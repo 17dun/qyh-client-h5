@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name="misapplication-tap-highlight" content="no"/>
+	<meta name="HandheldFriendly" content="true"/>
+	<meta name="MobileOptimized" content="320"/>
+	<title>球友会</title>
+	<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+    <style type="text/css">
+		li {
+			padding:0.8em;
+			border-bottom:1px solid #eaeaea;
+		}
+		li:active {
+			background:#f4f4f4;
+		}
+		.item {
+			display:block;
+			background:no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HSzuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCrroWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAABFcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBboK1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==);
+			background-size:12px 22px;
+			-ms-touch-action:auto;
+		}
+		.chs {
+			font-size:0.8em;
+			color:#838383;
+		}
+		
+		header{
+			background: #028ce6;
+			color: #FFFFFF;
+			height:45px;
+			line-height: 45px;
+		}
+		
+		footer{
+			
+			color:#9F9F9F;
+			width: 100%;
+height: 54px;
+position: fixed;
+bottom: 0;
+left: 0;
+font-size: 12px;
+text-align: center;
+box-shadow: 0px 1px 6px #CCC;
+		}
+		
+footer .nav-item{color:#666;float: left;width: 20%;padding-top: 36px;}
+
+footer .active{color: #009AFF;}
+
+footer .user.active{background: url(img/user.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .addr.active{background: url(img/addr.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .meet.active{background: url(img/meet.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .msg.active{background: url(img/msg.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .setting.active{background: url(img/setting.png) no-repeat 50% 3px;background-size:30px 30px;}
+
+footer .user{background: url(img/user_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .addr{background: url(img/addr_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .meet{background: url(img/meet_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .msg{background: url(img/msg_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
+footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
+</style>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/fastclick.js" ></script>
+		
+    <script type="text/javascript">
+    	//取消浏览器的所有事件，使得active的样式在手机上正常生效
+		document.addEventListener("touchstart",function(){
+		    return false;
+		},true);
+		
+		
+	
+		// 禁止选择
+		document.oncontextmenu=function(){
+			return false;
+		};
+   		var ws=null,list=null;
+		// 扩展API加载完毕，现在可以正常调用扩展API 
+		
+		function plusReady(){
+			plus.navigator.setStatusBarBackground( "#028ce6" );
+			ws=plus.webview.currentWebview();
+			list=plus.webview.create('user.html','user',{top:'45px',bottom:'56px',bounce:'vertical'});
+			var currentView = 'user';
+			// Android处理返回键
+//			plus.key.addEventListener("backbutton",function(){
+//				if(confirm("确认退出？")){
+//					plus.runtime.quit();
+//				}
+//			},false);
+			list.addEventListener("loaded",function(){//叶面加载完成后才显示
+				FastClick.attach(document.body);
+				ws.append(list);
+				var ttime;
+				
+				$('.nav-item').on('click',function(){
+					var dtime =  new Date()-ttime;
+					$('.nav-item').removeClass('active');
+					$(this).addClass('active');
+					
+					var item = $(this).attr('data-id');
+					
+					if(item!=currentView){
+						if(!plus.webview.getWebviewById(item)){
+							var myView = plus.webview.create(item+'.html',item,{top:'45px',bottom:'56px',bounce:'vertical'});
+						}else{
+							var myView = plus.webview.getWebviewById(item);
+						}
+						
+						plus.webview.hide(plus.webview.getWebviewById(currentView));
+						myView.show("none")
+						
+						currentView = item;
+					}
+					
+				})
+			},false);
+			
+			compatibleAdjust();
+		}
+		
+		// DOMContentLoaded事件处理
+		var _domReady=false;
+		document.addEventListener("DOMContentLoaded",function(){
+			_domReady=true;
+			compatibleAdjust();
+		},false);
+		var _adjust=false;
+		function compatibleAdjust(){
+			if(_adjust||!window.plus||!_domReady){
+				return;
+			}
+			_adjust=true;
+			// iOS平台使用div的滚动条
+			if("iOS"==plus.os.name){
+				document.getElementById("content").className="scontent";
+			}
+}
+		
+		if(window.plus){
+			plusReady();
+		}else{
+			document.addEventListener("plusready",plusReady,false);
+		}
+    </script>
+</head>
+<body>
+	<header>
+		<div class="nvtt" style="width: 100%;">找球友</div>
+	</header>
+	
+	<footer>
+		<a data-id="user" class="nav-item user active">球友</a>
+		<a data-id="addr" class="nav-item addr">场地</a>
+		<a data-id="meet" class="nav-item meet">约球</a>
+		<a data-id="msg" class="nav-item msg">信息</a>
+		<a data-id="setting" class="nav-item setting">设置</a>
+	</footer>
+</body>
+</html>
