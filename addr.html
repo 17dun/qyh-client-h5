@@ -8,77 +8,141 @@
 		<title>Hello H5+</title>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
-var ws=null;
-var list=null;
-function plusReady(){
-
-		
-	}
-// 判断扩展API是否准备，否则监听"plusready"事件
-
-
-$(function(){
-	if(window.plus){
-		ADDR.init();
-	}else{
-		document.addEventListener("plusready",function(){ADDR.init();},false);
-	}
-})
-
-var ADDR = {
-	init:function(){
-		this.map = null;
-		this.userLocation();
-	},
-	
-	m2l:function(){
-		var x = m.x/20037508.34*180;
-		var y = m.y/20037508.34*180;
-		y = 180/Math.PI*(2*Math.atan(Math.exp(y*Math.PI/180))-Math.PI/2);
-		return {
-		    x:x,
-		    y:y
-		}
-	},
-	
-	dis:function(a,b){
-		return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
-	},
-	
-	renderMap:function(pos){
-		this.map.centerAndZoom(new plus.maps.Point(116.360392,40.081397),16);
-		//this.createMarker();
-	},
-	createMarker:function(){
-		var marker=new plus.maps.Marker(new plus.maps.Point(116.3977,39.906016));
-		marker.setIcon("img/avatar_bianji.png");
-		marker.setLabel("HBuilder");
-		var bubble = new plus.maps.Bubble("打造最好的HTML5移动开发工具");
-		marker.setBubble(bubble);
-		this.map.addOverlay(marker);
-	},
-	
-	userLocation: function(){
-		this.map=new plus.maps.Map("map");
-		this.map.showUserLocation( true );
-		this.map.getUserLocation(function(state,pos){
-			if(0==state){
-				ADDR.renderMap(pos)
-				console.log(pos.getLng())
-				console.log(pos.getLat())
+		var USER = {
+			ws:null,
+			list:null,
+			hasOpen:false,
+			init : function(){
+				plus.navigator.closeSplashscreen();
+				this.ws=plus.webview.currentWebview();
+				this.list=$("#list");
+				this.setFresh();
+				var htmlStr = plus.storage.getItem('placeList');
+				if(htmlStr){
+					this.rendlocal();
+				}else{
+					this.getNewList();	
+				}
+			},
+			setFresh:function(){
+				this.ws.setPullToRefresh({support:true,
+					height:"50px",
+					range:"200px",
+					contentdown:{
+						caption:"下拉可以刷新"
+					},
+					contentover:{
+						caption:"释放立即刷新"
+					},
+					contentrefresh:{
+						caption:"正在刷新..."
+					}
+				},this.getNewList);
+			},
+			
+			getNewList:function(){
+					var ajax = new plus.net.XMLHttpRequest();
+					ajax.onreadystatechange = function () {
+						var user = USER;
+						if(ajax.readyState==4&&ajax.status == 200){
+							user.freshList(JSON.parse(ajax.responseText));
+						}
+					}
+				ajax.open("GET", 'http://192.168.1.103:888/?method=getPlaceList' );
+				ajax.send();
+			},
+			
+			freshList:function(data){
+				var data = {
+					list:data
+				}
+				var htmlStr = template('test',data);
+				this.list.html(htmlStr);
+				this.ws.endPullToRefresh();
+				plus.storage.setItem('placeList',htmlStr)
+			},
+			
+			rendlocal:function(){
+				var htmlStr = plus.storage.getItem('placeList');
+				this.list.html(htmlStr);
+			},
+			
+			
+			showInfo : function(id){
+				if(this.hasOpen){
+					return;
+				}
+				if(window.plus){
+					var openwn=plus.webview.create('user-info.html#'+id,'user-info',{scrollIndicator:'none',scalable:false});
+					openwn.addEventListener("loaded",function(){
+						openwn.show("slide-in-right",150);
+					})
+					
+					USER.hasOpen = true;
+					openwn.addEventListener("close",function(){//页面关闭后可再次打开
+						
+						USER.hasOpen=false;
+					},false);
+				}else{
+					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+					rootView.open('user-info.html');
+				}
 			}
-		});
-	}
-	
-	
-}
+		}
 
+		$(function(){
+			FastClick.attach(document.body);
+			document.addEventListener("touchstart",function(){return false;},false);//取消浏览器的所有事件，使得active的样式在手机上正常生效
+			document.oncontextmenu=function(){
+				return false;
+			};
+			if(window.plus){
+				USER.init();
+			}else{
+				$(document).on('plusready',function(){USER.init()});
+			}
+		})
 
 </script>
 		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
 		<style type="text/css">
-#map{width:100%;height:100%;}
+li {
+	padding:0.5em;
+	padding-bottom: 0;
+	border-bottom:1px solid #eaeaea;
+}
+li:active {
+	background:#f4f4f4;
+}
+
+.item {
+	display:block;
+	background:no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HSzuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCrroWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAABFcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBboK1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==);
+	background-size:15px 27px;
+	-ms-touch-action:auto;
+}
+.grey-text {
+	font-size:0.8em;
+	color:#838383;
+}
+
+#list{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.item-col{
+	float:left;
+	
+}
+.clear{clear: both;}
+.item-row{margin-bottom: 0.2em;}
+.item-col:last-child{margin-bottom: 0;}
+.item-row div{float:left}
+.score{margin-left: 0.5em;margin-top: 0.1em;}
+
 .clearfix:after {
   content: " ";
   display: block;
@@ -91,6 +155,38 @@ var ADDR = {
 		</style>
 	</head>
 	<body>
-		<div id="map">地图加载中...</div>
+		<ul id="list">
+			<img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/>
+		</ul>
+		<script id="test" type="text/html">
+			 {{each list}}
+			<li class="data-item" onclick="USER.showInfo({{$value.id}})">
+				<div class="item clearfix">
+					<div class="item-col"style="margin-left:0.5em;">
+						<div class="item-row clearfix">
+							<div class="name">{{$value.name}}</div>
+						</div>
+						<div class="item-row">
+							<span class="grey-text">
+							
+							</span>
+							<div class="grey-text">地址：{{$value.addr}}</div>
+							
+						</div>
+						<div class="item-row">
+							<div class="grey-text">	
+								价格：免费
+							</div>
+							</div>
+					</div>
+					<div class="item-col" style="float:right">
+						<span style="margin-right: 20px;" class="grey-text">
+								100m
+							</span>
+					</div>
+				</div>
+			</li> 
+			{{/each}}
+		</script>
 	</body>
 </html>
