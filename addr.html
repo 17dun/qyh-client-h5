@@ -2,28 +2,44 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		 <meta name="viewport" content="width=device-width">
 		<meta name="HandheldFriendly" content="true"/>
 		<meta name="MobileOptimized" content="320"/>
 		<title>Hello H5+</title>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
+		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		var ADDR = {
 			ws:null,
 			list:null,
 			hasOpen:false,
 			init : function(){
+				plus.navigator.closeSplashscreen();
 				this.ws=plus.webview.currentWebview();
+				this.bindEvent();	
+				if("iOS"==plus.os.name){
+					document.getElementById("content").className="scontent";
+				}
 				this.list=$("#list");
 				this.setFresh();
-				var htmlStr = plus.storage.getItem('placeList');
-				if(htmlStr){
+				var htmlStr = plus.storage.getItem('addrList');
+				this.getNewList();//调试时使用	
+				/*if(htmlStr){  
 					this.rendlocal();
 				}else{
 					this.getNewList();	
-				}
+				}*/
+			},
+			
+			bindEvent:function(){
+				$('.data-item').live('click',function(){
+					ADDR.showInfo($(this));
+				})
+				
 			},
 			setFresh:function(){
 				this.ws.setPullToRefresh({support:true,
@@ -40,6 +56,7 @@
 					}
 				},this.getNewList);
 			},
+			
 			getNewList:function(){
 					var ajax = new plus.net.XMLHttpRequest();
 					ajax.onreadystatechange = function () {
@@ -48,7 +65,7 @@
 							addr.freshList(JSON.parse(ajax.responseText));
 						}
 					}
-				ajax.open("GET", 'http://192.168.1.103:888/?method=getPlaceList' );
+				ajax.open("GET",apiServer+'/?method=getPlaceList' );
 				ajax.send();
 			},
 			
@@ -59,23 +76,34 @@
 				var htmlStr = template('test',data);
 				this.list.prepend(htmlStr);
 				this.ws.endPullToRefresh();
-				plus.storage.setItem('placeList',htmlStr)
+				plus.storage.setItem('addrList',htmlStr)
 			},
 			
 			rendlocal:function(){
-				var htmlStr = plus.storage.getItem('placeList');
+				var htmlStr = plus.storage.getItem('addrList');
 				this.list.prepend(htmlStr);
 			},
 			
 			
-			showInfo : function(id){
+			showInfo : function($item){
+				var data = {
+					id:$item.data('id'),
+					name:$item.data('name'),
+					addr:$item.data('addr'),
+					tel:$item.data('tel'),
+					point:$item.data('point'),
+					city:$item.data('city'),
+					x:$item.data('x'),
+					y:$item.data('y')
+				}
 				if(this.hasOpen){
 					return;
 				}
 				if(window.plus){
-					var openwn=plus.webview.create('user-info.html#'+id,'user-info',{scrollIndicator:'none',scalable:false});
+					var openwn=plus.webview.create('addr-info.html','addr-info',{scrollIndicator:'none',scalable:false});
 					openwn.addEventListener("loaded",function(){
 						openwn.show("slide-in-right",150);
+						openwn.evalJS('ADDRINFO.init('+JSON.stringify(data)+')')
 					})
 					
 					ADDR.hasOpen = true;
@@ -85,7 +113,7 @@
 					},false);
 				}else{
 					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-					rootView.open('user-info.html');
+					rootView.open('addr-info.html');
 				}
 			}
 		}
@@ -131,6 +159,10 @@ li:active {
 	margin:0;
 	padding:0;
 }
+
+
+
+
 .item-col{
 	float:left;
 	
@@ -150,6 +182,23 @@ li:active {
 .clearfix {
   zoom: 1;
 }
+
+/* 貌似没有效果 */
+
+@media screen and (max-device-width: 1200px) { 
+	li{padding-top:10px;padding-bottom: 10px;}
+	.item-row{margin-bottom: 0.4em;}
+	.item-col:last-child{margin-bottom: 0;}
+	.item img{width:70px;height:70px;}
+}
+
+@media screen and (max-device-width: 970px) { 
+	.item-row{margin-bottom: 0.3em;}
+	.item-col:last-child{margin-bottom: 0;}
+	.item img{width:60px;height:60px;}
+	li{padding-bottom:5px;padding-bottom:5px;}
+}
+
 		</style>
 	</head>
 	<body>
@@ -158,32 +207,31 @@ li:active {
 		</ul>
 		<script id="test" type="text/html">
 			 {{each list}}
-			<li class="data-item" onclick="USER.showInfo({{$value.id}})">
+			<li class="data-item" data-addr="{{$value.addr}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-city="{{$value.city}}">
 				<div class="item clearfix">
 					<div class="item-col"style="margin-left:0.5em;">
 						<div class="item-row clearfix">
 							<div class="name">{{$value.name}}</div>
-						</div>
-						<div class="item-row">
-							<span class="grey-text">
-							
-							</span>
-							<div class="grey-text">地址：{{$value.addr}}</div>
 							
 						</div>
 						<div class="item-row">
-							<div class="grey-text">	
+							<span class="grey-text"></span>
+							<span class="grey-text">地址：{{$value.addr}}</span>
+						</div>
+						<div class="item-row">
+							<span class="grey-text">	
 								价格：免费
-							</div>
-							</div>
+							</span>
+						</div>
 					</div>
 					<div class="item-col" style="float:right">
+						<span class="grey-text"></span>
 						<span style="margin-right: 20px;" class="grey-text">
 								100m
 							</span>
 					</div>
 				</div>
-			</li>
+			</li> 
 			{{/each}}
 		</script>
 	</body>

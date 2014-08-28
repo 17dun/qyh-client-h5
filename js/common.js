@@ -1,4 +1,7 @@
 ﻿(function(w){
+
+w.apiServer="http://192.168.7.212:8888";
+w.imgServer="http://192.168.7.212:8080";
 // 空函数
 function shield(){
 	return false;

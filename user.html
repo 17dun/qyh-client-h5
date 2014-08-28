@@ -10,6 +10,7 @@
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		var USER = {
 			ws:null,
@@ -62,7 +63,7 @@
 							user.freshList(JSON.parse(ajax.responseText));
 						}
 					}
-				ajax.open("GET", 'http://192.168.1.103:888/?method=getUserList' );
+				ajax.open("GET",apiServer+ '/?method=getUserList' );
 				ajax.send();
 			},
 			
@@ -203,7 +204,7 @@ li:active {
 			 {{each list}}
 			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
 				<div class="item clearfix">
-					<img style="border-radius:10px"  class="item-col" src="http://192.168.1.103:8080/images/{{$value.pic}}">
+					<img style="border-radius:10px"  class="item-col" src="http://192.168.7.212:8080/images/{{$value.pic}}">
 					<div class="item-col"style="margin-left:0.5em;">
 						<div class="item-row clearfix">
 							<div class="name">{{$value.name}}</div>
