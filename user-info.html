@@ -12,13 +12,18 @@
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
 		var USERINFO = {
-			init:function(){
+			init:function(data){
 				this.bindEvent();
-				setTimeout(function(){USERINFO.getData();},300)
+				this.renderHead(data);
+				setTimeout(function(){USERINFO.getData(data);},100)
+			},
+			renderHead : function(data){
+				var htmlStr = template('infoHead',data);
+				$('.info-head').html(htmlStr);
 			},
 			
-			getData : function(){
-				var id = location.hash.split('#')[1];
+			getData : function(data){
+				var id  = data.id;
 				var ajax = new plus.net.XMLHttpRequest();
 				ajax.onreadystatechange = function () {
 					var userinfo = USERINFO;
@@ -32,7 +37,7 @@
 			
 			render : function(data){
 				var htmlStr = template('userInfoTpl',data[0]);
-				$('.wrap').html(htmlStr);
+				$('.info').html(htmlStr);
 				$('.info').animate({opacity: 1},100,'ease-in')
 			},
 			
@@ -71,16 +76,19 @@
 			
 		}
 		
-		$(function(){
+		function pageInit(data){
+			$(function(){
 			FastClick.attach(document.body);
 			if(window.plus){
-				USERINFO.init();
+				USERINFO.init(data);
 			}else{
-				document.addEventListener("plusready",function(){USERINFO.init()},false);
+				document.addEventListener("plusready",function(){USERINFO.init(data)},false);
 			}
 			
 			
-		})
+		})	
+		}
+		
 		</script>
 		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
 		<style type="text/css">
@@ -126,13 +134,23 @@ header{
 .info-head{margin-top:45px;padding:10px;height:90px;color:#fff;background:#37454e;}
 .info-head img{width:80px;height:80px;}
 .info-head .info-item{float: left;}
-.info-body .info-item{height:1.5em;line-height:1.5em;border-bottom: 1px solid #eee;padding:10px;}
 .info-text{margin:0 10px;}
 .info-foot{width:100%;min-height: 45px;margin:0;padding:0;width:100%;border-radius:0;position: fixed;bottom: 0;display: flex;display:-webkit-flex;flex-flow: row;-webkit-flex-flow: row;}
 .info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;height:45px;line-height: 45px;text-decoration: none;}
 .add{width:50%;}
 .send{width:50%;margin-left:-1px;border-left:1px solid #fff;}
 .item-title{color:#202020;}
+
+@media screen and (max-device-width: 1200px) { 
+	.info-title{height:40px;line-height:40px;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+	.info-body .info-item{height:40px;line-height:40px;border-bottom: 1px solid #eee;padding:10px;}
+	.info-foot a{height: 50px;line-height: 50px;}
+}
+
+@media screen and (max-device-width: 970px) { 
+	.info-title{height:2em;line-height:2em;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+	.info-body .info-item{height:2em;line-height:em;border-bottom: 1px solid #eee;padding:10px;}
+}
 
 .info-body .info-text{float:right}
 		</style>
@@ -143,22 +161,16 @@ header{
 			<div class="nvtt">详细信息</div>
 		</header>
 		
-	<div class="wrap"><img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/></div>
-	<script id="userInfoTpl" type="text/html">
-		<div style="opacity: 0.5;" class="info">
-			<div class="info-content info-head">
-			<div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="http://192.168.1.103:8080/images/{{pic}}"/></div>
-			<div class="info-item" style="padding-top: 5px;">
-				<span class="info-text name">{{name}}</span>
-				
-				<div style="height: 8px;"></div>
-				<span class="info-text sex">{{if sex==1}}男{{else}}女{{/if}}</span>
-				<span class="info-text age">{{age}}岁</span>
-				<div style="height: 8px;"></div>
-				<span class="info-text work">擅长{{if style == 0}}弧圈{{else if style == 1}}削球{{else if style==2}}推挡{{/if}}</span>
-				<span class="info-text work">影响力{{score}}</span>
-			</div>
+	<div class="wrap">
+		<div class="info-content info-head">
+			
 		</div>
+		<div class="info">
+		<img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/>
+		</div>
+		<div class="info-content info-foot"><a class="add" href="javascript:;">加为好友</a><a class="send" href="javascript:;">发送消息</a></div>
+	</div>
+	<script id="userInfoTpl" type="text/html">
 		
 		<div class="info-content info-body">
 			<div class="info-title">装备信息</div>
@@ -174,9 +186,20 @@ header{
 			<div class="info-item"><span class="item-title">约球日程</span><span class="info-text">最近一周内没有计划</span></div>
 			<div class="info-item"><span class="item-title">个人简介</span><span class="info-text">{{info}}</span></div>
 		</div>
-		<div class="info-content info-foot"><a class="add" href="javascript:;">加为好友</a><a class="send" href="javascript:;">发送消息</a></div>
-		</div>
 		</script>
-	
+		
+		<script type="text/html" id="infoHead">
+		  <div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="http://192.168.1.103:8080/images/{{pic}}"/></div>
+			<div class="info-item" style="padding-top: 5px;">
+				<span class="info-text name">{{name}}</span>
+				<div style="height: 8px;"></div>
+				<span class="info-text sex">{{if sex==1}}男{{else}}女{{/if}}</span>
+				<span class="info-text age">{{age}}岁</span>
+				<div style="height: 8px;"></div>
+				<span class="info-text work">擅长{{if style == 0}}弧圈{{else if style == 1}}削球{{else if style==2}}推挡{{/if}}</span>
+				<span class="info-text work">影响力{{score}}</span>
+			</div>
+		</script>
+		
 	</body>
 </html>

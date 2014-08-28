@@ -10,12 +10,11 @@
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
-		var USER = {
+		var ADDR = {
 			ws:null,
 			list:null,
 			hasOpen:false,
 			init : function(){
-				plus.navigator.closeSplashscreen();
 				this.ws=plus.webview.currentWebview();
 				this.list=$("#list");
 				this.setFresh();
@@ -28,8 +27,8 @@
 			},
 			setFresh:function(){
 				this.ws.setPullToRefresh({support:true,
-					height:"50px",
-					range:"200px",
+					height:"45px",
+					range:"100px",
 					contentdown:{
 						caption:"下拉可以刷新"
 					},
@@ -41,13 +40,12 @@
 					}
 				},this.getNewList);
 			},
-			
 			getNewList:function(){
 					var ajax = new plus.net.XMLHttpRequest();
 					ajax.onreadystatechange = function () {
-						var user = USER;
+						var addr = ADDR;
 						if(ajax.readyState==4&&ajax.status == 200){
-							user.freshList(JSON.parse(ajax.responseText));
+							addr.freshList(JSON.parse(ajax.responseText));
 						}
 					}
 				ajax.open("GET", 'http://192.168.1.103:888/?method=getPlaceList' );
@@ -59,14 +57,14 @@
 					list:data
 				}
 				var htmlStr = template('test',data);
-				this.list.html(htmlStr);
+				this.list.prepend(htmlStr);
 				this.ws.endPullToRefresh();
 				plus.storage.setItem('placeList',htmlStr)
 			},
 			
 			rendlocal:function(){
 				var htmlStr = plus.storage.getItem('placeList');
-				this.list.html(htmlStr);
+				this.list.prepend(htmlStr);
 			},
 			
 			
@@ -80,10 +78,10 @@
 						openwn.show("slide-in-right",150);
 					})
 					
-					USER.hasOpen = true;
+					ADDR.hasOpen = true;
 					openwn.addEventListener("close",function(){//页面关闭后可再次打开
 						
-						USER.hasOpen=false;
+						ADDR.hasOpen=false;
 					},false);
 				}else{
 					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
@@ -99,9 +97,9 @@
 				return false;
 			};
 			if(window.plus){
-				USER.init();
+				ADDR.init();
 			}else{
-				$(document).on('plusready',function(){USER.init()});
+				$(document).on('plusready',function(){ADDR.init()});
 			}
 		})
 
@@ -156,7 +154,7 @@ li:active {
 	</head>
 	<body>
 		<ul id="list">
-			<img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/>
+			
 		</ul>
 		<script id="test" type="text/html">
 			 {{each list}}
@@ -185,7 +183,7 @@ li:active {
 							</span>
 					</div>
 				</div>
-			</li> 
+			</li>
 			{{/each}}
 		</script>
 	</body>

@@ -83,6 +83,7 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 		
 		function plusReady(){
 			plus.navigator.setStatusBarBackground( "#028ce6" );
+			plus.navigator.closeSplashscreen();
 			ws=plus.webview.currentWebview();
 			list=plus.webview.create('user.html','user',{top:'45px',bottom:'56px',bounce:'vertical'});
 			var currentView = 'user';
@@ -95,22 +96,18 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 			list.addEventListener("loaded",function(){//叶面加载完成后才显示
 				FastClick.attach(document.body);
 				ws.append(list);
-				var ttime;
-				
 				$('.nav-item').on('click',function(){
-					var dtime =  new Date()-ttime;
 					$('.nav-item').removeClass('active');
 					$(this).addClass('active');
-					
 					var item = $(this).attr('data-id');
-					
+					changeTitle(item);
 					if(item!=currentView){
 						if(!plus.webview.getWebviewById(item)){
 							var myView = plus.webview.create(item+'.html',item,{top:'45px',bottom:'56px',bounce:'vertical'});
+							ws.append(myView);
 						}else{
 							var myView = plus.webview.getWebviewById(item);
 						}
-						
 						plus.webview.hide(plus.webview.getWebviewById(currentView));
 						myView.show("none")
 						
@@ -121,6 +118,19 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 			},false);
 			
 			compatibleAdjust();
+		}
+		
+		
+		function changeTitle(item){
+			
+			var titleConf = {
+				'user':'附近的球友',
+				'addr':'附近的场地',
+				'meet':'约球',
+				'msg':'信息',
+				'setting':'设置'
+			};
+			$('.nvtt').html(titleConf[item]);
 		}
 		
 		// DOMContentLoaded事件处理
