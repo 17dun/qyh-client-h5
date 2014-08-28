@@ -148,8 +148,12 @@ header{
 }
 
 @media screen and (max-device-width: 970px) { 
+	.info-head{height:75px;}
+	.info-head img{width:65px;height: 65px;}
 	.info-title{height:2em;line-height:2em;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
 	.info-body .info-item{height:2em;line-height:em;border-bottom: 1px solid #eee;padding:10px;}
+	.info-foot{min-height: 40px;}
+	.info-foot a{height: 40px;line-height: 40px;}
 }
 
 .info-body .info-text{float:right}
@@ -190,12 +194,12 @@ header{
 		
 		<script type="text/html" id="infoHead">
 		  <div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="http://192.168.1.103:8080/images/{{pic}}"/></div>
-			<div class="info-item" style="padding-top: 5px;">
+			<div class="info-item" style="padding-top: 2px;">
 				<span class="info-text name">{{name}}</span>
-				<div style="height: 8px;"></div>
+				<div style="height: 3px;"></div>
 				<span class="info-text sex">{{if sex==1}}男{{else}}女{{/if}}</span>
 				<span class="info-text age">{{age}}岁</span>
-				<div style="height: 8px;"></div>
+				<div style="height: 3px;"></div>
 				<span class="info-text work">擅长{{if style == 0}}弧圈{{else if style == 1}}削球{{else if style==2}}推挡{{/if}}</span>
 				<span class="info-text work">影响力{{score}}</span>
 			</div>

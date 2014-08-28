@@ -6,12 +6,13 @@
 		<meta name="HandheldFriendly" content="true"/>
 		<meta name="MobileOptimized" content="320"/>
 		<title>Hello H5+</title>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
+		
 		var USER = {
 			ws:null,
 			list:null,
@@ -19,15 +20,15 @@
 			init : function(){
 				plus.navigator.closeSplashscreen();
 				this.ws=plus.webview.currentWebview();
-				this.bindEvent();	
-				if("iOS"==plus.os.name){
-					document.getElementById("content").className="scontent";
-				}
+				this.bindEvent();
 				this.list=$("#list");
 				this.setFresh();
+				localStorage.clear();
 				var htmlStr = plus.storage.getItem('userList');
+				
 				if(htmlStr){
-					this.rendlocal();
+					this.getNewList();
+					//this.rendlocal();
 				}else{
 					this.getNewList();	
 				}
@@ -63,13 +64,15 @@
 							user.freshList(JSON.parse(ajax.responseText));
 						}
 					}
-				ajax.open("GET",apiServer+ '/?method=getUserList' );
+				ajax.open("GET",CONF.apiServer+ '/?method=getUserList' );
 				ajax.send();
 			},
 			
 			freshList:function(data){
 				var data = {
-					list:data
+					list:data,
+					api:1111,
+					staticServer : CONF.staticServer
 				}
 				var htmlStr = template('test',data);
 				this.list.prepend(htmlStr);
@@ -121,6 +124,7 @@
 				return false;
 			};
 			if(window.plus){
+				
 				USER.init();
 			}else{
 				$(document).on('plusready',function(){USER.init()});
@@ -163,6 +167,7 @@ li:active {
 	float:left;
 	
 }
+.name{color:#202020;}
 .clear{clear: both;}
 .item-col:last-child{margin-bottom: 0;}
 .item-row div{float:left}
@@ -201,10 +206,11 @@ li:active {
 			
 		</ul>
 		<script id="test" type="text/html">
+			
 			 {{each list}}
 			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
 				<div class="item clearfix">
-					<img style="border-radius:10px"  class="item-col" src="http://192.168.7.212:8080/images/{{$value.pic}}">
+					<img style="border-radius:10px"  class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
 					<div class="item-col"style="margin-left:0.5em;">
 						<div class="item-row clearfix">
 							<div class="name">{{$value.name}}</div>
