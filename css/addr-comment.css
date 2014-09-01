@@ -1,0 +1,152 @@
+body{font-family:"微软雅黑";}
+li {
+	padding:0.5em;
+	border-bottom:1px solid #eaeaea;
+}
+li:active {
+	background:#f4f4f4;
+}
+
+header{
+	background: #028ce6;
+	color: #FFFFFF;
+	height: 45px;
+	line-height: 45px;
+	box-shadow:none;
+}
+
+.item {
+	display:block;
+	background:no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HSzuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCrroWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAABFcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBboK1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==);
+	background-size:12px 22px;
+	-ms-touch-action:auto;
+}
+.chs {
+	font-size:0.8em;
+	color:#838383;
+}
+
+#list{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.item-col{
+	float:left;
+}
+.clear{clear: both;}
+
+.info-title{background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+.info-content{font-size:1em;min-height: 60px;}
+.info-head{margin-top:45px;padding:10px;height:90px;color:#fff;background:#37454e;}
+.info-head img{width:80px;height:80px;}
+.info-head .info-item{float: left;}
+.info-text{margin:0 10px;}
+.info-foot{width:100%;min-height: 45px;margin:0;padding:0;width:100%;border-radius:0;position: fixed;bottom: 0;display: flex;display:-webkit-flex;flex-flow: row;-webkit-flex-flow: row;}
+.info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;height:45px;line-height: 45px;text-decoration: none;}
+.add{width:50%;}
+.send{width:50%;margin-left:-1px;border-left:1px solid #fff;}
+.item-title{color:#202020;}
+.placeinfo{display: inline-block;width: 250px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+@media screen and (max-device-width: 1200px) { 
+	.info-title{height:40px;line-height:40px;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+	.info-body .info-item{height:40px;line-height:40px;border-bottom: 1px solid #eee;padding:10px;}
+	.info-foot a{height: 50px;line-height: 50px;}
+}
+
+@media screen and (max-device-width: 970px) { 
+	.info-title{height:2em;line-height:2em;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+	.info-body .info-item{height:2em;line-height:em;border-bottom: 1px solid #eee;padding:10px;}
+}
+
+.arrow-right .info-body .info-text{float:right}
+.comment-row {
+padding: 0 4%;
+line-height: 50px;
+}
+.comment-row .comment-label {
+display: inline-block;
+text-align: right;
+width: 10%;
+vertical-align: top;
+}
+.comment-row .comment-content {
+width: 100%;
+display: inline-block;
+padding: 0 0 0 4%;
+margin: 0 0 20px;
+line-height: normal;
+}
+.comment-row {
+padding: 0 4%;
+line-height: 50px;
+}
+.comment-row .comment-content .star-wrapper {
+display: inline-block;
+vertical-align: middle;
+line-height: normal;
+}
+.comment-row .comment-content .comment-star {
+font-size: 0;
+vertical-align: text-bottom;
+display: inline-block;
+line-height: normal;
+}
+ol, ul {
+list-style: none;
+}
+element.style {
+}
+.comment-comment .comment-row .comment-content .comment-star {
+font-size: 0;
+vertical-align: text-bottom;
+display: inline-block;
+line-height: normal;
+}
+ol, ul {
+list-style: none;
+}
+body, p, b, dl, dd, input, img, form, div, ul, li, h1, h2, h3, h4, h5, h6, em {
+margin: 0;
+padding: 0;
+border: 0;
+}
+ul, menu, dir {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 40px;
+}
+.comment-row .comment-content .comment-star li {
+width: 27px;
+height: 21px;
+display: inline-block;
+background: url(http://webmap2.map.bdimg.com/static/waimai/widget/usercenter/order/images/b-g-star_8cbf452.png?__sprite);
+cursor: pointer;
+}
+.comment-row .comment-content .comment-star li.active {
+background: url(http://webmap0.map.bdimg.com/static/waimai/widget/usercenter/order/images/b-r-star_f7a5dff.png?__sprite);
+}
+.dialog-row .dailog-content .comment-text {
+border: 1px solid #e8e8e8;
+-moz-border-radius: 2px;
+border-radius: 2px;
+width: 100%;
+height: 90px;
+resize: none;
+font-size: 1.2em;
+}
+textarea {
+overflow: auto;
+vertical-align: top;
+}
+.dialog-row .vt-top {
+vertical-align: top;
+line-height: normal;
+}
+.star-tip{
+	font-size: 14px;
+}

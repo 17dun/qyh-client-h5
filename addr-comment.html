@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/fastclick.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+		var ADDRComment = {
+			init:function(data){
+				this.bindEvent();
+				this.renderHead(data);
+			},
+			renderHead : function(data){
+				$('.comment-head').html(data.name);
+			},
+			bindEvent : function(){
+				window.back=function(){
+					ws=plus.webview.currentWebview();
+					if(window.plus){
+						ws.close();
+					}else if(history.length>1){
+						history.back();
+					}else{
+						window.close();
+					}
+				};
+				plus.key.addEventListener("backbutton",function(){
+					back();
+				},false);
+				$(".submit-comment").on("click",function(){
+					alert("test");	
+				});
+			}
+		}
+		function plusReady(){
+			
+		}
+		
+		function pageInit(data){
+			$(function(){
+			FastClick.attach(document.body);
+			if(window.plus){
+				ADDRComment.init(data);
+			}else{
+				document.addEventListener("plusready",function(){ADDRComment.init(data)},false);
+			}
+		})	
+		}
+		
+		</script>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/addr-comment.css"/>
+	</head>
+	<body>
+		<header>
+			<div class="nvbt iback-cancel" onclick="back();"></div>
+			<div class="nvtt comment-head">test</div>
+			<div class="nvbt btn-nav-submit submit-comment">提交</div>
+		</header>
+		
+	<div class="wrap">
+		<div class="info-content">
+			
+		</div>
+		<div class="info">
+		
+		</div>
+		<div class="info-content info-foot submit-comment">
+			<a class="add" id="comment" style="margin: 0 auto;margin-bottom: 10px;margin-left: 25%;border-radius: 5px;" href="javascript:;">提交评价</a>	
+		</div>
+	</div>
+	<div class="comment-detail">
+	        <div class="comment-row">
+	            <div class="comment-content">
+	                <div class="star-wrapper">
+	                    <ul class="comment-star" data-node="comment-star">
+	                        <li class="active" data-value="1"></li>
+	                        <li data-value="2" class="active"></li>
+	                        <li data-value="3" class="active"></li>
+	                        <li data-value="4" class=""></li>
+	                        <li data-value="5" class=""></li>
+	                    </ul>
+	                    <span class="star-tip">点击星星打分</span>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="comment-row">
+	            <div class="comment-content vt-top">
+	                <textarea style="width: 90%; height: 100px;" class="comment-text placeholder-con" placeholder="场地怎样？来点评一下吧！" data-node="comment-text"></textarea>
+	                <span class="comment-text-notice"></span>
+	            </div>
+	        </div>
+		</div>
+	</body>
+</html>
