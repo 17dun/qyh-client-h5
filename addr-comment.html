@@ -20,6 +20,8 @@
 			},
 			renderHead : function(data){
 				$('.comment-head').html(data.name);
+				$('#comment-detail').data('id')=data.id;
+				$('#comment-detail').data('name')=data.name;
 			},
 			bindEvent : function(){
 				window.back=function(){
@@ -45,8 +47,26 @@
 					for(var i=0;i<index;i++){
 						li[i].className="active";
 					}
-					$('.star-tip').val(commentArr[i]);
+					$('.star-tip').html(commentArr[i-1]);
+					$('#star').val(index);
 				});
+			},
+			setData : function(data){
+				var id  = data.id,
+					commentText=$('#comment-text').val(),
+					start=$('#star').val();
+				 	date = new Date('yyyy-MM-dd HH:mm:ss');
+					
+				var ajax = new plus.net.XMLHttpRequest();
+				ajax.onreadystatechange = function () {
+					if(ajax.readyState==4&&ajax.status == 200){
+						alert('ok');
+						//placeinfo.render(JSON.parse(ajax.responseText));
+					}
+				}
+				ajax.open("GET",CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start);
+				
+				ajax.send();
 			}
 		}
 		function plusReady(){
@@ -91,19 +111,20 @@
 	            <div class="comment-content">
 	                <div class="star-wrapper">
 	                    <ul class="comment-star" data-node="comment-star">
-	                        <li data-value = "1" value="1" class="active"></li>
-	                        <li data-value = "1" value="2" class=""></li>
-	                        <li data-value = "1" value="3" class=""></li>
-	                        <li data-value = "1" value="4" class=""></li>
-	                        <li data-value = "1" value="5" class=""></li>
+	                        <li value="1" class="active"></li>
+	                        <li value="2" class=""></li>
+	                        <li value="3" class=""></li>
+	                        <li value="4" class=""></li>
+	                        <li value="5" class=""></li>
 	                    </ul>
 	                </div>
 	                <span class="star-tip">点击星星打分</span>
+	                <input type="hidden" id="star" value="1"/>
 	            </div>
 	        </div>
 	        <div class="comment-row">
 	            <div class="comment-content vt-top">
-	                <textarea style="width: 90%; height: 100px;" class="comment-text placeholder-con" placeholder="场地怎样？来点评一下吧！" data-node="comment-text"></textarea>
+	                <textarea id="comment-text" style="width: 90%; height: 100px;" placeholder="场地怎样？来点评一下吧！"></textarea>
 	                <span class="comment-text-notice"></span>
 	            </div>
 	        </div>
