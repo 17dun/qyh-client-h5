@@ -64,23 +64,7 @@ header{
 padding: 0 4%;
 line-height: 50px;
 }
-.comment-row .comment-label {
-display: inline-block;
-text-align: right;
-width: 10%;
-vertical-align: top;
-}
-.comment-row .comment-content {
-width: 100%;
-display: inline-block;
-padding: 0 0 0 4%;
-margin: 0 0 20px;
-line-height: normal;
-}
-.comment-row {
-padding: 0 4%;
-line-height: 50px;
-}
+
 .comment-row .comment-content .star-wrapper {
 display: inline-block;
 vertical-align: middle;
@@ -103,50 +87,34 @@ vertical-align: text-bottom;
 display: inline-block;
 line-height: normal;
 }
-ol, ul {
-list-style: none;
+.comment-row{
+	margin: 20px 0;
 }
-body, p, b, dl, dd, input, img, form, div, ul, li, h1, h2, h3, h4, h5, h6, em {
-margin: 0;
-padding: 0;
+ol, ul,li {
+list-style: none;
 border: 0;
 }
-ul, menu, dir {
-display: block;
-list-style-type: disc;
--webkit-margin-before: 1em;
--webkit-margin-after: 1em;
--webkit-margin-start: 0px;
--webkit-margin-end: 0px;
--webkit-padding-start: 40px;
+
+ul{
+-webkit-padding-start: 0px;
 }
-.comment-row .comment-content .comment-star li {
-width: 27px;
-height: 21px;
+.comment-star li {
+width: 40px;
+height: 40px;
 display: inline-block;
-background: url(http://webmap2.map.bdimg.com/static/waimai/widget/usercenter/order/images/b-g-star_8cbf452.png?__sprite);
+background: url(../img/gray_star.png) no-repeat;
 cursor: pointer;
+margin: 0 1px;
 }
-.comment-row .comment-content .comment-star li.active {
-background: url(http://webmap0.map.bdimg.com/static/waimai/widget/usercenter/order/images/b-r-star_f7a5dff.png?__sprite);
+.comment-star li.active {
+background: url(../img/golden_star.png);
 }
-.dialog-row .dailog-content .comment-text {
-border: 1px solid #e8e8e8;
--moz-border-radius: 2px;
-border-radius: 2px;
-width: 100%;
-height: 90px;
-resize: none;
-font-size: 1.2em;
-}
+
 textarea {
 overflow: auto;
 vertical-align: top;
 }
-.dialog-row .vt-top {
-vertical-align: top;
-line-height: normal;
-}
+
 .star-tip{
-	font-size: 14px;
+	font-size: 12px;
 }

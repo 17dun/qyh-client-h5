@@ -12,6 +12,7 @@
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
+		var commentArr =new Array( '很差','一般','好','很好','非常好')
 		var ADDRComment = {
 			init:function(data){
 				this.bindEvent();
@@ -36,6 +37,15 @@
 				},false);
 				$(".submit-comment").on("click",function(){
 					alert("test");	
+				});
+				$(".comment-star").on('click',function(e){
+					var index =$(e.target).val();
+					$('li').attr('class','');
+					var li = $('li');
+					for(var i=0;i<index;i++){
+						li[i].className="active";
+					}
+					$('.star-tip').val(commentArr[i]);
 				});
 			}
 		}
@@ -81,14 +91,14 @@
 	            <div class="comment-content">
 	                <div class="star-wrapper">
 	                    <ul class="comment-star" data-node="comment-star">
-	                        <li class="active" data-value="1"></li>
-	                        <li data-value="2" class="active"></li>
-	                        <li data-value="3" class="active"></li>
-	                        <li data-value="4" class=""></li>
-	                        <li data-value="5" class=""></li>
+	                        <li data-value = "1" value="1" class="active"></li>
+	                        <li data-value = "1" value="2" class=""></li>
+	                        <li data-value = "1" value="3" class=""></li>
+	                        <li data-value = "1" value="4" class=""></li>
+	                        <li data-value = "1" value="5" class=""></li>
 	                    </ul>
-	                    <span class="star-tip">点击星星打分</span>
 	                </div>
+	                <span class="star-tip">点击星星打分</span>
 	            </div>
 	        </div>
 	        <div class="comment-row">
