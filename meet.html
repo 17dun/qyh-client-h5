@@ -202,6 +202,35 @@ li:active {
 	</head>
 	<body>
 		<ul id="list">
+			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
+				<div class="item clearfix">
+					<img style="border-radius:10px;width:40px;height: 40px;"  class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
+					<div class="item-col"style="margin-left:0.5em;">
+						<div class="item-row clearfix">
+							<div class="name"><span class="grey-text"><a href="#" style="color:#028CE6">{{$value.name}}</a>发起约球</span></div>
+						</div>
+						<div class="item-row" style="width:100%;border:1px solid #ccc;padding:5px;">
+							<table>
+								<tr><td colspan="2">回龙观的朋友一起来happy啊</td></tr>
+								<tr><td>地点：</td><td>回龙观体育公园</td></tr>
+								<tr><td>时间：</td><td>2014-8-30 13:00</td></tr>
+								<tr><td>性别要求：</td><td>男女不限</td></tr>
+								<tr><td>付费方式：</td><td>场地免费</td></tr>
+							</table>
+						</div>
+							
+						<div class="item-row">
+							<span class="grey-text">	
+								应约人数：2/4
+							</span>
+							<span class="grey-text">
+								<a href="#" style="margin-left:10px;color: #028CE6;">小泽</a>
+								<a href="#" style="margin-left:10px;color: #028CE6;">肚兰</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</li> 
 			
 		</ul>
 		<script id="test" type="text/html">

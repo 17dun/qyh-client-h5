@@ -6,15 +6,15 @@
 		<meta name="HandheldFriendly" content="true"/>
 		<meta name="MobileOptimized" content="320"/>
 		<title>Hello H5+</title>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
-		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		var ADDRINFO = {
 			init:function(data){
+				
 				this.bindEvent();
 				this.renderHead(data);
 				setTimeout(function(){ADDRINFO.getData(data);},100)
@@ -26,15 +26,18 @@
 			
 			getData : function(data){
 				var id  = data.id;
+			
 				var ajax = new plus.net.XMLHttpRequest();
 				ajax.onreadystatechange = function () {
 					var placeinfo = ADDRINFO;
 					if(ajax.readyState==4&&ajax.status == 200){
+						
 						placeinfo.render(JSON.parse(ajax.responseText));
 					}
 				}
-				console.log(apiServer);
-				ajax.open("GET",apiServer+'/?method=getPlaceInfo&id='+id);
+				console.log(CONF.apiServer+'/?method=getPlaceInfo&id='+id);
+				ajax.open("GET",CONF.apiServer+'/?method=getPlaceInfo&id='+id);
+				
 				ajax.send();
 			},
 			
@@ -166,8 +169,7 @@ header{
 		<img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/>
 		</div>
 		<div class="info-content info-foot">
-			<a class="add" href="javascript:;">我要评价</a>
-			<a class="send" href="javascript:;">纠错</a></div>
+			<a class="add" href="javascript:;">我要评价</a><a class="send" href="javascript:;">纠错</a></div>
 	</div>
 	<script id="placeInfoTpl" type="text/html">
 		<div class="info-content info-body">

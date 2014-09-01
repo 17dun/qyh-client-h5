@@ -12,7 +12,6 @@
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
-		
 		var USER = {
 			ws:null,
 			list:null,
@@ -27,8 +26,8 @@
 				var htmlStr = plus.storage.getItem('userList');
 				
 				if(htmlStr){
-					this.getNewList();
-					//this.rendlocal();
+					//this.getNewList();
+					this.rendlocal();
 				}else{
 					this.getNewList();	
 				}
@@ -159,9 +158,6 @@ li:active {
 	margin:0;
 	padding:0;
 }
-
-
-
 
 .item-col{
 	float:left;
