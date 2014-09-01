@@ -24,7 +24,7 @@
 				this.list=$("#list");
 				this.setFresh();
 				localStorage.clear();
-				var htmlStr = plus.storage.getItem('userList');
+				var htmlStr = plus.storage.getItem('meetList');
 				
 				if(htmlStr){
 					this.getNewList();
@@ -77,11 +77,11 @@
 				var htmlStr = template('test',data);
 				this.list.prepend(htmlStr);
 				this.ws.endPullToRefresh();
-				plus.storage.setItem('userList',htmlStr)
+				plus.storage.setItem('meetList',htmlStr)
 			},
 			
 			rendlocal:function(){
-				var htmlStr = plus.storage.getItem('userList');
+				var htmlStr = plus.storage.getItem('meetList');
 				this.list.prepend(htmlStr);
 			},
 			
