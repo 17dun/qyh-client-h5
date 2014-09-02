@@ -11,6 +11,7 @@
 		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		 
 		var commentArr =new Array( '很差','一般','好','很好','非常好')
@@ -55,20 +56,18 @@
 				var id =$('#addr_id').val(),
 					commentText=$('#comment-text').val(),
 					start=$('#star').val(),
-				 	date = new Date(),
-				 	url='http://182.254.209.32:8888/?method=setAddrComment&addr_id=3&comment=郁闷&start=1&time=2014-09-01 12:12:12',//CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start,
+				 	date = new Date().getTime(),
+				 	url=encodeURI(CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start),
 				 	ajax = new plus.net.XMLHttpRequest();
 				 	
-				alert(url);
-				ajax.onreadystatechange = function () {
-					alert(ajax.readyState+":"+ajax.status);
+					ajax.onreadystatechange = function () {
 					if(ajax.readyState==4&&ajax.status == 200){
-						/*if(plus.os.name=="iOS"){
+						if(plus.os.name=="iOS"){
 							alert('添加评论成功');
 						}else{
 							plus.nativeUI.toast('添加评论成功');
-						}*/
-						placeinfo.render(JSON.parse(ajax.responseText));
+						}
+						back();
 					}
 				}
 				ajax.open("GET",url);
@@ -79,12 +78,10 @@
 		function plusReady(){
 			
 		}
-		function dateFormat(d){
-			return (d.getFullYear()+"-"+ultZeroize(d.getMonth()+1)+"-"+ultZeroize(d.getDate())+" "+ultZeroize(d.getHours())+":"+ultZeroize(d.getMinutes())+":"+ultZeroize(d.getSeconds()));
-		};
-		function pageInit(data){
+		
+		function commentPageInit(data){
 			$(function(){
-			FastClick.attach(document.body);
+				FastClick.attach(document.body);
 			if(window.plus){
 				ADDRComment.init(data);
 			}else{

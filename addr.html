@@ -100,7 +100,7 @@
 					var openwn=plus.webview.create('addr-info.html','addr-info',{scrollIndicator:'none',scalable:false});
 					openwn.addEventListener("loaded",function(){
 						openwn.show("slide-in-right",150);
-						openwn.evalJS('ADDRINFO.init('+JSON.stringify(data)+')')
+						openwn.evalJS('addrInfoPageInit('+JSON.stringify(data)+')')
 					})
 					
 					ADDR.hasOpen = true;

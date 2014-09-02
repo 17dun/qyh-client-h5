@@ -6,6 +6,8 @@
 		<meta name="HandheldFriendly" content="true"/>
 		<meta name="MobileOptimized" content="320"/>
 		<title>Hello H5+</title>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/addr-info.css"/>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
@@ -17,7 +19,8 @@
 				
 				this.bindEvent();
 				this.renderHead(data);
-				setTimeout(function(){ADDRINFO.getData(data);},100)
+				setTimeout(function(){ADDRINFO.getData(data);},100);
+				setTimeout(function(){ADDRINFO.getCommentData(data);},100);
 			},
 			renderHead : function(data){
 				var htmlStr = template('infoHead',data);
@@ -26,7 +29,6 @@
 			
 			getData : function(data){
 				var id  = data.id;
-			
 				var ajax = new plus.net.XMLHttpRequest();
 				ajax.onreadystatechange = function () {
 					var placeinfo = ADDRINFO;
@@ -35,16 +37,36 @@
 						placeinfo.render(JSON.parse(ajax.responseText));
 					}
 				}
-				console.log(CONF.apiServer+'/?method=getPlaceInfo&id='+id);
+				
 				ajax.open("GET",CONF.apiServer+'/?method=getPlaceInfo&id='+id);
 				
 				ajax.send();
 			},
-			
 			render : function(data){
 				var htmlStr = template('placeInfoTpl',data[0]);
 				$('.info').html(htmlStr);
 				$('.info').animate({opacity: 1},100,'ease-in')
+			},
+			getCommentData : function(data){
+				var id  = data.id;
+				var ajax = new plus.net.XMLHttpRequest();
+				ajax.onreadystatechange = function () {
+					if(ajax.readyState==4&&ajax.status == 200){
+						ADDRINFO.renderComments(JSON.parse(ajax.responseText));
+					}
+				}
+				
+				ajax.open("GET",CONF.apiServer+'/?method=getNewOneAddrCommentById&id='+id);
+				
+				ajax.send();
+			},
+			renderComments : function(data){
+				if(data[0].name!=null){
+					data[0].time = 
+					var htmlStr = template('commentsTpl',data[0]);
+					$('.commentsInfo').html(htmlStr);
+					$('.commentsInfo').animate({opacity: 1},100,'ease-in');
+				}
 			},
 			
 			bindEvent : function(){
@@ -83,7 +105,7 @@
 					var openwn=plus.webview.create('addr-comment.html','addr-comment',{scrollIndicator:'none',scalable:false});
 					openwn.addEventListener("loaded",function(){
 						openwn.show("slide-in-bottom",300);
-						openwn.evalJS('ADDRComment.init('+JSON.stringify(data)+')')
+						openwn.evalJS('commentPageInit('+JSON.stringify(data)+')')
 					})
 					
 					ADDRINFO.hasOpen = true;
@@ -100,7 +122,7 @@
 			
 		}
 		
-		function pageInit(data){
+		function addrInfoPageInit(data){
 			$(function(){
 			FastClick.attach(document.body);
 			if(window.plus){
@@ -114,73 +136,6 @@
 		}
 		
 		</script>
-		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
-		<style type="text/css">
-		body{font-family:"微软雅黑";}
-li {
-	padding:0.5em;
-	border-bottom:1px solid #eaeaea;
-}
-li:active {
-	background:#f4f4f4;
-}
-
-header{
-	background: #028ce6;
-	color: #FFFFFF;
-	height: 45px;
-	line-height: 45px;
-	box-shadow:none;
-}
-
-.item {
-	display:block;
-	background:no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HSzuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCrroWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAABFcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBboK1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==);
-	background-size:12px 22px;
-	-ms-touch-action:auto;
-}
-.chs {
-	font-size:0.8em;
-	color:#838383;
-}
-
-#list{
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-.item-col{
-	float:left;
-}
-.clear{clear: both;}
-
-.info-title{background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
-.info-content{font-size:1em;min-height: 60px;}
-.info-head{margin-top:45px;padding:10px;height:90px;color:#fff;background:#37454e;}
-.info-head img{width:80px;height:80px;}
-.info-head .info-item{float: left;}
-.info-text{margin:0 10px;}
-.info-foot{width:100%;min-height: 45px;margin:0;padding:0;width:100%;border-radius:0;position: fixed;bottom: 0;display: flex;display:-webkit-flex;flex-flow: row;-webkit-flex-flow: row;}
-.info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;height:45px;line-height: 45px;text-decoration: none;}
-.add{width:50%;}
-.send{width:50%;margin-left:-1px;border-left:1px solid #fff;}
-.name{}
-.item-title{color:#202020;}
-.placeinfo{display: inline-block;width: 250px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-@media screen and (max-device-width: 1200px) { 
-	.info-title{height:40px;line-height:40px;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
-	.info-body .info-item{height:40px;line-height:40px;border-bottom: 1px solid #eee;padding:10px;}
-	.info-foot a{height: 50px;line-height: 50px;}
-}
-
-@media screen and (max-device-width: 970px) { 
-	.info-title{height:2em;line-height:2em;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
-	.info-body .info-item{height:2em;line-height:em;border-bottom: 1px solid #eee;padding:10px;}
-}
-
-.arrow-right .info-body .info-text{float:right}
-
-		</style>
 	</head>
 	<body>
 		<header>
@@ -193,8 +148,9 @@ header{
 			
 		</div>
 		<div class="info">
-		<img width="60px" height="50px;" style="position: fixed;margin-top:-25px;margin-left: -30px;; top:50%;left:50%" src="img/u.gif"/>
+		加载中...
 		</div>
+		<div class="commentsInfo">加载中...</div>
 		<div class="info-content info-foot">
 			<a class="add" href="javascript:;">我要评价</a><a class="send" href="javascript:;">纠错</a></div>
 	</div>
@@ -210,35 +166,38 @@ header{
 					<span class="placeinfo">{{tel}}</span>
 					<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;"/>
 				</div>
-			<div class="info-title">评价</div>
-			<div class="info-item" style="margin: 0px 5px;">
-				<div class="item-title" style="font-weight: bold;margin:5px 0px;;">
-				  <span>用户名</span>
+		</div>
+	</script>
+	<script id="commentsTpl" type="text/html">
+		<div class="info-title">评价</div>
+		<div class="info-item" style="margin: 0px 5px;">
+			<div class="info-row item-title" style="font-weight: bold;margin:5px 0px;;">
+			  <span>{{name}}</span>
+			</div>
+			<div class="info-row">
+			  <img src="img/star{{start}}0.png" width="77px" height="14"/>
+			  <span class="span-right">{{time}}</span>
+			</div>
+			
+			<div class="info-row">
+				<div style="width: 80%;float: left;margin: 2px 0;">
+				<span>{{comment}}</span>  
 				</div>
-				<div >
-				  <img src="img/star20.png"/>
-				</div>
-				<div>
-					<div style="width: 80%;float: left;">
-					<span>很好很好很好很好很好很好很好很好很很好很好很好很好很很好很好很好很好很很好很好很好很好很很好很好很好很好很好很好</span>  
-					</div>
-					<div class="" style="width:20%;float: left;">
-						<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;"/>
-					</div>
+				<div class="" style="width:20%;float: left;margin: 2px 0;">
+					<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;"/>
 				</div>
 			</div>
 		</div>
-		</script>
-		
-		<script type="text/html" id="infoHead">
-		  <div class="info-item" id="addrHead" data-id="{{id}}" data-name="{{name}}">
-		  	<img  width="60em" height="60em" src="img/no_picture.png"/></div>
-			<div class="info-item" style="padding-top: 5px;">
-				<span class="info-text " style="display: inline-block; width: 200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{name}}</span>
-				<div style="height: 8px;"></div>
-				
-			</div>
-		</script>
+	</script>
+	<script type="text/html" id="infoHead">
+	  <div class="info-item" id="addrHead" data-id="{{id}}" data-name="{{name}}">
+	  	<img  width="60em" height="60em" src="img/no_picture.png"/></div>
+		<div class="info-item" style="padding-top: 5px;">
+			<span class="info-text " style="display: inline-block; width: 200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{name}}</span>
+			<div style="height: 8px;"></div>
+			
+		</div>
+	</script>
 		
 	</body>
 </html>
