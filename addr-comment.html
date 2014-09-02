@@ -12,6 +12,7 @@
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
+		 
 		var commentArr =new Array( '很差','一般','好','很好','非常好')
 		var ADDRComment = {
 			init:function(data){
@@ -20,8 +21,7 @@
 			},
 			renderHead : function(data){
 				$('.comment-head').html(data.name);
-				$('#comment-detail').data('id')=data.id;
-				$('#comment-detail').data('name')=data.name;
+				$('#addr_id').val(data.id)
 			},
 			bindEvent : function(){
 				window.back=function(){
@@ -38,7 +38,7 @@
 					back();
 				},false);
 				$(".submit-comment").on("click",function(){
-					alert("test");	
+					ADDRComment.setData();
 				});
 				$(".comment-star").on('click',function(e){
 					var index =$(e.target).val();
@@ -51,20 +51,27 @@
 					$('#star').val(index);
 				});
 			},
-			setData : function(data){
-				var id  = data.id,
+			setData : function(){
+				var id =$('#addr_id').val(),
 					commentText=$('#comment-text').val(),
-					start=$('#star').val();
-				 	date = new Date('yyyy-MM-dd HH:mm:ss');
-					
-				var ajax = new plus.net.XMLHttpRequest();
+					start=$('#star').val(),
+				 	date = new Date(),
+				 	url='http://182.254.209.32:8888/?method=setAddrComment&addr_id=3&comment=郁闷&start=1&time=2014-09-01 12:12:12',//CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start,
+				 	ajax = new plus.net.XMLHttpRequest();
+				 	
+				alert(url);
 				ajax.onreadystatechange = function () {
+					alert(ajax.readyState+":"+ajax.status);
 					if(ajax.readyState==4&&ajax.status == 200){
-						alert('ok');
-						//placeinfo.render(JSON.parse(ajax.responseText));
+						/*if(plus.os.name=="iOS"){
+							alert('添加评论成功');
+						}else{
+							plus.nativeUI.toast('添加评论成功');
+						}*/
+						placeinfo.render(JSON.parse(ajax.responseText));
 					}
 				}
-				ajax.open("GET",CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start);
+				ajax.open("GET",url);
 				
 				ajax.send();
 			}
@@ -72,7 +79,9 @@
 		function plusReady(){
 			
 		}
-		
+		function dateFormat(d){
+			return (d.getFullYear()+"-"+ultZeroize(d.getMonth()+1)+"-"+ultZeroize(d.getDate())+" "+ultZeroize(d.getHours())+":"+ultZeroize(d.getMinutes())+":"+ultZeroize(d.getSeconds()));
+		};
 		function pageInit(data){
 			$(function(){
 			FastClick.attach(document.body);
@@ -106,7 +115,7 @@
 			<a class="add" id="comment" style="margin: 0 auto;margin-bottom: 10px;margin-left: 25%;border-radius: 5px;" href="javascript:;">提交评价</a>	
 		</div>
 	</div>
-	<div class="comment-detail">
+	<div class="comment-detail" data-id="" data-name="">
 	        <div class="comment-row">
 	            <div class="comment-content">
 	                <div class="star-wrapper">
@@ -120,11 +129,12 @@
 	                </div>
 	                <span class="star-tip">点击星星打分</span>
 	                <input type="hidden" id="star" value="1"/>
+	                <input type="hidden" id="addr_id" value=""/>
 	            </div>
 	        </div>
 	        <div class="comment-row">
 	            <div class="comment-content vt-top">
-	                <textarea id="comment-text" style="width: 90%; height: 100px;" placeholder="场地怎样？来点评一下吧！"></textarea>
+	                <textarea id="comment-text" style="width: 90%; height: 100px;" placeholder="场地怎样？来点评一下吧！">郁闷</textarea>
 	                <span class="comment-text-notice"></span>
 	            </div>
 	        </div>
