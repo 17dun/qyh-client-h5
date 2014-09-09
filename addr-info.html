@@ -10,13 +10,13 @@
 		<link rel="stylesheet" type="text/css" href="css/addr-info.css"/>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/touch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
 		var ADDRINFO = {
 			init:function(data){
-				
 				this.bindEvent();
 				this.renderHead(data);
 				setTimeout(function(){ADDRINFO.getData(data);},100);
@@ -51,12 +51,12 @@
 			getCommentData : function(data){
 				var id  = data.id;
 				var ajax = new plus.net.XMLHttpRequest();
+				
 				ajax.onreadystatechange = function () {
 					if(ajax.readyState==4&&ajax.status == 200){
 						ADDRINFO.renderComments(JSON.parse(ajax.responseText));
 					}
 				}
-				
 				ajax.open("GET",CONF.apiServer+'/?method=getNewOneAddrCommentById&id='+id);
 				
 				ajax.send();
@@ -80,6 +80,10 @@
 						window.close();
 					}
 				};
+				$(document.body).on('swipeRight',function(){
+					plus.webview.currentWebview().close()
+				})
+				
 				plus.key.addEventListener("backbutton",function(){
 					back();
 				},false);
@@ -131,7 +135,7 @@
 				if(window.plus){
 					var openwn=plus.webview.create('addr-comment-list.html','addr-comment-list',{scrollIndicator:'none',scalable:false});
 					openwn.addEventListener("loaded",function(){
-						openwn.show("slide-in-right",300);
+						openwn.show("slide-in-right",150);
 						openwn.evalJS('addrCommentListPageInit('+JSON.stringify(data)+')')
 					})
 					

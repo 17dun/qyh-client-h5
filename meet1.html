@@ -12,27 +12,23 @@
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
+		
 		var USER = {
 			ws:null,
 			list:null,
 			hasOpen:false,
-			myscroll:null,
-			
 			init : function(){
 				plus.navigator.closeSplashscreen();
 				this.ws=plus.webview.currentWebview();
 				this.bindEvent();
 				this.list=$("#list");
-//				if (plus.os.name == "Android") {
-//					this.setFresh();
-//				}
 				this.setFresh();
 				localStorage.clear();
-				var htmlStr = plus.storage.getItem('userList');
+				var htmlStr = plus.storage.getItem('meetList');
 				
 				if(htmlStr){
-					//this.getNewList();
-					this.rendlocal();
+					this.getNewList();
+					//this.rendlocal();
 				}else{
 					this.getNewList();	
 				}
@@ -61,12 +57,10 @@
 			},
 			
 			getNewList:function(){
-				
 					var ajax = new plus.net.XMLHttpRequest();
 					ajax.onreadystatechange = function () {
 						var user = USER;
 						if(ajax.readyState==4&&ajax.status == 200){
-							
 							user.freshList(JSON.parse(ajax.responseText));
 						}
 					}
@@ -75,7 +69,6 @@
 			},
 			
 			freshList:function(data){
-				
 				var data = {
 					list:data,
 					api:1111,
@@ -83,50 +76,13 @@
 				}
 				var htmlStr = template('test',data);
 				this.list.prepend(htmlStr);
-				
-				plus.storage.setItem('userList',htmlStr);
-//				if (plus.os.name != "Android") {
-//					this.myscroll.refresh();
-//				}else{
-//					this.ws.endPullToRefresh();
-//				}
-this.ws.endPullToRefresh();
-				
+				this.ws.endPullToRefresh();
+				plus.storage.setItem('meetList',htmlStr)
 			},
 			
 			rendlocal:function(){
-				var htmlStr = plus.storage.getItem('userList');
+				var htmlStr = plus.storage.getItem('meetList');
 				this.list.prepend(htmlStr);
-//				if (plus.os.name != "Android") {
-//					this.myscroll=new iScroll("wrap",{bounce:true,hideScrollbar:false,topOffset:50,
-//					useTransition: true,
-//					onRefresh:function(){
-//						$('.pullDownLabel').html('下拉获取最新数据...');
-//						
-//					},
-//					onScrollMove:function(){
-//						if(this.y>5&&!$('#pullDown').hasClass('flip')){
-//							$('.pullDownLabel').html('松开刷新');
-//							$('#pullDown').addClass('flip');
-//							this.minScrollY = 0;
-//						}else if(this.y<5&&$('#pullDown').hasClass('flip')){
-//							$('#pullDown').removeClass('flip');
-//							$('.pullDownLabel').html('下拉获取最新数据');
-//							this.minScrollY = -50;
-//						}
-//					},
-//					onScrollEnd:function(){
-//						if($('#pullDown').hasClass('flip')){
-//							$('#pullDown').attr('class','loading');
-//							$('.pullDownLabel').html('加载中');
-//							USER.getNewList();
-//						}
-//					}
-//					});
-//				}else{
-//					this.ws.endPullToRefresh();
-//				}
-this.ws.endPullToRefresh();
 			},
 			
 			
@@ -163,9 +119,6 @@ this.ws.endPullToRefresh();
 
 		$(function(){
 			FastClick.attach(document.body);
-			
-			
-			
 			document.addEventListener("touchstart",function(){return false;},false);//取消浏览器的所有事件，使得active的样式在手机上正常生效
 			document.oncontextmenu=function(){
 				return false;
@@ -207,11 +160,13 @@ li:active {
 	padding:0;
 }
 
+
+
+
 .item-col{
 	float:left;
 	
 }
-.name{color:#202020;}
 .clear{clear: both;}
 .item-col:last-child{margin-bottom: 0;}
 .item-row div{float:left}
@@ -243,74 +198,70 @@ li:active {
 .clearfix {
   zoom: 1;
 }
-
 		</style>
 	</head>
 	<body>
-		<div id="wrap">
-			<ul id="list">
-				</ul>
-			<!--<div id="scroller">
-				<!--<div id="pullDown">
-					<span class="pullDownIcon"></span><span class="pullDownLabel">下拉获取最新数据...</span>
-				</div>-->
-				
-			</div>
-		</div>
+		<ul id="list">
+			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
+				<div class="item clearfix">
+					<img style="border-radius:10px;width:40px;height: 40px;"  class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
+					<div class="item-col"style="margin-left:0.5em;">
+						<div class="item-row clearfix">
+							<div class="name"><span class="grey-text"><a href="#" style="color:#028CE6">{{$value.name}}</a>发起约球</span></div>
+						</div>
+						<div class="item-row" style="width:100%;border:1px solid #ccc;padding:5px;">
+							<table>
+								<tr><td colspan="2">回龙观的朋友一起来happy啊</td></tr>
+								<tr><td>地点：</td><td>回龙观体育公园</td></tr>
+								<tr><td>时间：</td><td>2014-8-30 13:00</td></tr>
+								<tr><td>性别要求：</td><td>男女不限</td></tr>
+								<tr><td>付费方式：</td><td>场地免费</td></tr>
+							</table>
+						</div>
+							
+						<div class="item-row">
+							<span class="grey-text">	
+								应约人数：2/4
+							</span>
+							<span class="grey-text">
+								<a href="#" style="margin-left:10px;color: #028CE6;">小泽</a>
+								<a href="#" style="margin-left:10px;color: #028CE6;">肚兰</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</li> 
+			
+		</ul>
 		<script id="test" type="text/html">
 			
 			 {{each list}}
 			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
 				<div class="item clearfix">
-					<img style="border-radius:10px"  class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
+					<img style="border-radius:10px;width:40px;height: 40px;"  class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
 					<div class="item-col"style="margin-left:0.5em;">
 						<div class="item-row clearfix">
-							<div class="name">{{$value.name}}</div>
-							
+							<div class="name"><span class="grey-text"><a href="#" style="color:#028CE6">{{$value.name}}</a>发起约球</span></div>
 						</div>
-						<div class="item-row">
-							<span class="grey-text">
-								{{if $value.sex == 0}}
-									女
-								{{else}}
-									男
-								{{/if}}
-							</span>
-							<span class="grey-text">{{$value.age}}岁</span>
-							<span class="grey-text">
-								球龄
-								{{if $value.bollage==0}}
-									半年以下
-								{{else}}
-									半年到一年
-								{{/if}}
-							</span>
-							
+						<div class="item-row" style="width:100%;border:1px solid #ccc;padding:5px;">
+							<table>
+								<tr><td colspan="2">回龙观的朋友一起来happy啊</td></tr>
+								<tr><td>地点：</td><td>回龙观体育公园</td></tr>
+								<tr><td>时间：</td><td>2014-8-30 13:00</td></tr>
+								<tr><td>性别要求：</td><td>男女不限</td></tr>
+								<tr><td>付费方式：</td><td>场地免费</td></tr>
+							</table>
 						</div>
+							
 						<div class="item-row">
 							<span class="grey-text">	
-								擅长
-								{{if $value.style == 0}}
-									弧圈
-								{{else if $value.style == 1}}
-									削球
-								{{else if $value.style==2}}
-									推挡
-								{{/if}}
+								应约人数：2/4
 							</span>
-							<span class="grey-text">惯用
-								{{if $value.paixing == 1}}
-									直拍
-								{{else}}
-									横拍
-								{{/if}}
+							<span class="grey-text">
+								<a href="#" style="margin-left:10px;color: #028CE6;">小泽</a>
+								<a href="#" style="margin-left:10px;color: #028CE6;">肚兰</a>
 							</span>
 						</div>
-					</div>
-					<div class="item-col" style="float:right">
-						<span style="margin-right: 20px;" class="grey-text">
-								100m
-							</span>
 					</div>
 				</div>
 			</li> 

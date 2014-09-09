@@ -62,7 +62,8 @@ footer .addr{background: url(img/addr_hide.png) no-repeat 50% 3px;background-siz
 footer .meet{background: url(img/meet_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
 footer .msg{background: url(img/msg_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
 footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
-</style>
+#tools{position: fixed;top:60px;z-index: 9999;}
+    </style>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		
@@ -96,14 +97,22 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 			list.addEventListener("loaded",function(){//叶面加载完成后才显示
 				FastClick.attach(document.body);
 				ws.append(list);
+				$('.position').on('click',function(){
+					plus.webview.getWebviewById('meet').evalJS("ADDR.renderMap()")
+				})
 				$('.nav-item').on('click',function(){
-					$('.nav-item').removeClass('active');
+					$('.nav-item').removeClass('active');	
 					$(this).addClass('active');
 					var item = $(this).attr('data-id');
 					changeTitle(item);
 					if(item!=currentView){
 						if(!plus.webview.getWebviewById(item)){
-							var myView = plus.webview.create(item+'.html',item,{top:'45px',bottom:'56px',bounce:'vertical'});
+							if(item=='meet'){
+								var myView = plus.webview.create(item+'.html',item,{top:'100px',bottom:'56px'});	
+							}else{
+								var myView = plus.webview.create(item+'.html',item,{top:'45px',bottom:'56px',bounce:'vertical'});
+							}
+							
 							ws.append(myView);
 						}else{
 							var myView = plus.webview.getWebviewById(item);
@@ -162,12 +171,16 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 	<header>
 		<div class="nvtt" style="width: 100%;">找球友</div>
 	</header>
+	<div id="tools">
+			<a href="#" class="position">五公里内</a>
+			<a href="#" class="position">两公里内</a>
+			<a href="#" class="position">一公里内</a>
+	</div>
 	
 	<footer>
 		<a data-id="user" class="nav-item user active">球友</a>
 		<a data-id="addr" class="nav-item addr">场地</a>
 		<a data-id="meet" class="nav-item meet">约球</a>
-		<!--<a data-id="msg" class="nav-item msg">信息</a>-->
 		<a data-id="setting" class="nav-item setting">设置</a>
 	</footer>
 </body>

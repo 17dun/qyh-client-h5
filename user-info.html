@@ -8,12 +8,16 @@
 		<title>Hello H5+</title>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/touch.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/fx.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
 		<script type="text/javascript" charset="utf-8">
 		var USERINFO = {
 			init:function(data){
+				
+				
+				
 				this.bindEvent();
 				this.renderHead(data);
 				setTimeout(function(){USERINFO.getData(data);},100)
@@ -54,6 +58,9 @@
 						window.close();
 					}
 				};
+				$(document.body).on('swipeRight',function(){
+					plus.webview.currentWebview().close()
+				})
 				plus.key.addEventListener("backbutton",function(){
 					back();
 				},false);
