@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		 <meta name="viewport" content="width=device-width">
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/fastclick.js" ></script>
+		<script src="js/iscroll.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+		var ADDRCOMMENTLIST = {
+			ws:null,
+			list:null,
+			hasOpen:false,
+			init : function(data){
+				plus.navigator.closeSplashscreen();
+				this.ws=plus.webview.currentWebview();
+				this.bindEvent();
+				this.list=$("#list");
+				this.setFresh();
+				localStorage.clear();
+				var htmlStr = plus.storage.getItem('commentList');
+				this.getNewList(data);
+				/*if(htmlStr){
+					this.rendlocal();
+				}else{
+					this.getNewList(data);	
+				}*/
+			},
+			
+			bindEvent:function(){
+				window.back=function(){
+					ws=plus.webview.currentWebview();
+					if(window.plus){
+						ws.close();
+					}else if(history.length>1){
+						history.back();
+					}else{
+						window.close();
+					}
+				};
+				
+				$('.addComment').on('click',function(){
+					ADDRCOMMENTLIST.showAddComment($('#addr_info'));
+				});
+				$('.info-select').on('click',function(){
+					$('#dialog-select').hide();
+				});
+				
+			},
+			showAddComment :function($item){
+				var data = {
+					id:$item.data('id'),
+					name:$item.data('name')
+				}
+				if(this.hasOpen){
+					return;
+				}
+				if(window.plus){
+					var openwn=plus.webview.create('addr-comment.html','addr-comment',{scrollIndicator:'none',scalable:false});
+					openwn.addEventListener("loaded",function(){
+						openwn.show("slide-in-right",300);
+						openwn.evalJS('commentPageInit('+JSON.stringify(data)+')')
+					})
+					
+					ADDRINFO.hasOpen = true;
+					openwn.addEventListener("close",function(){//页面关闭后可再次打开
+						ADDRINFO.hasOpen=false;
+					},false);
+				}else{
+					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+					rootView.open('addr-comment.html');
+				}
+			},
+			setFresh:function(){
+				this.ws.setPullToRefresh({support:true,
+					height:"45px",
+					range:"200px",
+					contentdown:{
+						caption:"下拉可以刷新"
+					},
+					contentover:{
+						caption:"释放立即刷新"
+					},
+					contentrefresh:{
+						caption:"正在刷新..."
+					}
+				},this.getNewList);
+			},
+			
+			getNewList:function(data){
+				var ajax = new plus.net.XMLHttpRequest();
+				ajax.onreadystatechange = function () {
+					if(ajax.readyState==4&&ajax.status == 200){
+						ADDRCOMMENTLIST.freshList(JSON.parse(ajax.responseText),data);
+					}
+				}
+				ajax.open("GET",CONF.apiServer+ '/?method=getAddrCommentsById&id='+data.id);
+				ajax.send();
+			},
+			
+			freshList:function(list,data){
+				var data = {
+					list:list,
+					staticServer : CONF.staticServer,
+					id:data.id,
+					name:data.name
+				}
+				$(".comment-head").html(data.name);
+				var htmlStr = template('commentListTpl',data);
+				this.list.prepend(htmlStr);
+				this.ws.endPullToRefresh();
+				plus.storage.setItem('commentList',htmlStr);
+			},
+			
+			rendlocal:function(){
+				var addrName = plus.storage.getItem('addrName');
+				$(".comment-head").html(addrName);
+				var htmlStr = plus.storage.getItem('commentList');
+				this.list.prepend(htmlStr);
+			}
+		}
+
+		function addrCommentListPageInit(data){
+			$(function(){
+			FastClick.attach(document.body);
+			document.addEventListener("touchstart",function(){return false;},false);//取消浏览器的所有事件，使得active的样式在手机上正常生效
+			document.oncontextmenu=function(){
+				return false;
+			};
+			if(window.plus){
+				ADDRCOMMENTLIST.init(data);
+			}else{
+				document.addEventListener("plusready",function(){ADDRCOMMENTLIST.init(data)},false);
+			}
+		})	
+		}
+
+</script>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+		<style type="text/css">
+li {
+	padding:0.5em;
+	padding-bottom: 0;
+	border-bottom:1px solid #eaeaea;
+	list-style: none;
+}
+li:active,.info-select:active {
+	background:#E0E0E0;
+}
+.data-none{margin-top: 90px;}
+.item{padding-bottom: 2px;}
+.item-row{margin: 2px 0;}
+.grey-text {
+	font-size:0.8em;
+	color:#838383;
+}
+
+#list{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+  clear: both;
+}
+header{
+	background: #028ce6;
+	color: #FFFFFF;
+	height: 45px;
+	line-height: 45px;
+	box-shadow:none;
+}
+.info-select{
+	background-color: #fff;
+	width:100%;
+	min-height: 40px;
+	width:100%;
+	border-radius:0;
+	position: fixed;
+	top: 47px;
+	display: flex;
+	display:-webkit-flex;flex-flow: row;
+	-webkit-flex-flow: row;
+	border-bottom:1px solid #eaeaea;
+	}
+
+.info-content{font-size:1em;min-height: 40px;}
+.send{margin-left:-1px;border-left:1px solid #fff;}
+.select-score{float: left;text-align: center;width: 100%;height: 40px;line-height: 40px;}
+	.middle{vertical-align: middle;}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="nvbt iback-back" onclick="back();"></div>
+			<div class="nvtt comment-head"></div>
+			<div class="nvbt iback-btn-edit addComment"></div>
+		</header>
+		<div class="data-none"></div>
+		<div class="info-content info-select">
+			<div class="select-score">
+			<span id="star-text">全部星级</span><img src="img/arrow_down.png" class="middle" width="20px" height="20px"/>
+			</div> 
+		</div>
+		<div id="dialog-select" style="position: absolute;width: 100%;background-color: #fff;border: 1px solid #eaeaea;margin-top: -2;">
+			<ul class="" style="">
+			  <li>全部星级</li>
+			  <li>只显示五星评价</li>
+			  <li>只显示五星评价</li>
+			  <li>只显示五星评价</li>
+			  <li>只显示五星评价</li>
+			  <li>只显示五星评价</li>
+			</ul>
+		</div>
+		<ul id="list">
+		</ul>
+		<script id="commentListTpl" type="text/html">
+			<div id="addr_info" data-id="{{id}}" data-name="{{name}}"></div>
+			 {{each list}}
+			<li class="data-item" >
+					<div class="item">
+						<div class="item-row">
+							<div style="float:left" class="name">{{$value.name}}</div>
+							<div  style="float:right">
+								<span style="margin-right: 20px;" class="grey-text">
+									{{$value.time}}
+								</span>
+							</div>
+						</div>
+						<div class="clearfix item-row" >
+							<img src="img/star{{$value.start}}0.png" width="77px" height="14"/>
+						</div>
+						<div  class="item-row">
+							<span class="grey-text">	
+								{{$value.comment}}
+							</span>
+						</div>
+					</div>
+			</li> 
+			{{/each}}
+		</script>
+	</body>
+</html>

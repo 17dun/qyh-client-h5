@@ -23,6 +23,7 @@
 				setTimeout(function(){ADDRINFO.getCommentData(data);},100);
 			},
 			renderHead : function(data){
+				plus.storage.setItem('addrName',data.name);
 				var htmlStr = template('infoHead',data);
 				$('.info-head').html(htmlStr);
 			},
@@ -62,7 +63,6 @@
 			},
 			renderComments : function(data){
 				if(data[0].name!=null){
-					data[0].time = 
 					var htmlStr = template('commentsTpl',data[0]);
 					$('.commentsInfo').html(htmlStr);
 					$('.commentsInfo').animate({opacity: 1},100,'ease-in');
@@ -83,9 +83,12 @@
 				plus.key.addEventListener("backbutton",function(){
 					back();
 				},false);
-				$('.add').live('click',function(){
+				$('.add').on('click',function(){
 					ADDRINFO.showInfo($('#addrHead'));
-				})
+				});
+				$('.commentsInfo').on('click',function(){
+					ADDRINFO.showCommentList($('#addrHead'));
+				});
 			},
 			
 			add : function(){
@@ -115,6 +118,30 @@
 				}else{
 					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
 					rootView.open('addr-comment.html');
+				}
+			},
+			showCommentList:function($item){
+				var data = {
+					id:$item.data('id'),
+					name:$item.data('name')
+				}
+				if(this.hasOpen){
+					return;
+				}
+				if(window.plus){
+					var openwn=plus.webview.create('addr-comment-list.html','addr-comment-list',{scrollIndicator:'none',scalable:false});
+					openwn.addEventListener("loaded",function(){
+						openwn.show("slide-in-right",300);
+						openwn.evalJS('addrCommentListPageInit('+JSON.stringify(data)+')')
+					})
+					
+					ADDRINFO.hasOpen = true;
+					openwn.addEventListener("close",function(){//页面关闭后可再次打开
+						ADDRINFO.hasOpen=false;
+					},false);
+				}else{
+					var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+					rootView.open('addr-comment-list.html');
 				}
 			}
 		}
@@ -150,9 +177,10 @@
 		<div class="info">
 		加载中...
 		</div>
-		<div class="commentsInfo">加载中...</div>
+		<div class="commentsInfo comment-info">加载中...</div>
 		<div class="info-content info-foot">
-			<a class="add" href="javascript:;">我要评价</a><a class="send" href="javascript:;">纠错</a></div>
+			<a class="add" href="javascript:;">我要评价</a><a class="send" href="javascript:;">纠错</a>
+		</div>
 	</div>
 	<script id="placeInfoTpl" type="text/html">
 		<div class="info-content info-body">
@@ -170,7 +198,7 @@
 	</script>
 	<script id="commentsTpl" type="text/html">
 		<div class="info-title">评价</div>
-		<div class="info-item" style="margin: 0px 5px;">
+		<div class="info-item" style="margin: 0px 5px;height: 100px;">
 			<div class="info-row item-title" style="font-weight: bold;margin:5px 0px;;">
 			  <span>{{name}}</span>
 			</div>

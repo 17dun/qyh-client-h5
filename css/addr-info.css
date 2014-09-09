@@ -1,10 +1,11 @@
-body{font-family:"微软雅黑";}
+body{font-family:"微软雅黑";background:#f6f6f6;}
+
 li {
 	padding:0.5em;
 	border-bottom:1px solid #eaeaea;
 }
-li:active {
-	background:#f4f4f4;
+li:active,.comment-info:active {
+	background:#E0E0E0;
 }
 
 header{
@@ -14,6 +15,7 @@ header{
 	line-height: 45px;
 	box-shadow:none;
 }
+.info,.comment-info{background:#ffffff;}
 .span-right{display: inline-block;float: right;margin-right: 10px;}
 .item {
 	display:block;
@@ -36,7 +38,7 @@ header{
 }
 .clear{clear: both;}
 
-.info-title{background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
+.info-title{background:#f6f6f6;color:#222;border: 1px solid #eee;}
 .info-content{font-size:1em;min-height: 60px;}
 .info-head{margin-top:45px;padding:10px;height:90px;color:#fff;background:#37454e;}
 .info-head img{width:80px;height:80px;}
@@ -44,9 +46,8 @@ header{
 .info-text{margin:0 10px;}
 .info-foot{width:100%;min-height: 45px;margin:0;padding:0;width:100%;border-radius:0;position: fixed;bottom: 0;display: flex;display:-webkit-flex;flex-flow: row;-webkit-flex-flow: row;}
 .info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;height:45px;line-height: 45px;text-decoration: none;}
-.add{width:50%;}
-.send{width:50%;margin-left:-1px;border-left:1px solid #fff;}
-.name{}
+.add,.send{width:50%;}
+.send{margin-left:-1px;border-left:1px solid #fff;}
 .item-title{color:#202020;}
 .placeinfo{display: inline-block;width: 250px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 @media screen and (max-device-width: 1200px) { 

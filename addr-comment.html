@@ -24,7 +24,7 @@
 				$('.comment-head').html(data.name);
 				$('#addr_id').val(data.id)
 			},
-			bindEvent : function(){
+			bindEvent : function(data){
 				window.back=function(){
 					ws=plus.webview.currentWebview();
 					if(window.plus){
@@ -57,9 +57,8 @@
 					commentText=$('#comment-text').val(),
 					start=$('#star').val(),
 				 	date = new Date().getTime(),
-				 	url=encodeURI(CONF.apiServer+'/?method=setAddrComment&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start),
+				 	url=encodeURI(CONF.apiServer+'/?method=setAddrComment&user_id=2&addr_id='+id+"&comment="+commentText+"&time="+date+"&start="+start),
 				 	ajax = new plus.net.XMLHttpRequest();
-				 	
 					ajax.onreadystatechange = function () {
 					if(ajax.readyState==4&&ajax.status == 200){
 						if(plus.os.name=="iOS"){
