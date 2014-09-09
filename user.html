@@ -16,11 +16,16 @@
 			ws:null,
 			list:null,
 			hasOpen:false,
+			myscroll:null,
+			
 			init : function(){
 				plus.navigator.closeSplashscreen();
 				this.ws=plus.webview.currentWebview();
 				this.bindEvent();
 				this.list=$("#list");
+				if (plus.os.name == "Android") {
+					this.setFresh();
+				}
 				this.setFresh();
 				localStorage.clear();
 				var htmlStr = plus.storage.getItem('userList');
@@ -56,10 +61,12 @@
 			},
 			
 			getNewList:function(){
+				
 					var ajax = new plus.net.XMLHttpRequest();
 					ajax.onreadystatechange = function () {
 						var user = USER;
 						if(ajax.readyState==4&&ajax.status == 200){
+							
 							user.freshList(JSON.parse(ajax.responseText));
 						}
 					}
@@ -68,6 +75,7 @@
 			},
 			
 			freshList:function(data){
+				
 				var data = {
 					list:data,
 					api:1111,
@@ -75,13 +83,48 @@
 				}
 				var htmlStr = template('test',data);
 				this.list.prepend(htmlStr);
-				this.ws.endPullToRefresh();
-				plus.storage.setItem('userList',htmlStr)
+				
+				plus.storage.setItem('userList',htmlStr);
+				if (plus.os.name != "Android") {
+					this.myscroll.refresh();
+				}else{
+					this.ws.endPullToRefresh();
+				}
+				
 			},
 			
 			rendlocal:function(){
 				var htmlStr = plus.storage.getItem('userList');
 				this.list.prepend(htmlStr);
+				if (plus.os.name != "Android") {
+					this.myscroll=new iScroll("wrap",{bounce:true,hideScrollbar:false,topOffset:50,
+					useTransition: true,
+					onRefresh:function(){
+						$('.pullDownLabel').html('下拉获取最新数据...');
+						
+					},
+					onScrollMove:function(){
+						if(this.y>5&&!$('#pullDown').hasClass('flip')){
+							$('.pullDownLabel').html('松开刷新');
+							$('#pullDown').addClass('flip');
+							this.minScrollY = 0;
+						}else if(this.y<5&&$('#pullDown').hasClass('flip')){
+							$('#pullDown').removeClass('flip');
+							$('.pullDownLabel').html('下拉获取最新数据');
+							this.minScrollY = -50;
+						}
+					},
+					onScrollEnd:function(){
+						if($('#pullDown').hasClass('flip')){
+							$('#pullDown').attr('class','loading');
+							$('.pullDownLabel').html('加载中');
+							USER.getNewList();
+						}
+					}
+					});
+				}else{
+					this.ws.endPullToRefresh();
+				}
 			},
 			
 			
@@ -118,6 +161,9 @@
 
 		$(function(){
 			FastClick.attach(document.body);
+			
+			
+			
 			document.addEventListener("touchstart",function(){return false;},false);//取消浏览器的所有事件，使得active的样式在手机上正常生效
 			document.oncontextmenu=function(){
 				return false;
@@ -195,12 +241,87 @@ li:active {
 .clearfix {
   zoom: 1;
 }
+
+
+#wrap{
+	position:absolute; z-index:1;
+	top:0; bottom:0;
+	width:100%;
+	background:#aaa;
+	overflow:auto;
+}
+#list{
+	z-index:2;
+	background: #fff;
+}
+#pullDown, #pullUp {
+	background:#fff;
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+#scroller {
+	position:absolute; z-index:1;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
 		</style>
 	</head>
 	<body>
-		<ul id="list">
-			
-		</ul>
+		<div id="wrap">
+			<div id="scroller">
+				<div id="pullDown">
+					<span class="pullDownIcon"></span><span class="pullDownLabel">下拉获取最新数据...</span>
+				</div>
+				<ul id="list">
+				</ul>
+			</div>
+		</div>
 		<script id="test" type="text/html">
 			
 			 {{each list}}

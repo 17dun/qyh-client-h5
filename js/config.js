@@ -1,4 +1,4 @@
 ﻿var CONF = {
-	apiServer : 'http://182.254.209.32:8888',
-	staticServer : 'http://182.254.209.32:8080'
+	apiServer : 'http://172.22.114.6:888',
+	staticServer : 'http://172.22.114.6:8080'
 }
