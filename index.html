@@ -8,6 +8,7 @@
 	<meta name="MobileOptimized" content="320"/>
 	<title>球友会</title>
 	<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
     <style type="text/css">
 		li {
 			padding:0.8em;
@@ -30,15 +31,15 @@
 		header{
 			background: #028ce6;
 			color: #FFFFFF;
-			height:45px;
-			line-height: 45px;
+			height:35px;
+			line-height: 35px;
 		}
 		
 		footer{
 			
 			color:#9F9F9F;
 			width: 100%;
-height: 54px;
+height: 50px;
 position: fixed;
 bottom: 0;
 left: 0;
@@ -47,7 +48,7 @@ text-align: center;
 box-shadow: 0px 1px 6px #CCC;
 		}
 		
-footer .nav-item{color:#666;float: left;width: 25%;padding-top: 36px;}
+footer .nav-item{color:#666;float: left;width: 25%;padding-top: 30px;}
 
 footer .active{color: #009AFF;}
 
@@ -62,7 +63,7 @@ footer .addr{background: url(img/addr_hide.png) no-repeat 50% 3px;background-siz
 footer .meet{background: url(img/meet_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
 footer .msg{background: url(img/msg_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
 footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;background-size:30px 30px;}
-#tools{position: fixed;top:60px;z-index: 9999;}
+#tools{position: fixed;top:50px;z-index: 9999;opacity: 0.2;}
     </style>
 		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/fastclick.js" ></script>
@@ -86,14 +87,14 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 			plus.navigator.setStatusBarBackground( "#028ce6" );
 			plus.navigator.closeSplashscreen();
 			ws=plus.webview.currentWebview();
-			list=plus.webview.create('user.html','user',{top:'45px',bottom:'56px',bounce:'vertical'});
-			var currentView = 'user';
+			list=plus.webview.create('meet.html','meet',{top:'35px',bottom:'50px'});
+			var currentView = 'meet';
 			// Android处理返回键
-//			plus.key.addEventListener("backbutton",function(){
-//				if(confirm("确认退出？")){
-//					plus.runtime.quit();
-//				}
-//			},false);
+			plus.key.addEventListener("backbutton",function(){
+				if(confirm("确认退出？")){
+					plus.runtime.quit();
+				}
+			},false);
 			list.addEventListener("loaded",function(){//叶面加载完成后才显示
 				FastClick.attach(document.body);
 				ws.append(list);
@@ -101,27 +102,32 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 					plus.webview.getWebviewById('meet').evalJS("ADDR.renderMap()")
 				})
 				$('.nav-item').on('click',function(){
-					$('.nav-item').removeClass('active');	
+					$('.nav-item').removeClass('active');
 					$(this).addClass('active');
 					var item = $(this).attr('data-id');
 					changeTitle(item);
 					if(item!=currentView){
 						if(!plus.webview.getWebviewById(item)){
+						
 							if(item=='meet'){
-								var myView = plus.webview.create(item+'.html',item,{top:'100px',bottom:'56px'});	
+								var myView = plus.webview.create(item+'.html',item,{top:'35px',bottom:'50px'});	
 							}else{
-								var myView = plus.webview.create(item+'.html',item,{top:'45px',bottom:'56px',bounce:'vertical'});
+								var myView = plus.webview.create(item+'.html',item,{top:'35px',bottom:'50px',bounce:'vertical'});
 							}
 							
 							ws.append(myView);
 						}else{
 							var myView = plus.webview.getWebviewById(item);
+							if(item=='meet'){
+								myView.evalJS('ADDR.centerAndZoom()')
+							}
 						}
 						plus.webview.hide(plus.webview.getWebviewById(currentView));
 						myView.show("none")
 						
 						currentView = item;
 					}
+					
 					
 				})
 			},false);
@@ -169,18 +175,13 @@ footer .setting{background: url(img/seeting_hide.png) no-repeat 50% 3px;backgrou
 </head>
 <body>
 	<header>
-		<div class="nvtt" style="width: 100%;">找球友</div>
+		<div class="nvtt" style="width: 100%;">约球</div>
 	</header>
-	<div id="tools">
-			<a href="#" class="position">五公里内</a>
-			<a href="#" class="position">两公里内</a>
-			<a href="#" class="position">一公里内</a>
-	</div>
-	
+
 	<footer>
-		<a data-id="user" class="nav-item user active">球友</a>
+		<a data-id="meet" class="nav-item meet active">约球</a>
+		<a data-id="user" class="nav-item user">球友</a>
 		<a data-id="addr" class="nav-item addr">场地</a>
-		<a data-id="meet" class="nav-item meet">约球</a>
 		<a data-id="setting" class="nav-item setting">设置</a>
 	</footer>
 </body>
