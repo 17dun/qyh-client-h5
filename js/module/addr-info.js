@@ -2,54 +2,29 @@ var ADDRINFO = {
 	init: function(data) {
 		this.bindEvent();
 		this.renderHead(data);
-		setTimeout(function() {
-			ADDRINFO.getData(data);
-		}, 100);
-		setTimeout(function() {
-			ADDRINFO.getCommentData(data);
-		}, 100);
+		this.getData(data);
+		//this.getCommentData(data);
 	},
 	renderHead: function(data) {
-		plus.storage.setItem('addrName', data.name);
 		var htmlStr = template('infoHead', data);
 		$('.info-head').html(htmlStr);
 	},
-
 	getData: function(data) {
 		var id = data.id;
 		var ajax = new plus.net.XMLHttpRequest();
 		ajax.onreadystatechange = function() {
-			var placeinfo = ADDRINFO;
 			if (ajax.readyState == 4 && ajax.status == 200) {
-
-				placeinfo.render(JSON.parse(ajax.responseText));
+				ADDRINFO.renderBody(JSON.parse(ajax.responseText));
 			}
 		}
-
 		ajax.open("GET", CONF.apiServer + '/?method=getPlaceInfo&id=' + id);
-
 		ajax.send();
 	},
-	render: function(data) {
-		var htmlStr = template('placeInfoTpl', data[0]);
-		$('.info').html(htmlStr);
-		$('.info').animate({
-			opacity: 1
-		}, 100, 'ease-in')
+	renderBody: function(data) {
+		var htmlStr = template('placeInfoTpl', data);
+		$('.info-body').html(htmlStr);
 	},
-	getCommentData: function(data) {
-		var id = data.id;
-		var ajax = new plus.net.XMLHttpRequest();
-
-		ajax.onreadystatechange = function() {
-			if (ajax.readyState == 4 && ajax.status == 200) {
-				ADDRINFO.renderComments(JSON.parse(ajax.responseText));
-			}
-		}
-		ajax.open("GET", CONF.apiServer + '/?method=getNewOneAddrCommentById&id=' + id);
-
-		ajax.send();
-	},
+	
 	renderComments: function(data) {
 		if (data[0].name != null) {
 			var htmlStr = template('commentsTpl', data[0]);
@@ -59,7 +34,6 @@ var ADDRINFO = {
 			}, 100, 'ease-in');
 		}
 	},
-
 	bindEvent: function() {
 		window.back = function() {
 			ws = plus.webview.currentWebview();
@@ -85,7 +59,6 @@ var ADDRINFO = {
 			ADDRINFO.showCommentList($('#addrHead'));
 		});
 	},
-
 	add: function() {
 
 	},

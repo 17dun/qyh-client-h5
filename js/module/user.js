@@ -4,13 +4,14 @@ var USER = {
 	hasOpen: false,
 	myscroll: null,
 	init: function() {
-		plus.navigator.closeSplashscreen();
+		$('.loading').show();
 		this.ws = plus.webview.currentWebview();
 		this.bindEvent();
 		this.list = $("#list");
 		this.setFresh();
 		localStorage.clear();
 		var htmlStr = plus.storage.getItem('userList');
+		this.getNewList();
 		if (htmlStr) {
 			this.rendlocal();
 		} else {
@@ -115,9 +116,6 @@ var USER = {
 
 $(function() {
 	FastClick.attach(document.body);
-
-
-
 	document.addEventListener("touchstart", function() {
 		return false;
 	}, false); //取消浏览器的所有事件，使得active的样式在手机上正常生效

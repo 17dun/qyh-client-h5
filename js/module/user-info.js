@@ -1,13 +1,8 @@
 var USERINFO = {
 	init: function(data) {
-
-
-
 		this.bindEvent();
 		this.renderHead(data);
-		setTimeout(function() {
-			USERINFO.getData(data);
-		}, 100)
+		this.getData(data);
 	},
 	renderHead: function(data) {
 		data.staticServer = CONF.staticServer
@@ -31,9 +26,6 @@ var USERINFO = {
 	render: function(data) {
 		var htmlStr = template('userInfoTpl', data[0]);
 		$('.info').html(htmlStr);
-		$('.info').animate({
-			opacity: 1
-		}, 100, 'ease-in')
 	},
 
 	bindEvent: function() {

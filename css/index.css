@@ -18,8 +18,8 @@ li:active {
 header {
 	background: #028ce6;
 	color: #FFFFFF;
-	height: 35px;
-	line-height: 35px;
+	height: 45px;
+	line-height: 45px;
 }
 footer {
 	color: #9F9F9F;
@@ -36,7 +36,7 @@ footer .nav-item {
 	color: #666;
 	float: left;
 	width: 25%;
-	padding-top: 30px;
+	padding-top: 35px;
 }
 footer .active {
 	color: #009AFF;
@@ -57,7 +57,7 @@ footer .msg.active {
 	background: url(../img/msg.png) no-repeat 50% 3px;
 	background-size: 30px 30px;
 }
-footer .setting.active {
+footer .my.active {
 	background: url(../img/setting.png) no-repeat 50% 3px;
 	background-size: 30px 30px;
 }
@@ -77,7 +77,7 @@ footer .msg {
 	background: url(../img/msg_hide.png) no-repeat 50% 3px;
 	background-size: 30px 30px;
 }
-footer .setting {
+footer .my {
 	background: url(../img/seeting_hide.png) no-repeat 50% 3px;
 	background-size: 30px 30px;
 }

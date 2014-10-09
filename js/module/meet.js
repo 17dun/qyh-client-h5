@@ -1,13 +1,13 @@
 $(function() {
 	if (window.plus) {
-		ADDR.init();
+			MEET.init();
 	} else {
 		document.addEventListener("plusready", function() {
-			ADDR.init();
+			MEET.init();
 		}, false);
 	}
 })
-var ADDR = {
+var MEET = {
 	point: null,
 	map: null,
 	hasOpen: false,
@@ -19,6 +19,9 @@ var ADDR = {
 	init: function() {
 		var me = this;
 		me.bindEvent();
+		if(me.map){
+			me.map = null;
+		}
 		plus.geolocation.getCurrentPosition(function(pos) {
 			var centerPoint = new BMap.Point(pos.coords.longitude, pos.coords.latitude);
 			me.point = centerPoint;
@@ -40,6 +43,11 @@ var ADDR = {
 		}, null, {
 			coordsType: 'bd09ll'
 		})
+	},
+	
+	//重新定位
+	changePosition:function(){
+		
 	},
 	bindEvent: function() {
 
@@ -77,6 +85,41 @@ var ADDR = {
 		}
 	},
 
+	showPlaceInfo: function($item) {
+		var data = {
+			id: $item.data('id'),
+			name: $item.data('name'),
+			addr: $item.data('addr'),
+			tel: $item.data('tel'),
+			point: $item.data('point'),
+			city: $item.data('city'),
+			x: $item.data('x'),
+			y: $item.data('y')
+		}
+		if (this.hasOpen) {
+			return;
+		}
+		if (window.plus) {
+			var openwn = plus.webview.create('addr-info.html', 'addr-info', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
+				openwn.show("slide-in-right", 150);
+				openwn.evalJS('addrInfoPageInit(' + JSON.stringify(data) + ')')
+			})
+
+			MEET.hasOpen = true;
+			openwn.addEventListener("close", function() { //页面关闭后可再次打开
+
+				MEET.hasOpen = false;
+			}, false);
+		} else {
+			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+			rootView.open('addr-info.html');
+		}
+	},
+
 	getPlaceData: function() {
 		var me = this;
 		//projection 可以抽离出去
@@ -87,8 +130,8 @@ var ADDR = {
 			if (ajax.readyState == 4 && ajax.status == 200) {
 				var addrList = JSON.parse(ajax.responseText);
 				var opts = {
-					width: 200, // 信息窗口宽度
-					height: 50, // 信息窗口高度
+					width: 260, // 信息窗口宽度
+					height: 60, // 信息窗口高度
 					enableMessage: false,
 					offset: new BMap.Size(2, -23)
 				};
@@ -101,18 +144,19 @@ var ADDR = {
 					var marker2 = new BMap.Marker(rs, {
 						icon: myIcon
 					});
-					var addrName = item.name;
-					var addrPlace = item.addr;
 					if (item.tel == 'undefined') {
 						var addrtel = '暂无';
 					} else {
 						var addrtel = item.tel;
 					};
-					var content = '地址：' + addrPlace + '<br/>电话：' + addrtel;
+					var content = '<div ontouchend="MEET.showPlaceInfo($(this))" class="addr-card clearfix" data-addr="' + item.addr + '" data-id="' + item.id + '" data-name="' + item.name + '" data-city="'+ item.city +'">';
+					content += '<img src="img/qiuzhuo.jpg"/ style="float:left;">'
+					content += '<div style="float:left;width:170px;padding-left:10px;">' + item.name + '<br/>电话：' + addrtel+'评分：<img src="img/star'+item.star+'0.png" width="77px" height="14" /></div>';
+					content += '</div>';
+					
 					marker2.addEventListener("click", function(e) {
 						var p = e.target;
 						var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-						opts.title = addrName;
 						var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象
 						me.map.openInfoWindow(infoWindow, point);
 					});
@@ -154,7 +198,7 @@ var ADDR = {
 					var rs = projection.pointToLngLat(mypoint);
 					var myIcon = new BMap.Icon("img/you.png", new BMap.Size(44, 60));
 					myIcon.setImageSize(new BMap.Size(22, 30));
-					var content = '<div ontouchend="ADDR.showUserInfo($(this))" class="user-card" data-pic="' + item.pic + '" data-id="' + item.id + '" data-name="' + item.name + '" data-sex="' + item.sex + '" data-age="' + item.age + '" data-bollage="' + item.bollage + '">';
+					var content = '<div ontouchend="MEET.showUserInfo($(this))" class="user-card clearfix" data-pic="' + item.pic + '" data-id="' + item.id + '" data-name="' + item.name + '" data-sex="' + item.sex + '" data-age="' + item.age + '" data-bollage="' + item.bollage + '">';
 					content += '<img style="border-radius:10px;width:50px;height:50px;"  class="item-col" src="' + CONF.staticServer + '/images/' + item.pic + '">';
 					content += '<div class="item-col" style="margin-left:0.5em;width:150px;">';
 					content += '性别:' + CONF.sex[item.sex] + ' 年龄:' + item.age + '岁</br>';
