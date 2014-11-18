@@ -21,6 +21,10 @@ var INDEX = {
 			return false;
 		};
 
+		$('.edit').on('click', function() {
+			plus.webview.getWebviewById('my').evalJS("MY.editMy();");
+		});
+		
 		$('.position').on('click', function() {
 			plus.webview.getWebviewById('meet').evalJS("MEET.init()");
 		})

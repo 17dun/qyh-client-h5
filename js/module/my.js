@@ -1,7 +1,9 @@
 var MY = {
+	data: null,
+	hasOpen: false,
 	init: function() {
-		this.bindEvent();
 		this.getData();
+		this.bindEvent();
 	},
 	getData: function() {
 		var id = 2;
@@ -9,7 +11,8 @@ var MY = {
 		ajax.onreadystatechange = function() {
 			var my = MY;
 			if (ajax.readyState == 4 && ajax.status == 200) {
-				my.render(JSON.parse(ajax.responseText));
+				data = JSON.parse(ajax.responseText)
+				my.render(data);
 			}
 		}
 		ajax.open("GET", CONF.apiServer + '/?method=getUserInfo&id=' + id);
@@ -23,6 +26,30 @@ var MY = {
 	},
 
 	bindEvent: function() {
+		
+	},
+	editMy: function() {
+		if (this.hasOpen) {
+			return;
+		}
+		if (window.plus) {
+			var openwn = plus.webview.create('my-edit.html', 'my-edit', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
+				openwn.show("slide-in-bottom", 150);
+				openwn.evalJS('MYEDIT.init(' + JSON.stringify(data) + ')');
+			})
+
+			MY.hasOpen = true;
+			openwn.addEventListener("close", function() { //页面关闭后可再次打开
+				MY.hasOpen = false;
+			}, false);
+		} else {
+			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+			rootView.open('my-edit.html');
+		}
 	}
 }
 

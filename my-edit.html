@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/touch.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/fx.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/template.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/fastclick.js" type="text/javascript"  ></script>
+		<script src="js/module/my-edit.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/my-edit.css"/>
+	</head>
+	
+	<body>
+		<header>
+			<div class="nvbt iback-cancel" ontouchend="back();"></div>
+			<div class="nvtt myedit-head" >更新个人资料</div>
+			<div class="nvbt nvbtr btn-nav-submit" >提交</div>
+		</header>
+	<div class="wrap">
+		<div class="info">
+		<div class="loading"></div>
+		</div>
+		
+	</div>
+	<script type="text/html" id="userInfoTpl">
+		
+		<div class="info-content info-body">
+			<div class="info-item" style="height:60px;line-height:60px;">
+				<div style="width: 30%;height:60px;float: left;color: #202020;">头像</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;height:60px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="border-radius:10px;display: table-cell;height:60px;background: #EAEAEA;float: right;margin-right: 10px;">
+						<img style="border-radius:10px" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/>
+					</span>
+				</div>
+			</div>
+			
+			<div class="info-title">基本信息</div>
+			<div class="info-item-input">
+				<div style="width: 30%;float: left;color: #202020;">昵称</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<input class="input-row" type="text" value="{{name}}" placeholder="未完善">
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">性别</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{if sex == 0}}女{{else}}男{{/if}}
+					</span>
+					<input readonly="readonly" class="input-row" hidden="hidden" type="text" value="{{sex}}" placeholder="未完善">
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">年龄</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{age}}岁
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">球龄</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{bollage}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">擅长</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{style}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">影响力</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{score}}
+					</span>
+				</div>
+			</div>
+			<div class="info-title">装备信息</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">拍型</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{if paixing == 0}}直拍{{else}}横拍{{/if}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">底板</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{diban}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">正手胶面</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{zhengshou}}
+					</span>
+				</div>
+			</div>
+			
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">反手胶面</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{fanshou}}
+					</span>
+				</div>
+			</div>
+			<div class="info-title">个人信息</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">打球目的</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						锻炼身体、结识朋友
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">常打时段</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						每天晚上下班后
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">常打地点</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						回龙观、立水桥、霍营
+					</span>
+				</div>
+			</div>
+			
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">约球日程</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						最近一周内没有计划
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">个人简介</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{info}}
+					</span>
+				</div>
+			</div>
+			<div style="padding: 10px 0;">
+				<div class="info-title" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;">
+					提 交
+				</div>
+			</div>
+		</div>
+		</script>
+	</body>
+</html>
