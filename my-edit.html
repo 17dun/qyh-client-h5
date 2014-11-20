@@ -13,24 +13,39 @@
 		<script src="js/libs/template.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/libs/fastclick.js" type="text/javascript"  ></script>
 		<script src="js/module/my-edit.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
 		<link rel="stylesheet" type="text/css" href="css/my-edit.css"/>
+		<script type="text/javascript">
+			function pickDate() {
+				var dDate=new Date();
+				dDate.setFullYear(2014,0,1);
+				var minDate=new Date();
+				minDate.setFullYear(2010,0,1);
+				var maxDate=new Date();
+				maxDate.setFullYear(2016,11,31);
+				plus.nativeUI.pickDate( function(e) {
+					var d=e.date;
+					outLine( "选择的日期："+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() );
+				},function(e){
+					//outSet( "未选择日期："+e.message );
+				},{title:"请选择日期",date:dDate,minDate:minDate,maxDate:maxDate});
+			}
+		</script>
 	</head>
 	
 	<body>
 		<header>
 			<div class="nvbt iback-cancel" ontouchend="back();"></div>
-			<div class="nvtt myedit-head" >更新个人资料</div>
+			<div class="nvtt myedit-head">更新个人资料</div>
 			<div class="nvbt nvbtr btn-nav-submit" >提交</div>
 		</header>
 	<div class="wrap">
 		<div class="info">
-		<div class="loading"></div>
 		</div>
 		
 	</div>
 	<script type="text/html" id="userInfoTpl">
-		
 		<div class="info-content info-body">
 			<div class="info-item" style="height:60px;line-height:60px;">
 				<div style="width: 30%;height:60px;float: left;color: #202020;">头像</div>
@@ -53,7 +68,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item" id="sex" onclick="MYEDIT.showMyEditSex()">
 				<div style="width: 30%;float: left;color: #202020;">性别</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -62,12 +77,12 @@
 					<span style="display: table-cell;float: right;margin-right: 10px;">
 						{{if sex == 0}}女{{else}}男{{/if}}
 					</span>
-					<input readonly="readonly" class="input-row" hidden="hidden" type="text" value="{{sex}}" placeholder="未完善">
+					
 				</div>
 			</div>
 			<div class="info-item">
 				<div style="width: 30%;float: left;color: #202020;">年龄</div>
-				<div style="width: 70%;float: right;">
+				<div style="width: 70%;float: right;" onclick="pickDate()">
 					<span style="display: table-cell;float: right;width:7px;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>

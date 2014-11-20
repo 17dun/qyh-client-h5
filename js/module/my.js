@@ -23,6 +23,7 @@ var MY = {
 		data[0].staticServer = CONF.staticServer
 		var htmlStr = template('userInfoTpl', data[0]);
 		$('.wrap').html(htmlStr);
+		plus.storage.setItem('myEdit', data);
 	},
 
 	bindEvent: function() {
