@@ -59,7 +59,7 @@ var MEET = {
 			sex: $item.data('sex'),
 			pic: $item.data('pic'),
 			age: $item.data('age'),
-			bollage: $item.data('bollage')
+			ballage: $item.data('ballage')
 		};
 		if (this.hasOpen) {
 			return;
@@ -96,6 +96,7 @@ var MEET = {
 			x: $item.data('x'),
 			y: $item.data('y')
 		}
+		
 		if (this.hasOpen) {
 			return;
 		}
@@ -198,10 +199,10 @@ var MEET = {
 					var rs = projection.pointToLngLat(mypoint);
 					var myIcon = new BMap.Icon("img/you.png", new BMap.Size(44, 60));
 					myIcon.setImageSize(new BMap.Size(22, 30));
-					var content = '<div ontouchend="MEET.showUserInfo($(this))" class="user-card clearfix" data-pic="' + item.pic + '" data-id="' + item.id + '" data-name="' + item.name + '" data-sex="' + item.sex + '" data-age="' + item.age + '" data-bollage="' + item.bollage + '">';
+					var content = '<div ontouchend="MEET.showUserInfo($(this))" class="user-card clearfix" data-pic="' + item.pic + '" data-id="' + item.id + '" data-name="' + item.name + '" data-sex="' + item.sex + '" data-age="' + item.age + '" data-ballage="' + item.ballage + '">';
 					content += '<img style="border-radius:10px;width:50px;height:50px;"  class="item-col" src="' + CONF.staticServer + '/images/' + item.pic + '">';
 					content += '<div class="item-col" style="margin-left:0.5em;width:150px;">';
-					content += '性别:' + CONF.sex[item.sex] + ' 年龄:' + item.age + '岁</br>';
+					content += '性别:' + CONF.sex[item.sex] + ' 年龄:' + formatAge(item.age) + '岁</br>';
 					content += '惯用:' + CONF.paixing[item.paixing] + ' 擅长:' + CONF.style[item.style];
 					content += '</div><div class="item-col user-card-bk"></div></div>';
 

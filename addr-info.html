@@ -32,37 +32,42 @@
 			</div>
 		</div>
 		<script id="placeInfoTpl" type="text/html">
-			<div class="info-content info-body">
-				<div class="info-item" id="showLocation">
+			<div style="background: #fff;">
+				{{if addr!=null && addr!=undefined}}
+				<div class="info-item" id="showLocation" style="">
 					<img src="img/icon_location.png" style="width: 25px; height: 25px;display: inline-block; vertical-align: middle;" />
 					<span class="placeinfo" style="height: 25px;line-height: 25px;">{{addr}}</span>
 					<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;" />
 				</div>
+				{{/if}}
+				{{if tel!=null && tel!="undefined"}}
 				<div class="info-item" id="Call">
 					<img src="img/icon_call.png" style="margin-bottom: 10px;width: 25px; height: 25px;vertical-align: middle;" />
 					<span class="placeinfo">{{tel}}</span>
 					<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;" />
 				</div>
+				{{/if}}
 			</div>
+			{{if lastcomment!=null}}
 			<div class="info-title">评价</div>
-			<div class="info-item" style="margin: 0px 5px;height: 100px;">
-				<div class="info-row item-title" style="font-weight: bold;margin:5px 0px;;">
-					<span>{{lastcomment.name}}</span>
+			<div class="info-item" style="height: 100px;background: #fff;">
+				<div class="item-title" style="height:20px ;margin-bottom: 5px; font-weight: bold;">
+					{{lastcomment.name}}
 				</div>
-				<div class="info-row">
+				<div class="info-row" style="">
 					<img src="img/star{{lastcomment.start}}0.png" width="77px" height="14" />
-					<span class="span-right">{{lastcomment.time}}</span>
+					<span class="span-right">{{lastcomment.time | dateFormat:'yyyy-MM-dd'}}</span>
 				</div>
-
-				<div class="info-row">
-					<div style="width: 80%;float: left;margin: 2px 0;">
+				<div class="info-row" >
+					<div style="width: 80%;float: left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 						<span>{{lastcomment.comment}}</span> 
 					</div>
-					<div class="" style="width:20%;float: left;margin: 2px 0;">
+					<div class="" style="width:20%;float: left;">
 						<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;" />
 					</div>
 				</div>
 			</div>
+			{{/if}}
 		</script>
 		
 		

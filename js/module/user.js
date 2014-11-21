@@ -10,13 +10,14 @@ var USER = {
 		this.list = $("#list");
 		this.setFresh();
 		localStorage.clear();
-		var htmlStr = plus.storage.getItem('userList');
 		this.getNewList();
+		/*var htmlStr = plus.storage.getItem('userList');
+		
 		if (htmlStr) {
 			this.rendlocal();
 		} else {
 			this.getNewList();
-		}
+		}*/
 	},
 
 	bindEvent: function() {
@@ -87,7 +88,7 @@ var USER = {
 			sex: $item.data('sex'),
 			pic: $item.data('pic'),
 			age: $item.data('age'),
-			bollage: $item.data('bollage')
+			ballage: $item.data('ballage')
 		}
 		if (this.hasOpen) {
 			return;

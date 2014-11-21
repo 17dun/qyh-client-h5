@@ -28,15 +28,35 @@ var MYEDIT = {
 				window.close();
 			}
 		};
+		window.close = function() {
+			ws = plus.webview.currentWebview();
+			ws.close();
+		};
 		$(document.body).on('swipeRight', function() {
 			plus.webview.currentWebview().close()
 		})
 		plus.key.addEventListener("backbutton", function() {
 			back();
 		}, false);
-		$('.info-item').live('click', function() {
-			my.showMyEditSex();
-		})
+		
+	},
+	pickDate:function(date){
+		var dDate=new Date(),
+			ageDate=new Date(date-0),
+			minDate=new Date(),
+			maxDate=new Date();
+			minDate.setFullYear(1900,1,1);
+			maxDate.setFullYear(maxDate.getFullYear(),maxDate.getMonth()+1,maxDate.getDate());
+			ageDate.setFullYear(ageDate.getFullYear(),ageDate.getMonth(),ageDate.getDate());
+			plus.nativeUI.pickDate( function(e) {
+				var d=e.date;
+				data =JSON.parse(plus.storage.getItem('myEdit'));
+				data[0]['age']=(new Date(d.getFullYear(),(d.getMonth()+1),d.getDate())).getTime();
+				plus.storage.setItem('myEdit',JSON.stringify(data));
+				$('#val-age').html(dDate.getFullYear()-d.getFullYear());
+			},function(e){
+				//outSet( "未选择日期："+e.message );
+			},{title:"请选择日期",date:ageDate,minDate:minDate,maxDate:maxDate});
 	},
 	showMyEditSex: function() {
 		if (this.hasOpenSex) {
@@ -59,6 +79,52 @@ var MYEDIT = {
 		} else {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
 			rootView.open('my-edit-sex.html');
+		}
+	},
+	showMyEditBallAge: function() {
+		if (this.hasOpenSex) {
+			return;
+		}
+		if (window.plus) {
+			var openwn = plus.webview.create('my-edit-ballage.html', 'my-edit-ballage', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
+				openwn.show("slide-in-right", 150);
+				var data =  plus.storage.getItem('myEdit');
+				openwn.evalJS('MYEDITBALLAGE.init(' + data + ')')
+			})
+			MYEDIT.hasOpenSex = true;
+			openwn.addEventListener("close", function() { //页面关闭后可再次打开
+				MYEDIT.hasOpenSex = false;
+			}, false);
+		} else {
+			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+			rootView.open('my-edit-ballage.html');
+		}
+	},
+	showMyEditStyle: function() {
+		if (this.hasOpenSex) {
+			return;
+		}
+		if (window.plus) {
+			var openwn = plus.webview.create('my-edit-style.html', 'my-edit-ballage', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
+				openwn.show("slide-in-right", 150);
+				var data =  plus.storage.getItem('myEdit');
+				openwn.evalJS('MYEDITSTYLE.init(' + data + ')')
+			})
+			MYEDIT.hasOpenSex = true;
+			openwn.addEventListener("close", function() { //页面关闭后可再次打开
+				MYEDIT.hasOpenSex = false;
+			}, false);
+		} else {
+			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+			rootView.open('my-edit-style.html');
 		}
 	}
 }

@@ -120,6 +120,7 @@ w.timeToStr=function(ts){
 w.dateToStr=function(d){
 	return (d.getFullYear()+"-"+ultZeroize(d.getMonth()+1)+"-"+ultZeroize(d.getDate())+" "+ultZeroize(d.getHours())+":"+ultZeroize(d.getMinutes())+":"+ultZeroize(d.getSeconds()));
 };
+
 /**
  * zeroize value with length(default is 2).
  * @param {Object} v
@@ -135,4 +136,13 @@ w.ultZeroize=function(v,l){
 	}
 	return z+v;
 };
+w.formatAge = function(date){
+	var newDate = new Date();
+    var ageDate = new Date(date-0);
+    if(date!=0){
+		return newDate.getFullYear()-ageDate.getFullYear();
+	}else{
+		return "未完善";
+	}
+}
 })(window);

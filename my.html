@@ -18,6 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="css/my.css"/>
 	</head>
 	<body>
+		
 		<div class="wrap">
 		
 		</div>
@@ -29,9 +30,9 @@
 			<div class="info-title">基本信息</div>
 			<div class="info-item"><span class="item-title">昵称</span><span class="info-text">{{name}}</span></div>
 			<div class="info-item"><span class="item-title">性别</span><span class="info-text">{{if sex == 0}}女{{else}}男{{/if}}</span></div>
-			<div class="info-item"><span class="item-title">年龄</span><span class="info-text">{{age}}岁</span></div>
-			<div class="info-item"><span class="item-title">球龄</span><span class="info-text">{{bollage}}</span></div>
-			<div class="info-item"><span class="item-title">擅长</span><span class="info-text">{{style}}</span></div>
+			<div class="info-item"><span class="item-title">年龄</span><span class="info-text">{{age | ageFormat}}岁</span></div>
+			<div class="info-item"><span class="item-title">球龄</span><span class="info-text">{{ballage | ballAgeFormat}}</span></div>
+			<div class="info-item"><span class="item-title">擅长</span><span class="info-text">{{style | styleFormat}}</span></div>
 			<div class="info-item"><span class="item-title">影响力</span><span class="info-text">{{score}}</span></div>
 			
 			<div class="info-title">装备信息</div>

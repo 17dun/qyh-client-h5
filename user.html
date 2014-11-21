@@ -23,7 +23,7 @@
 		</div>
 		<script id="test" type="text/html">
 			{{each list}}
-			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-bollage="{{$value.bollage}}">
+			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-ballage="{{$value.ballage}}">
 				<div class="item clearfix">
 					<img style="border-radius:10px" class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
 					<div class="item-col" style="margin-left:0.5em;">
@@ -38,14 +38,10 @@
 									男
 								{{/if}}
 							</span>
-							<span class="grey-text">{{$value.age}}岁</span>
+							<span class="grey-text">{{$value.age | ageFormat}}岁</span>
 							<span class="grey-text">
 								球龄
-								{{if $value.bollage==0}}
-									半年以下
-								{{else}}
-									半年到一年
-								{{/if}}
+								{{$value.ballage | ballAgeFormat}}
 							</span>
 						</div>
 						<div class="item-row">

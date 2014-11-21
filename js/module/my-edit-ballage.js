@@ -1,4 +1,4 @@
-var MYEDITSEX = {
+var MYEDITBALLAGE= {
 	hasOpen:false,
 	data:null,
 	init: function(data) {
@@ -7,13 +7,8 @@ var MYEDITSEX = {
 		this.render(data);
 	},
 	render: function(data) {
-		$('.boy').hide();
-		$('.gril').hide();
-		if(data[0]['sex']==0){
-			$('.gril').show();
-		}else{
-			$('.boy').show();
-		}
+		$('.ballage').hide();
+		$(".ballage"+data[0]['ballage']).show();
 	},
 
 	bindEvent: function() {
@@ -35,7 +30,7 @@ var MYEDITSEX = {
 		}, false);
 		$('.info-item').on('click',function(){
 			data =JSON.parse(plus.storage.getItem('myEdit'));
-			data[0]['sex']=$(this).data('sex');
+			data[0]['ballage']=$(this).data('ballage');
 			plus.storage.setItem('myEdit',JSON.stringify(data));
 			data =JSON.parse(plus.storage.getItem('myEdit'));
 			if (this.hasOpen) {
@@ -50,9 +45,9 @@ var MYEDITSEX = {
 					openwn.show("slide-in-left", 150);
 					openwn.evalJS('MYEDIT.init(' +JSON.stringify(data) + ')');
 				})
-				MYEDITSEX.hasOpen = true;
+				MYEDITBALLAGE.hasOpen = true;
 				openwn.addEventListener("close", function() { //页面关闭后可再次打开
-					MYEDITSEX.hasOpen = false;
+					MYEDITBALLAGE.hasOpen = false;
 				}, false);
 			} else {
 				var rootView = plus.webview.getWebviewById(plus.runtime.appid);
@@ -72,10 +67,10 @@ function pageInit(data) {
 	$(function() {
 		FastClick.attach(document.body);
 		if (window.plus) {
-			MYEDITSEX.init(data);
+			MYEDITBALLAGE.init(data);
 		} else {
 			document.addEventListener("plusready", function() {
-				MYEDITSEX.init(data)
+				MYEDITBALLAGE.init(data)
 			}, false);
 		}
 	})
