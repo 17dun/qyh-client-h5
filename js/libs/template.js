@@ -3,6 +3,9 @@
 template.helper('ballAgeFormat', function (date) {
 	return CONF.ballage[date];
 });
+template.helper('pxFormat', function (date) {
+	return CONF.paixing[date];
+});
 template.helper('styleFormat', function (date) {
 	return CONF.style[date];
 });

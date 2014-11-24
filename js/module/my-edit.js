@@ -2,15 +2,8 @@ var MYEDIT = {
 	hasOpenSex:false,
 	init: function(data) {
 		this.bindEvent();
-		this.renderHead(data);
 		this.render(data);
 	},
-	renderHead: function(data) {
-		data.staticServer = CONF.staticServer
-		var htmlStr = template('infoHead', data);
-		$('.info-head').html(htmlStr);
-	},
-
 	render: function(data) {
 		var htmlStr = template('userInfoTpl', data[0]);
 		$('.info').html(htmlStr);
@@ -57,6 +50,23 @@ var MYEDIT = {
 			},function(e){
 				//outSet( "未选择日期："+e.message );
 			},{title:"请选择日期",date:ageDate,minDate:minDate,maxDate:maxDate});
+	},
+	showMyEditItem: function(index) {
+		if (window.plus) {
+			
+			var openwn = plus.webview.create('my-edit-item.html','my-edit-item', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
+				openwn.show("slide-in-right", 150);
+				var data =  plus.storage.getItem('myEdit');
+				openwn.evalJS('MYEDITITEM.init(' + data + ','+index+')')
+			})
+		} else {
+			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+			rootView.open('my-edit-item.html');
+		}
 	},
 	showMyEditSex: function() {
 		if (window.plus) {

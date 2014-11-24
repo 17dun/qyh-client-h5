@@ -52,7 +52,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-sex"  onclick="MYEDIT.showMyEditSex()">
+			<div class="info-item info-sex"  onclick="MYEDIT.showMyEditItem(0)">
 				<div style="width: 30%;float: left;color: #202020;">性别</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -75,7 +75,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-ballage" onclick="MYEDIT.showMyEditBallAge()">
+			<div class="info-item info-ballage" onclick="MYEDIT.showMyEditItem(1)">
 				<div style="width: 30%;float: left;color: #202020;">球龄</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
@@ -86,7 +86,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-style" onclick="MYEDIT.showMyEditStyle()">
+			<div class="info-item info-style" onclick="MYEDIT.showMyEditItem(2)">
 				<div style="width: 30%;float: left;color: #202020;">擅长</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
@@ -97,13 +97,10 @@
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item-read">
 				<div style="width: 30%;float: left;color: #202020;">影响力</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;width:7px;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
+					<span style="display: table-cell;float: right;margin-right: 15px;">
 						{{score}}
 					</span>
 				</div>
@@ -116,7 +113,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{if paixing == 0}}直拍{{else}}横拍{{/if}}
+						{{paixing | pxFormat}}
 					</span>
 				</div>
 			</div>

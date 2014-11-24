@@ -115,7 +115,7 @@ header {
 		color: #222;
 		border: 1px solid #eee;
 	}
-	.info-body .info-item,.info-body .info-item-input{
+	.info-body .info-item,.info-body .info-item-input,.info-item-read{
 		height: 40px;
 		line-height: 40px;
 		border-bottom: 1px solid #eee;
@@ -130,6 +130,19 @@ header {
 		line-height: 50px;
 	}
 }
+.item-row{
+	height: 50px;line-height: 50px;border-bottom: 1px solid #EAEAEA;border-top-left-radius: 10px;border-top-right-radius: 10px;
+}
+.item-row-end{
+	height: 50px;line-height: 50px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;
+}
+.span-title{
+	display: inline-block;margin-left: 10px;font:italic bold 18px arial;
+}
+.span-chance{display: none;float: right;margin-right: 10px;}
+.imgab{height: 20px;width: 18px;}
+.block{display:block;}
+#edit-item{background: #fff;border-radius: 10px;margin: 0;border: 1px solid #EAEAEA;}
 @media screen and (max-device-width: 970px) {
 	.info-head {
 		height: 75px;
