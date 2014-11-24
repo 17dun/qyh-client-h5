@@ -1,5 +1,4 @@
 var MYEDITSEX = {
-	hasOpen:false,
 	data:null,
 	init: function(data) {
 		data=data;
@@ -38,31 +37,14 @@ var MYEDITSEX = {
 			data[0]['sex']=$(this).data('sex');
 			plus.storage.setItem('myEdit',JSON.stringify(data));
 			data =JSON.parse(plus.storage.getItem('myEdit'));
-			if (this.hasOpen) {
-				return;
-			}
-			if (window.plus) {
-				var openwn = plus.webview.create('my-edit.html', 'my-edit', {
-					scrollIndicator: 'none',
-					scalable: false
-				});
-				openwn.addEventListener("loaded", function() {
-					openwn.show("slide-in-left", 150);
-					openwn.evalJS('MYEDIT.init(' +JSON.stringify(data) + ')');
-				})
-				MYEDITSEX.hasOpen = true;
-				openwn.addEventListener("close", function() { //页面关闭后可再次打开
-					MYEDITSEX.hasOpen = false;
-				}, false);
-			} else {
-				var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-				rootView.open('my-edit.html');
-			}
+			
+			plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150)
+			plus.webview.getWebviewById('my-edit').evalJS('MYEDIT.init(' +JSON.stringify(data) + ')');
+			
 		});
 		
 	}
 }
-
 
 function plusReady() {
 

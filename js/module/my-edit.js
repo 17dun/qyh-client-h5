@@ -59,11 +59,9 @@ var MYEDIT = {
 			},{title:"请选择日期",date:ageDate,minDate:minDate,maxDate:maxDate});
 	},
 	showMyEditSex: function() {
-		if (this.hasOpenSex) {
-			return;
-		}
 		if (window.plus) {
-			var openwn = plus.webview.create('my-edit-sex.html', 'my-edit-sex', {
+			
+			var openwn = plus.webview.create('my-edit-sex.html','my-edit-sex', {
 				scrollIndicator: 'none',
 				scalable: false
 			});
@@ -72,10 +70,6 @@ var MYEDIT = {
 				var data =  plus.storage.getItem('myEdit');
 				openwn.evalJS('MYEDITSEX.init(' + data + ')')
 			})
-			MYEDIT.hasOpenSex = true;
-			openwn.addEventListener("close", function() { //页面关闭后可再次打开
-				MYEDIT.hasOpenSex = false;
-			}, false);
 		} else {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
 			rootView.open('my-edit-sex.html');
