@@ -1,6 +1,6 @@
 var MYEDITITEM = {
 	data:null,
-	dataItem:'',
+	dataArrEN:['sex','ballage','style','paxing'],
 	init: function(data,index) {
 		data=data;
 		this.render(data,index);
@@ -8,36 +8,15 @@ var MYEDITITEM = {
 	},
 	render: function(data,index) {
 		var str="",
-			itemArr=null,
-			len=0;
-		switch(index){
-			case 0:
-			$('#myhead').html('性别');
-			itemArr =CONF.sex;
-			dataItem = 'sex';
-			break;
-			case 1:
-			$('#myhead').html('球龄');
-			itemArr =CONF.ballage;
-			dataItem = 'ballage';
-			break;
-			case 2:
-			$('#myhead').html('擅长');
-			itemArr =CONF.style;
-			dataItem = 'style';
-			break;
-			case 3:
-			$('#myhead').html('拍型');
-			itemArr =CONF.paixing;
-			dataItem = 'paixing';
-			break;
-		}
-		
+		len=0,
+		dataArrCN=['性别','球龄','擅长','拍型'];
+		itemArr=CONF[MYEDITITEM.dataArrEN[index]];
+		$('#myhead').html(dataArrCN[index]);
 		len = itemArr.length;
 		for(var i =0;i<len;i++){
-				var active = data[0][dataItem]==i?'block':'';
-				str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance'><img class='imgab' src='img/ab1.png' /></span></div>"
-			}
+			var active = data[0][MYEDITITEM.dataArrEN[index]]==i?'block':'';
+			str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance'><img class='imgab' src='img/ab1.png' /></span></div>"
+		}
 		$('#edit-item').html(str);
 	},
 
@@ -60,20 +39,15 @@ var MYEDITITEM = {
 		}, false);
 		$('.info-item').on('click',function(){
 			data =JSON.parse(plus.storage.getItem('myEdit'));
-			data[0][dataItem]=$(this).data('item');
+			data[0][MYEDITITEM.dataArrEN[$(this).data('index')]]=$(this).data('item');
 			plus.storage.setItem('myEdit',JSON.stringify(data));
 			data =JSON.parse(plus.storage.getItem('myEdit'));
-			
 			plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150)
 			plus.webview.getWebviewById('my-edit').evalJS('MYEDIT.init(' +JSON.stringify(data) + ')');
 			
 		});
 		
 	}
-}
-
-function plusReady() {
-
 }
 
 function pageInit(data) {
