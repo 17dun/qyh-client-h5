@@ -26,6 +26,11 @@ var MYEDITITEM = {
 			itemArr =CONF.style;
 			dataItem = 'style';
 			break;
+			case 3:
+			$('#myhead').html('拍型');
+			itemArr =CONF.paixing;
+			dataItem = 'paixing';
+			break;
 		}
 		
 		len = itemArr.length;
