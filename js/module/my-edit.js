@@ -68,69 +68,23 @@ var MYEDIT = {
 			rootView.open('my-edit-item.html');
 		}
 	},
-	showMyEditSex: function() {
+	showMyEditoftenAddr: function() {
 		if (window.plus) {
 			
-			var openwn = plus.webview.create('my-edit-sex.html','my-edit-sex', {
+			var openwn = plus.webview.create('my-edit-oftenAddr.html','my-edit-oftenAddr', {
 				scrollIndicator: 'none',
 				scalable: false
 			});
 			openwn.addEventListener("loaded", function() {
 				openwn.show("slide-in-right", 150);
 				var data =  plus.storage.getItem('myEdit');
-				openwn.evalJS('MYEDITSEX.init(' + data + ')')
+				openwn.evalJS('MYEDITOFTENADDR.init(' + data + ')')
 			})
 		} else {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('my-edit-sex.html');
+			rootView.open('my-edit-oftenAddr.html');
 		}
 	},
-	showMyEditBallAge: function() {
-		if (this.hasOpenSex) {
-			return;
-		}
-		if (window.plus) {
-			var openwn = plus.webview.create('my-edit-ballage.html', 'my-edit-ballage', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-right", 150);
-				var data =  plus.storage.getItem('myEdit');
-				openwn.evalJS('MYEDITBALLAGE.init(' + data + ')')
-			})
-			MYEDIT.hasOpenSex = true;
-			openwn.addEventListener("close", function() { //页面关闭后可再次打开
-				MYEDIT.hasOpenSex = false;
-			}, false);
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('my-edit-ballage.html');
-		}
-	},
-	showMyEditStyle: function() {
-		if (this.hasOpenSex) {
-			return;
-		}
-		if (window.plus) {
-			var openwn = plus.webview.create('my-edit-style.html', 'my-edit-ballage', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-right", 150);
-				var data =  plus.storage.getItem('myEdit');
-				openwn.evalJS('MYEDITSTYLE.init(' + data + ')')
-			})
-			MYEDIT.hasOpenSex = true;
-			openwn.addEventListener("close", function() { //页面关闭后可再次打开
-				MYEDIT.hasOpenSex = false;
-			}, false);
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('my-edit-style.html');
-		}
-	}
 }
 
 

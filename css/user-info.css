@@ -57,9 +57,13 @@ header {
 .info-head .info-item {
 	float: left;
 }
-.info-text {
+.info-text,.info-text-small {
 	margin: 0 10px;
 }
+.info-text-small{
+	font-size: 14px;
+}
+
 .info-foot {
 	width: 100%;
 	min-height: 45px;
@@ -83,6 +87,7 @@ header {
 	line-height: 45px;
 	text-decoration: none;
 }
+.add,.send{height: 45px;line-height: 45px;}
 .add {
 	width: 50%;
 }

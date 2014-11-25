@@ -47,7 +47,7 @@
 			<div class="info-item-input">
 				<div style="width: 30%;float: left;color: #202020;">昵称</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;margin-right: 10px;">
+					<span style="display: table-cell;float: right;margin-right: 5px;">
 						<input class="input-row" type="text" value="{{name}}" placeholder="未完善">
 					</span>
 				</div>
@@ -59,7 +59,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{if sex == 0}}女{{else}}男{{/if}}
+						{{sex | itemFormat:'sex'}}
 					</span>
 					
 				</div>
@@ -71,7 +71,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-age">{{age | ageFormat}}</span>岁
+						<span id="val-age">{{age | itemFormat:'age'}}</span>岁
 					</span>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{ballage | ballAgeFormat}}
+						{{ballage |  itemFormat:'ballage'}}
 					</span>
 				</div>
 			</div>
@@ -93,7 +93,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{style | styleFormat}}
+						{{style | itemFormat:'style'}}
 					</span>
 				</div>
 			</div>
@@ -113,75 +113,66 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{paixing | pxFormat}}
+						{{paixing | itemFormat:'paixing'}}
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item-input">
 				<div style="width: 30%;float: left;color: #202020;">底板</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;width:7px;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{diban}}
+					<span style="display: table-cell;float: right;margin-right: 5px;">
+						<input class="input-row" type="text" value="{{diban}}" placeholder="未完善">
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item-input">
 				<div style="width: 30%;float: left;color: #202020;">正手胶面</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;width:7px;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{zhengshou}}
+					<span style="display: table-cell;float: right;margin-right: 5px;">
+						<input class="input-row" type="text" value="{{zhengshou}}" placeholder="未完善">
 					</span>
 				</div>
 			</div>
 			
-			<div class="info-item">
+			<div class="info-item-input">
 				<div style="width: 30%;float: left;color: #202020;">反手胶面</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;width:7px;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{fanshou}}
+					<span style="display: table-cell;float: right;margin-right: 5px;">
+						<input class="input-row" type="text" value="{{fanshou}}" placeholder="未完善">
 					</span>
 				</div>
 			</div>
 			<div class="info-title">个人信息</div>
-			<div class="info-item">
+			<div class="info-item info-purpose"  onclick="MYEDIT.showMyEditItem(4)">
 				<div style="width: 30%;float: left;color: #202020;">打球目的</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						锻炼身体、结识朋友
+						{{purpose | itemFormat:'purpose'}}
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item info-timePeriod"  onclick="MYEDIT.showMyEditItem(5)">
 				<div style="width: 30%;float: left;color: #202020;">常打时段</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						每天晚上下班后
+						{{timePeriod | itemFormat:'timePeriod'}}
 					</span>
 				</div>
 			</div>
-			<div class="info-item">
+			<div class="info-item info-oftenAddr">
 				<div style="width: 30%;float: left;color: #202020;">常打地点</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						回龙观、立水桥、霍营
+						{{oftenAddr | itemFormat:'oftenAddr'}}
 					</span>
 				</div>
 			</div>
@@ -198,13 +189,11 @@
 				</div>
 			</div>
 			<div class="info-item">
+				
 				<div style="width: 30%;float: left;color: #202020;">个人简介</div>
 				<div style="width: 70%;float: right;">
-					<span style="display: table-cell;float: right;width:7px;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
-						{{info}}
+					<span style="display: table-cell;float: right;margin-right: 5px;">
+						<input class="input-row" type="text" value="{{info}}" placeholder="未完善">
 					</span>
 				</div>
 			</div>

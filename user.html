@@ -23,7 +23,7 @@
 		</div>
 		<script id="test" type="text/html">
 			{{each list}}
-			<li class="data-item" data-pic="{{$value.pic}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-ballage="{{$value.ballage}}">
+			<li class="data-item" data-score="{{$value.score}}" data-pic="{{$value.pic}}" data-style="{{$value.style}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-ballage="{{$value.ballage}}">
 				<div class="item clearfix">
 					<img style="border-radius:10px" class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
 					<div class="item-col" style="margin-left:0.5em;">
@@ -32,40 +32,27 @@
 						</div>
 						<div class="item-row">
 							<span class="grey-text">
-								{{if $value.sex == 0}}
-									女
-								{{else}}
-									男
-								{{/if}}
+								{{$value.sex | itemFormat:'sex'}}
 							</span>
-							<span class="grey-text">{{$value.age | ageFormat}}岁</span>
+							<span class="grey-text">{{$value.age | itemFormat:'age'}}岁</span>
 							<span class="grey-text">
 								球龄
-								{{$value.ballage | ballAgeFormat}}
+								{{$value.ballage | itemFormat:'ballage'}}
 							</span>
 						</div>
 						<div class="item-row">
 							<span class="grey-text">	
 								擅长
-								{{if $value.style == 0}}
-									弧圈
-								{{else if $value.style == 1}}
-									削球
-								{{else if $value.style==2}}
-									推挡
-								{{/if}}
+								{{$value.style | itemFormat:'style'}}
 							</span>
 							<span class="grey-text">惯用
-								{{if $value.paixing == 1}}
-									直拍
-								{{else}}
-									横拍
-								{{/if}}
+								
+								{{$value.paixing | itemFormat:'paixing'}}
 							</span>
 						</div>
 					</div>
 					<div class="item-col" style="float:right">
-						<span style="margin-right: 20px;" class="grey-text">
+						<span style="margin-right: 20px;margin-top: 28px;display: inline-block;" class="grey-text">
 								100m
 							</span>
 					</div>

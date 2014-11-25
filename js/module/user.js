@@ -88,7 +88,9 @@ var USER = {
 			sex: $item.data('sex'),
 			pic: $item.data('pic'),
 			age: $item.data('age'),
-			ballage: $item.data('ballage')
+			ballage: $item.data('ballage'),
+			style:$item.data('style'),
+			score:$item.data('score')
 		}
 		if (this.hasOpen) {
 			return;

@@ -1,6 +1,6 @@
 var MYEDITITEM = {
 	data:null,
-	dataArrEN:['sex','ballage','style','paixing','purpose','timePeriod'],
+	dataArrEN:['sex','ballage','style','paxing','purpose','timePeriod'],
 	init: function(data,index) {
 		data=data;
 		this.render(data,index);

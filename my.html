@@ -29,21 +29,21 @@
 			
 			<div class="info-title">基本信息</div>
 			<div class="info-item"><span class="item-title">昵称</span><span class="info-text">{{name}}</span></div>
-			<div class="info-item"><span class="item-title">性别</span><span class="info-text">{{if sex == 0}}女{{else}}男{{/if}}</span></div>
-			<div class="info-item"><span class="item-title">年龄</span><span class="info-text">{{age | ageFormat}}岁</span></div>
-			<div class="info-item"><span class="item-title">球龄</span><span class="info-text">{{ballage | ballAgeFormat}}</span></div>
-			<div class="info-item"><span class="item-title">擅长</span><span class="info-text">{{style | styleFormat}}</span></div>
+			<div class="info-item"><span class="item-title">性别</span><span class="info-text">{{sex | itemFormat:'sex'}}</span></div>
+			<div class="info-item"><span class="item-title">年龄</span><span class="info-text">{{age | itemFormat:'age'}}岁</span></div>
+			<div class="info-item"><span class="item-title">球龄</span><span class="info-text">{{ballage |  itemFormat:'ballage'}}</span></div>
+			<div class="info-item"><span class="item-title">擅长</span><span class="info-text">{{style | itemFormat:'style'}}</span></div>
 			<div class="info-item"><span class="item-title">影响力</span><span class="info-text">{{score}}</span></div>
 			
 			<div class="info-title">装备信息</div>
-			<div class="info-item"><span class="item-title">拍型</span><span class="info-text">{{paixing | pxFormat}}</span></div>
+			<div class="info-item"><span class="item-title">拍型</span><span class="info-text">{{paixing | itemFormat:'paixing'}}</span></div>
 			<div class="info-item"><span class="item-title">底板</span><span class="info-text">{{diban}}</span></div>
 			<div class="info-item"><span class="item-title">正手胶面</span><span class="info-text">{{zhengshou}}</span></div>
 			<div class="info-item"><span class="item-title">反手胶面</span><span class="info-text">{{fanshou}}</span></div>
 			<div class="info-title">个人信息</div>
-			<div class="info-item"><span class="item-title">打球目的</span><span class="info-text">锻炼身体、结识朋友</span></div>
-			<div class="info-item"><span class="item-title">常打时段</span><span class="info-text">每天晚上下班后</span></div>
-			<div class="info-item"><span class="item-title">常打地点</span><span class="info-text">回龙观、立水桥、霍营</span></div>
+			<div class="info-item"><span class="item-title">打球目的</span><span class="info-text">{{purpose | itemFormat:'purpose'}}</span></div>
+			<div class="info-item"><span class="item-title">常打时段</span><span class="info-text">{{timePeriod | itemFormat:'timePeriod'}}</span></div>
+			<div class="info-item"><span class="item-title">常打地点</span><span class="info-text">{{oftenAddr | addrFormat}}</span></div>
 			<div class="info-item"><span class="item-title">约球日程</span><span class="info-text">最近一周内没有计划</span></div>
 			<div class="info-item"><span class="item-title">个人简介</span><span class="info-text">{{info}}</span></div>
 		</div>

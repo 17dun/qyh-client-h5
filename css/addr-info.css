@@ -39,26 +39,66 @@ header{
 .clear{clear: both;}
 
 .info-title{background:#f6f6f6;color:#222;border: 1px solid #eee;}
-.info-content{font-size:1em;min-height: 60px;}
 .info-head{margin-top:45px;padding:10px;height:90px;color:#fff;background:#37454e;}
 .info-head img{width:80px;height:80px;}
 .info-head .info-item{float: left;}
 .info-text{margin:0 10px;}
 .info-foot{width:100%;min-height: 45px;margin:0;padding:0;width:100%;border-radius:0;position: fixed;bottom: 0;display: flex;display:-webkit-flex;flex-flow: row;-webkit-flex-flow: row;}
-.info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;height:45px;line-height: 45px;text-decoration: none;}
+.info-foot a{display: inline-block;text-align: center;background:#028ce6;color:#fff;text-decoration: none;height: 45px;line-height: 45px;}
 .add,.send{width:50%;}
 .send{margin-left:-1px;border-left:1px solid #fff;}
 .item-title{color:#202020;}
 .placeinfo{display: inline-block;width: 250px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 @media screen and (max-device-width: 1200px) { 
-	.info-title{height:40px;line-height:40px;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
-	.info-body .info-item{height:40px;line-height:40px;border-bottom: 1px solid #eee;padding:10px;}
-	.info-foot a{height: 50px;line-height: 50px;}
+	.info-title {
+		height: 40px;
+		line-height: 40px;
+		background: #f6f6f6;
+		padding: 10px;
+		color: #222;
+		border: 1px solid #eee;
+	}
+	.info-body .info-item {
+		height: 40px;
+		line-height: 40px;
+		border-bottom: 1px solid #eee;
+		padding: 10px;
+	}
+	.info-foot a {
+		height: 50px;
+		line-height: 50px;
+	}
 }
 
 @media screen and (max-device-width: 970px) { 
-	.info-title{height:2em;line-height:2em;background:#f6f6f6;padding:10px;color:#222;border: 1px solid #eee;}
-	.info-body .info-item{height:2em;line-height:em;border-bottom: 1px solid #eee;padding:10px;}
+	.info-head {
+		height: 75px;
+	}
+	.info-head img {
+		width: 65px;
+		height: 65px;
+	}
+	.info-title {
+		height: 2em;
+		line-height: 2em;
+		background: #f6f6f6;
+		padding: 10px;
+		color: #222;
+		border: 1px solid #eee;
+	}
+	.info-body .info-item {
+		height: 2em;
+		line-height: em;
+		border-bottom: 1px solid #eee;
+		padding: 10px;
+	}
+	.info-foot {
+		min-height: 40px;
+	}
+	.info-foot a {
+		height: 40px;
+		line-height: 40px;
+	}
 }
 
 .arrow-right .info-body .info-text{float:right}

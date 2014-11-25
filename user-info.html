@@ -28,35 +28,35 @@
 		<div class="info">
 		<div class="loading"></div>
 		</div>
-		<div class="info-content info-foot"><a class="add" href="javascript:;">加为好友</a><a class="send" href="javascript:;">发送消息</a></div>
+		<div class="info-content info-foot"><a class="add" style="height: 45px;line-height: 45px;" href="javascript:;">加为好友</a><a class="send" style="height: 45px;line-height: 45px;" href="javascript:;">发送消息</a></div>
 	</div>
+	<script type="text/html" id="infoHead">
+	  <div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
+		<div class="info-item" style="padding-top: 2px;">
+			<span class="info-text name">{{name}}</span>
+			<div style="height: 3px;"></div>
+			<span class="info-text-small sex">{{sex | itemFormat:'sex'}}</span>
+			<span class="info-text-small age">{{age | itemFormat:'age'}}岁</span>
+			<div style="height: 3px;"></div>
+			<span class="info-text-small work">{{style | itemFormat:'style'}}</span>
+			<span class="info-text-small work">影响力:{{score}}</span>
+		</div>
+	</script>
 	<script id="userInfoTpl" type="text/html">
 		<div class="info-content info-body">
 			<div class="info-title">装备信息</div>
-			<div class="info-item"><span class="item-title">拍型</span><span class="info-text">{{if paixing == 0}}直拍{{else}}横拍{{/if}}</span></div>
+			<div class="info-item"><span class="item-title">拍型</span><span class="info-text">{{paixing | itemFormat:'paixing'}}</span></div>
 			<div class="info-item"><span class="item-title">底板</span><span class="info-text">{{diban}}</span></div>
 			<div class="info-item"><span class="item-title">正手胶面</span><span class="info-text">{{zhengshou}}</span></div>
 			<div class="info-item"><span class="item-title">反手胶面</span><span class="info-text">{{fanshou}}</span></div>
 			<div class="info-title">个人信息</div>
-			<div class="info-item"><span class="item-title">打球经验</span><span class="info-text">2年</span></div>
-			<div class="info-item"><span class="item-title">打球目的</span><span class="info-text">锻炼身体、结识朋友</span></div>
-			<div class="info-item"><span class="item-title">常打时段</span><span class="info-text">每天晚上下班后</span></div>
-			<div class="info-item"><span class="item-title">常打地点</span><span class="info-text">回龙观、立水桥、霍营</span></div>
+			<div class="info-item"><span class="item-title">打球经验</span><span class="info-text">{{ballage |  itemFormat:'ballage'}}</span></div>
+			<div class="info-item"><span class="item-title">打球目的</span><span class="info-text">{{purpose | itemFormat:'purpose'}}</span></div>
+			<div class="info-item"><span class="item-title">常打时段</span><span class="info-text">{{timePeriod | itemFormat:'timePeriod'}}</span></div>
+			<div class="info-item"><span class="item-title">常打地点</span><span class="info-text">{{oftenAddr | addrFormat}}</span></div>
 			<div class="info-item"><span class="item-title">约球日程</span><span class="info-text">最近一周内没有计划</span></div>
 			<div class="info-item"><span class="item-title">个人简介</span><span class="info-text">{{info}}</span></div>
 		</div>
-		</script>
-		<script type="text/html" id="infoHead">
-		  <div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
-			<div class="info-item" style="padding-top: 2px;">
-				<span class="info-text name">{{name}}</span>
-				<div style="height: 3px;"></div>
-				<span class="info-text sex">{{if sex==1}}男{{else}}女{{/if}}</span>
-				<span class="info-text age">{{age | ageFormat}}岁</span>
-				<div style="height: 3px;"></div>
-				<span class="info-text work">擅长{{if style == 0}}弧圈{{else if style == 1}}削球{{else if style==2}}推挡{{/if}}</span>
-				<span class="info-text work">影响力{{score}}</span>
-			</div>
 		</script>
 	</body>
 </html>
