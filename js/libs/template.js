@@ -12,7 +12,35 @@ template.helper('itemFormat', function (date,item) {
 			}
 		break;
 		case 'oftenAddr':
-			return "未完善";
+			if(!date){
+				return "未完善";
+			}else{
+				var areaArr,
+				area,
+				subArea,
+				oftenAddr='';
+				if(date.indexOf(',')>-1){
+					areaArr = date.split(',');
+					for(var i=0;i<areaArr.length;i++){
+						area= areaArr[i].split('|');
+						subArea = area[1].split('$');
+						for(var k=0;k<subArea.length;k++){
+							oftenAddr+=CONF.subArea[area[0]][k]+',';
+						}
+					}
+				}else{
+					area= often.split('|');
+					subArea = area[1].split('$');
+					for(var k=0;k<subArea.length;k++){
+						oftenAddr+=CONF.subArea[area[0]][k]+',';
+					}
+				}
+				if(oftenAddr){
+					oftenAddr=oftenAddr.substring(0,oftenAddr.length-1);
+				}
+				
+				return oftenAddr;
+			}
 		break;
 		default:
 			return CONF[item][date];
@@ -46,7 +74,4 @@ template.helper('dateFormat', function (date, format) {
         return all;
     });
     return format;
-});
-template.helper('addrFormat', function (date) {
-	return "未完善";
 });

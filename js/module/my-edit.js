@@ -52,39 +52,37 @@ var MYEDIT = {
 			},{title:"请选择日期",date:ageDate,minDate:minDate,maxDate:maxDate});
 	},
 	showMyEditItem: function(index) {
-		if (window.plus) {
-			
-			var openwn = plus.webview.create('my-edit-item.html','my-edit-item', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-right", 150);
-				var data =  plus.storage.getItem('myEdit');
-				openwn.evalJS('MYEDITITEM.init(' + data + ','+index+')')
-			})
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('my-edit-item.html');
+		var data =  plus.storage.getItem('myEdit');
+		if(index != 6){
+			if (window.plus) {
+				var openwn = plus.webview.create('my-edit-item.html','my-edit-item', {
+					scrollIndicator: 'none',
+					scalable: false
+				});
+				openwn.addEventListener("loaded", function() {
+					openwn.show("slide-in-right", 150);
+					openwn.evalJS('MYEDITITEM.init(' + data + ','+index+')')
+				})
+			} else {
+				var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+				rootView.open('my-edit-item.html');
+			}
+		}else{
+			if (window.plus) {
+				var openwn = plus.webview.create('my-oftenAddr.html','my-oftenAddr', {
+					scrollIndicator: 'none',
+					scalable: false
+				});
+				openwn.addEventListener("loaded", function() {
+					openwn.show("slide-in-right", 150);
+					openwn.evalJS('MYOFTENADDR.init(' + data + ')')
+				})
+			} else {
+				var rootView = plus.webview.getWebviewById(plus.runtime.appid);
+				rootView.open('my-oftenAddr.html');
+			}
 		}
-	},
-	showMyEditoftenAddr: function() {
-		if (window.plus) {
-			
-			var openwn = plus.webview.create('my-edit-oftenAddr.html','my-edit-oftenAddr', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-right", 150);
-				var data =  plus.storage.getItem('myEdit');
-				openwn.evalJS('MYEDITOFTENADDR.init(' + data + ')')
-			})
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('my-edit-oftenAddr.html');
-		}
-	},
+	}
 }
 
 

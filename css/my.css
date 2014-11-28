@@ -55,6 +55,9 @@ li:active {
 .item-title {
 	color: #202020;
 }
+.text-flow{
+	overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width: 70%;text-align: right;
+}
 @media screen and (max-device-width: 1200px) {
 	.info-title {
 		height: 40px;

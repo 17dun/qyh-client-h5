@@ -106,6 +106,9 @@ header {
 	display: table-cell;
 	float: right;
 }
+.span-label{
+	border: none;background:#028CE6;color: #fff;float: left;text-align: center;margin: 5px;padding: 8px;
+}
 @media screen and (max-device-width: 1200px) {
 	.info-title {
 		height: 40px;
@@ -136,6 +139,9 @@ header {
 .item-row-end{
 	height: 50px;line-height: 50px;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;
 }
+.nonebottom{
+	border-bottom:none;
+}
 .span-title{
 	display: inline-block;margin-left: 10px;font:italic bold 18px arial;
 }
@@ -143,6 +149,7 @@ header {
 .imgab{height: 20px;width: 18px;}
 .block{display:block;}
 #edit-item{background: #fff;border-radius: 10px;margin: 0;border: 1px solid #EAEAEA;}
+
 @media screen and (max-device-width: 970px) {
 	.info-head {
 		height: 75px;

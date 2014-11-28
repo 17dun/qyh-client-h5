@@ -3,6 +3,7 @@ var MYEDITITEM = {
 	dataArrEN:['sex','ballage','style','paixing','purpose','timePeriod'],
 	init: function(data,index) {
 		data=data;
+		this.initEvent();
 		this.render(data,index);
 		this.bindEvent();
 	},
@@ -14,13 +15,14 @@ var MYEDITITEM = {
 		$('#myhead').html(dataArrCN[index]);
 		len = itemArr.length;
 		for(var i =0;i<len;i++){
-			var active = data[0][MYEDITITEM.dataArrEN[index]]==i?'block':'';
-			str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance'><img class='imgab' src='img/ab1.png' /></span></div>"
+			var active = data[0][MYEDITITEM.dataArrEN[index]]==i?'block':'',
+			bottom = i==len-1?'nonebottom':'';
+			
+			str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance "+bottom+"'><img class='imgab' src='img/ab1.png' /></span></div>"
 		}
 		$('#edit-item').html(str);
 	},
-
-	bindEvent: function() {
+	initEvent:function(){
 		window.back = function() {
 			ws = plus.webview.currentWebview();
 			if (window.plus) {
@@ -37,6 +39,8 @@ var MYEDITITEM = {
 		plus.key.addEventListener("backbutton", function() {
 			back();
 		}, false);
+	},
+	bindEvent: function() {
 		$('.info-item').on('click',function(){
 			data =JSON.parse(plus.storage.getItem('myEdit'));
 			data[0][MYEDITITEM.dataArrEN[$(this).data('index')]]=$(this).data('item');

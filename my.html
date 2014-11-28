@@ -43,7 +43,18 @@
 			<div class="info-title">个人信息</div>
 			<div class="info-item"><span class="item-title">打球目的</span><span class="info-text">{{purpose | itemFormat:'purpose'}}</span></div>
 			<div class="info-item"><span class="item-title">常打时段</span><span class="info-text">{{timePeriod | itemFormat:'timePeriod'}}</span></div>
-			<div class="info-item"><span class="item-title">常打地点</span><span class="info-text">{{oftenAddr | addrFormat}}</span></div>
+			
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">常打地点</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span class="text-flow" style="display: table-cell;float: right;margin-right: 10px;">
+						{{oftenAddr | itemFormat:'oftenAddr'}}
+					</span>
+				</div>
+			</div>
 			<div class="info-item"><span class="item-title">约球日程</span><span class="info-text">最近一周内没有计划</span></div>
 			<div class="info-item"><span class="item-title">个人简介</span><span class="info-text">{{info}}</span></div>
 		</div>
