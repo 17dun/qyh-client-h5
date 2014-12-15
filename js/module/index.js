@@ -1,11 +1,15 @@
+/*
+ *index只管底部的按钮，全局的事件和全局的设置
+ * */
+
 var INDEX = {
-	ws : null,
-	list : null,
-	currentView : 'meet',
+	webview : null,
+	subView : null,
+	currentViewId : 'meet',
 	init : function(){
 		plus.navigator.setStatusBarBackground("#028ce6");
 		plus.navigator.closeSplashscreen();
-		this.ws = plus.webview.currentWebview();
+		this.webview = plus.webview.currentWebview();
 		this.bindEvent();
 		this.renderFirstPage();
 	},
@@ -21,63 +25,44 @@ var INDEX = {
 			return false;
 		};
 
-		$('.edit').on('click', function() {
-			plus.webview.getWebviewById('my').evalJS("MY.editMy();");
-		});
-		
-		$('.position').on('click', function() {
-			plus.webview.getWebviewById('meet').evalJS("MEET.init()");
-		})
-
 		$('.nav-item').on('click', function() {
-			$('.nav-item').removeClass('active');
-			$(this).addClass('active');
-			var item = $(this).attr('data-id');
-			me.changeTitle(item);
-			me.changeToolBtn(item);
-				if (!plus.webview.getWebviewById(item)) {
-					if (item == 'meet'||item == 'my') {
-						var myView = plus.webview.create(item + '.html', item, {
-							top: '45px',
-							bottom: '50px'
-						});
-					} else {
-						var myView = plus.webview.create(item + '.html', item, {
-							top: '45px',
-							bottom: '50px',
-							bounce: 'vertical'
-						});
-					}
-					me.ws.append(myView);
-				} else {
-					var myView = plus.webview.getWebviewById(item);
-					if (item == 'meet') {
-						myView.evalJS('ADDR.centerAndZoom()');
-					}
-				}
-				plus.webview.hide(plus.webview.getWebviewById(me.currentView));
-				myView.show("none");
-				me.currentView = item;
+			me.showPage($(this));
 		})
+	},
+	showPage : function($item){
+		var me = this;
+		$('.nav-item').removeClass('active');
+		$item.addClass('active');
+		var itemId = $item.data('id');
+		var itemBounce = $item.data('bounce');
+		//如果不存在该webview，则创建之
+		if (!plus.webview.getWebviewById(itemId)) {
+			alert(me.currentViewId);
+			var myView = plus.webview.create(itemId + '.html', itemId, {
+				top: '45px',
+				bottom: '50px',
+				bounce: itemBounce
+			});
+			me.webview.append(myView);
+		}else {
+			var myView = plus.webview.getWebviewById(itemId);
+			if (itemId == 'meet') {
+				myView.evalJS('ADDR.centerAndZoom()');
+			}
+		}
+		plus.webview.hide(plus.webview.getWebviewById(me.currentViewId));
+		myView.show("none");
+		me.currentViewId = itemId;
 	},
 	renderFirstPage : function(){
 		var me = this;
-		me.list = plus.webview.create('meet.html', 'meet', {
-			top: '45px',
+		me.subView = plus.webview.create('meet.html', 'meet', {
+			top: '0px',
 			bottom: '50px'
 		});
-		me.list.addEventListener("loaded", function() {		
-			me.ws.append(me.list);
+		me.subView.addEventListener("loaded", function() {		
+			me.webview.append(me.subView);
 		}, false);
-
-	},
-	changeTitle : function(item){
-		var titleConf = CONF.title;
-		$('.nvtt').html(titleConf[item]);
-	},
-	changeToolBtn : function(item){
-		$('.nvbtrbt').hide();
-		$('.'+item+'-btn').show();
 	}
 }
 

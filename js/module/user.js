@@ -11,13 +11,6 @@ var USER = {
 		this.setFresh();
 		localStorage.clear();
 		this.getNewList();
-		/*var htmlStr = plus.storage.getItem('userList');
-		
-		if (htmlStr) {
-			this.rendlocal();
-		} else {
-			this.getNewList();
-		}*/
 	},
 
 	bindEvent: function() {

@@ -7,6 +7,7 @@ $(function() {
 		}, false);
 	}
 })
+
 var MEET = {
 	point: null,
 	map: null,
@@ -38,8 +39,8 @@ var MEET = {
 				offset: new BMap.Size(-15, 18)
 			});
 			marker.setLabel(label);
-			me.getPlaceData();
-			me.getUserListData();
+			//me.getPlaceData();
+			//me.getUserListData();
 		}, null, {
 			coordsType: 'bd09ll'
 		})

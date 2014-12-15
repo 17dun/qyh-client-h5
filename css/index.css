@@ -1,26 +1,3 @@
-li {
-	padding: 0.8em;
-	border-bottom: 1px solid #eaeaea;
-}
-li:active {
-	background: #f4f4f4;
-}
-.item {
-	display: block;
-	background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HSzuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCrroWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAABFcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBboK1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==);
-	background-size: 12px 22px;
-	-ms-touch-action: auto;
-}
-.chs {
-	font-size: 0.8em;
-	color: #838383;
-}
-header {
-	background: #028ce6;
-	color: #FFFFFF;
-	height: 45px;
-	line-height: 45px;
-}
 footer {
 	color: #9F9F9F;
 	width: 100%;
