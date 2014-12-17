@@ -128,12 +128,6 @@ header {
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
 }
-header {
-	background: #028ce6;
-	color: #FFFFFF;
-	height: 45px;
-	line-height: 45px;
-}
 .arrow-right{
 	width: 7px; height: 11px;
 }
