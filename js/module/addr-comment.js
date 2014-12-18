@@ -59,19 +59,4 @@ var ADDRComment = {
 	}
 }
 
-function plusReady() {
-
-}
-
-function commentPageInit(data) {
-	$(function() {
-		FastClick.attach(document.body);
-		if (window.plus) {
-			ADDRComment.init(data);
-		} else {
-			document.addEventListener("plusready", function() {
-				ADDRComment.init(data)
-			}, false);
-		}
-	})
-}
+APP.run(function(){ADDRComment.init()});

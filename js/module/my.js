@@ -54,13 +54,4 @@ var MY = {
 	}
 }
 
-$(function() {
-	FastClick.attach(document.body);
-	if (window.plus) {
-		MY.init();
-	} else {
-		document.addEventListener("plusready", function() {
-			MY.init()
-		}, false);
-	}
-})
+APP.run(function(){MY.init()});

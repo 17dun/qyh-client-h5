@@ -1,12 +1,3 @@
-$(function() {
-	if (window.plus) {
-			MEET.init();
-	} else {
-		document.addEventListener("plusready", function() {
-			MEET.init();
-		}, false);
-	}
-})
 var MEET = {
 	point: null,
 	map: null,
@@ -23,6 +14,7 @@ var MEET = {
 			me.map = null;
 		}
 		plus.geolocation.getCurrentPosition(function(pos) {
+			
 			var centerPoint = new BMap.Point(pos.coords.longitude, pos.coords.latitude);
 			me.point = centerPoint;
 			var map = new BMap.Map("container");
@@ -40,9 +32,10 @@ var MEET = {
 			marker.setLabel(label);
 			me.getPlaceData();
 			me.getUserListData();
-		}, null, {
-			coordsType: 'bd09ll'
-		})
+		}, function(e){console.log(e.message)}, {
+			coordsType: 'bd09ll',
+			provider:'baidu'
+		});
 	},
 	
 	//重新定位
@@ -202,7 +195,7 @@ var MEET = {
 					var content = '<div ontouchend="MEET.showUserInfo($(this))" class="user-card clearfix" data-pic="' + item.pic + '" data-id="' + item.id + '" data-name="' + item.name + '" data-sex="' + item.sex + '" data-age="' + item.age + '" data-ballage="' + item.ballage + '">';
 					content += '<img style="border-radius:10px;width:50px;height:50px;"  class="item-col" src="' + CONF.staticServer + '/images/' + item.pic + '">';
 					content += '<div class="item-col" style="margin-left:0.5em;width:150px;">';
-					content += '性别:' + CONF.sex[item.sex] + ' 年龄:' + formatAge(item.age) + '岁</br>';
+					content += '性别:' + CONF.sex[item.sex] + ' 年龄:' + APP.formatAge(item.age) + '岁</br>';
 					content += '惯用:' + CONF.paixing[item.paixing] + ' 擅长:' + CONF.style[item.style];
 					content += '</div><div class="item-col user-card-bk"></div></div>';
 
@@ -235,3 +228,5 @@ var MEET = {
 		return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 	}
 }
+
+APP.run(function(){MEET.init();})

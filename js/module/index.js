@@ -3,7 +3,6 @@ var INDEX = {
 	list : null,
 	currentView : 'meet',
 	init : function(){
-		plus.navigator.setStatusBarBackground("#028ce6");
 		plus.navigator.closeSplashscreen();
 		this.ws = plus.webview.currentWebview();
 		this.bindEvent();
@@ -11,53 +10,44 @@ var INDEX = {
 	},
 	bindEvent : function(){
 		var me = this;
-		FastClick.attach(document.body);
-		plus.key.addEventListener("backbutton", function() {
-			if (confirm("确认退出？")) {
-				plus.runtime.quit();
-			}
-		}, false);
-		document.oncontextmenu = function() {
-			return false;
-		};
-
+		//我的页面顶部按钮
 		$('.edit').on('click', function() {
 			plus.webview.getWebviewById('my').evalJS("MY.editMy();");
 		});
-		
+		//约球页面顶部定位
 		$('.position').on('click', function() {
 			plus.webview.getWebviewById('meet').evalJS("MEET.init()");
 		})
-
+		//底部tab切换
 		$('.nav-item').on('click', function() {
+			var item = $(this).attr('data-id');
+			if(item==me.currentView){
+				return false;
+			}
 			$('.nav-item').removeClass('active');
 			$(this).addClass('active');
-			var item = $(this).attr('data-id');
-			me.changeTitle(item);
-			me.changeToolBtn(item);
-				if (!plus.webview.getWebviewById(item)) {
-					if (item == 'meet'||item == 'my') {
-						var myView = plus.webview.create(item + '.html', item, {
-							top: '45px',
-							bottom: '50px'
-						});
-					} else {
-						var myView = plus.webview.create(item + '.html', item, {
-							top: '45px',
-							bottom: '50px',
-							bounce: 'vertical'
-						});
-					}
-					me.ws.append(myView);
+			me.freshTitle(item);
+			me.freshToolBtn(item);
+			if (!plus.webview.getWebviewById(item)) {
+				if (item == 'meet'||item == 'my') {
+					var myView = plus.webview.create(item + '.html', item, {
+						top: '45px',
+						bottom: '50px'
+					});
 				} else {
-					var myView = plus.webview.getWebviewById(item);
-					if (item == 'meet') {
-						myView.evalJS('ADDR.centerAndZoom()');
-					}
+					var myView = plus.webview.create(item + '.html', item, {
+						top: '45px',
+						bottom: '50px',
+						bounce: 'vertical'
+					});
 				}
-				plus.webview.hide(plus.webview.getWebviewById(me.currentView));
-				myView.show("none");
-				me.currentView = item;
+				me.ws.append(myView);
+			} else {
+				var myView = plus.webview.getWebviewById(item);
+			}
+			plus.webview.hide(plus.webview.getWebviewById(me.currentView));
+			myView.show("none");
+			me.currentView = item;
 		})
 	},
 	renderFirstPage : function(){
@@ -71,22 +61,14 @@ var INDEX = {
 		}, false);
 
 	},
-	changeTitle : function(item){
+	freshTitle : function(item){
 		var titleConf = CONF.title;
 		$('.nvtt').html(titleConf[item]);
 	},
-	changeToolBtn : function(item){
+	freshToolBtn : function(item){
 		$('.nvbtrbt').hide();
 		$('.'+item+'-btn').show();
 	}
 }
 
-$(function() {
-	if (window.plus) {
-		INDEX.init();
-	}else{
-		$(document).on('plusready', function() {
-			INDEX.init()
-		});
-	}
-})
+APP.run(function(){INDEX.init();})

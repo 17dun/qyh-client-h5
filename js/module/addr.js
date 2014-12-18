@@ -104,19 +104,4 @@ var ADDR = {
 	}
 }
 
-$(function() {
-	FastClick.attach(document.body);
-	document.addEventListener("touchstart", function() {
-		return false;
-	}, false); //取消浏览器的所有事件，使得active的样式在手机上正常生效
-	document.oncontextmenu = function() {
-		return false;
-	};
-	if (window.plus) {
-		ADDR.init();
-	} else {
-		$(document).on('plusready', function() {
-			ADDR.init()
-		});
-	}
-})
+APP.run(function(){ADDR.init()});
