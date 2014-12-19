@@ -13,11 +13,12 @@
 	</head>
 
 	<body>
-		<div id="wrap">
-			<div class="loading"></div>
-			<ul id="list" style="display:none;"></ul>
-		</div>
-		<script id="test" type="text/html">
+		<div class="info-content">
+			<div id="wrap">
+				<div class="loading"></div>
+				<ul id="list" style="display:none;"></ul>
+			</div>
+			<script id="test" type="text/html">
 			{{each list}}
 			<li class="data-item" data-score="{{$value.score}}" data-pic="{{$value.pic}}" data-style="{{$value.style}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-ballage="{{$value.ballage}}">
 				<div class="item clearfix">
@@ -56,5 +57,6 @@
 			</li>
 			{{/each}}
 		</script>
+		</div>
 	</body>
 </html>

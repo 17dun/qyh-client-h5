@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<link rel="stylesheet" href="css/core.css" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="css/my-edit.css"/>
+		<script src="js/core.js" type="text/javascript"></script>
+		<script src="js/module/meet-form.js" type="text/javascript"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="nvbt iback-cancel" ontouchend="window.close();"></div>
+			<div class="nvtt myedit-head">我要约球</div>
+			<div class="nvbt nvbtr btn-nav-submit" >提交</div>
+		</header>
+		<div class="info">
+		</div>
+		<div class="info-content info-body">
+			<div class="info-title">基本信息</div>
+			<div class="info-item info-time">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					时间
+				</div>
+				<div style="width: 60%;float: right;" >
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<input id="val-time" type="datetime" class="datetime" />
+				</div>
+			</div>
+			<div class="info-item info-addr" >
+				<div style="width: 30%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					地点</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-addr">不限</span>
+					</span>
+					
+				</div>
+			</div>
+			<div class="info-item info-type"  onclick="MEETFORM.showMeetSelectItem(0)">
+				<div style="width: 30%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					类型</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-type">自由打、比赛</span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-type"  onclick="MEETFORM.showMeetSelectItem(1)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					赛制</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-type">单打 双打 </span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-sex"  onclick="MEETFORM.showMeetSelectItem(2)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					性别要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-sex">男、女、不限</span>
+					</span>
+					
+				</div>
+			</div>
+			<div class="info-item info-age" onclick="MEETFORM.showMeetSelectItem(3)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					年龄要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-sex">20岁以下<!--、20-30、30-40、40以上--></span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-ballneed" onclick="MEETFORM.showMeetSelectItem(4)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					球技要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-ballneed">初学者<!--、会推挡、会抽球、高手--></span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-addrcost" onclick="MEETFORM.showMeetSelectItem(5)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					场地费</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-addrcost">免费<!--、AA、发起者付、赴约者付 、如果是比赛的话（输者付）--></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div style="padding: 10px 0;">
+			<div class="info-title" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;">
+				提 交
+			</div>
+		</div>
+	</body>
+</html>

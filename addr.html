@@ -14,9 +14,10 @@
 		<script src="js/module/addr.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<ul id="list">
-		</ul>
-		<script id="test" type="text/html">
+		<div class="info-content">
+			<ul id="list">
+			</ul>
+			<script id="test" type="text/html">
 			{{each list}}
 			<li class="data-item" data-addr="{{$value.addr}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-city="{{$value.city}}">
 				<div class="item clearfix">
@@ -43,5 +44,6 @@
 			</li>
 			{{/each}}
 		</script>
+		</div>
 	</body>
 </html>

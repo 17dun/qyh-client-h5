@@ -2,11 +2,9 @@ li {
 	padding: 0.5em;
 	border-bottom: 1px solid #eaeaea;
 }
-li:active {
+li:active,input.active {
 	background: #f4f4f4;
 }
-
-
 header {
 	background: #028ce6;
 	color: #FFFFFF;
@@ -119,6 +117,7 @@ header {
 		border: 1px solid #eee;
 	}
 	.info-body .info-item,.info-body .info-item-input,.info-item-read{
+		background: #fff;
 		height: 40px;
 		line-height: 40px;
 		border-bottom: 1px solid #eee;
@@ -178,8 +177,11 @@ header {
 .info-body .info-text {
 	float: right
 }
-.info-item:active {
+.info-item:active,#val-time:active{
 	background: #CCCCCC;
+}
+.datetime {
+	width: 85%;height: 30px;text-align: right; border: none;-webkit-appearance: none;
 }
 .loading {
 	width: 70px;
