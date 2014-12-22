@@ -1,8 +1,7 @@
 var MEETITEM = {
-	data:null,
-	dataArrEN:['sex','ballage','style','paixing','purpose','timePeriod'],
+	dataArrEN:['type_damend','sex_damend','age_damend','skills_damend','site_fee'],
 	init: function(data,index) {
-		data=data;
+		data = data;
 		this.initEvent();
 		this.render(data,index);
 		this.bindEvent();
@@ -10,20 +9,17 @@ var MEETITEM = {
 	render: function(data,index) {
 		var str="",
 		len=0,
-		dataArrCN=['类型','球龄','擅长','拍型','打球目的','常打时段'];
+		dataArrCN=['类型','赛制','性别要求','年龄要求','球技要求','场地费'];
 		itemArr=CONF[MEETITEM.dataArrEN[index]];
 		$('#myhead').html(dataArrCN[index]);
 		len = itemArr.length;
-		
 		for(var i =0;i<len;i++){
-			var active = data[0][MEETITEM.dataArrEN[index]]==i?'block':'',
-			bottom = i==len-1?'nonebottom':'';
-			
+			var active = data[MEETITEM.dataArrEN[index]]==i?'block':'';
+			var bottom = i==len-1?'nonebottom':'';
 			str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance "+bottom+"'><img class='imgab' src='img/ab1.png' /></span></div>"
+			
 		}
-		alert(str)
-		$('#select-item').html(str);
-		
+		$('#chance-item').html(str);
 	},
 	initEvent:function(){
 		window.back = function() {
@@ -46,13 +42,11 @@ var MEETITEM = {
 	bindEvent: function() {
 		$('.info-item').on('click',function(){
 			data =JSON.parse(plus.storage.getItem('meet-form'));
-			data[0][MEETITEM.dataArrEN[$(this).data('index')]]=$(this).data('item');
+			data[MEETITEM.dataArrEN[$(this).data('index')]]=$(this).data('item');
 			plus.storage.setItem('meet-form',JSON.stringify(data));
-			data =JSON.parse(plus.storage.getItem('meet-form'));
 			plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150);
 			plus.webview.getWebviewById('meet-form').evalJS('MEETFORM.init(' +JSON.stringify(data) + ')');
 		});
-		
 	}
 }
 

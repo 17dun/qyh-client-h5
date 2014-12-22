@@ -20,7 +20,7 @@ var MYEDITITEM = {
 			
 			str += "<div class='info-item item-row' data-index='"+index+"' data-item='"+i+"'><span class='span-title'>"+itemArr[i]+"</span><span class='"+active+" span-chance "+bottom+"'><img class='imgab' src='img/ab1.png' /></span></div>"
 		}
-		$('#edit-item').html(str);
+		$('#chance-item').html(str);
 	},
 	initEvent:function(){
 		window.back = function() {

@@ -43,7 +43,7 @@ var MEET = {
 		
 	},
 	bindEvent: function() {
-		$(document).on('click','#btn_meet',function(){
+		$(document).on('click',function(){
 			MEET.showMeetForm();
 		})
 	},

@@ -147,7 +147,7 @@ header {
 .span-chance{display: none;float: right;margin-right: 10px;}
 .imgab{height: 20px;width: 18px;}
 .block{display:block;}
-#edit-item{background: #fff;border-radius: 10px;margin: 0;border: 1px solid #EAEAEA;}
+#chance-item{background: #fff;border-radius: 10px;margin: 0;border: 1px solid #EAEAEA;}
 
 @media screen and (max-device-width: 970px) {
 	.info-head {

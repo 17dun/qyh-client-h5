@@ -16,10 +16,12 @@
 		<header>
 			<div class="nvbt iback-cancel" ontouchend="window.close();"></div>
 			<div class="nvtt myedit-head">我要约球</div>
-			<div class="nvbt nvbtr btn-nav-submit" >提交</div>
+			<div class="nvbt nvbtr btn-nav-submit meet-submit" onclick="MEETFORM.setMeet()">提交</div>
 		</header>
 		<div class="info">
 		</div>
+		
+	<script type="text/html" id="meetFormTpl">
 		<div class="info-content info-body">
 			<div class="info-title">基本信息</div>
 			<div class="info-item info-time">
@@ -31,7 +33,7 @@
 					<span style="display: table-cell;float: right;width:7px;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
-					<input id="val-time" type="datetime" class="datetime" />
+					<input id="val-time" type="datetime" class="datetime" value="{{time}}" />
 				</div>
 			</div>
 			<div class="info-item info-addr" >
@@ -43,12 +45,20 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-addr">不限</span>
+						<span id="val-addr">{{add_id}}</span>
 					</span>
 					
 				</div>
 			</div>
-			<div class="info-item info-type"  onclick="MEETFORM.showMeetSelectItem(0)">
+			<div class="info-item info-peopleNum">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					人数</div>
+				<div style="width: 60%;float: right;">
+					<input type="number" id="val-peopleNum" class="input-row" value="{{people_num}}" />
+				</div>
+			</div>
+			<div class="info-item info-type"  onclick="MEETFORM.showMeetFormItem(0)">
 				<div style="width: 30%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					类型</div>
@@ -57,24 +67,11 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-type">自由打、比赛</span>
+						<span id="val-type">{{type_damend | itemFormat : 'type_damend'}}</span>
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-type"  onclick="MEETFORM.showMeetSelectItem(1)">
-				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
-					赛制</div>
-				<div style="width: 60%;float: right;">
-					<span style="display: table-cell;float: right;">
-						<img class="arrow-right" src="img/arrow_right.png" />
-					</span>
-					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-type">单打 双打 </span>
-					</span>
-				</div>
-			</div>
-			<div class="info-item info-sex"  onclick="MEETFORM.showMeetSelectItem(2)">
+			<div class="info-item info-sex"  onclick="MEETFORM.showMeetFormItem(1)">
 				<div style="width: 40%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					性别要求</div>
@@ -83,12 +80,12 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-sex">男、女、不限</span>
+						<span id="val-sex">{{sex_damend | itemFormat : 'sex_damend'}}</span>
 					</span>
 					
 				</div>
 			</div>
-			<div class="info-item info-age" onclick="MEETFORM.showMeetSelectItem(3)">
+			<div class="info-item info-age" onclick="MEETFORM.showMeetFormItem(2)">
 				<div style="width: 40%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					年龄要求</div>
@@ -97,11 +94,11 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-sex">20岁以下<!--、20-30、30-40、40以上--></span>
+						<span id="val-sex">{{age_damend | itemFormat : 'age_damend'}}</span>
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-ballneed" onclick="MEETFORM.showMeetSelectItem(4)">
+			<div class="info-item info-ballneed" onclick="MEETFORM.showMeetFormItem(3)">
 				<div style="width: 40%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					球技要求</div>
@@ -110,11 +107,11 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-ballneed">初学者<!--、会推挡、会抽球、高手--></span>
+						<span id="val-ballneed">{{skills_damend | itemFormat : 'skills_damend'}}</span>
 					</span>
 				</div>
 			</div>
-			<div class="info-item info-addrcost" onclick="MEETFORM.showMeetSelectItem(5)">
+			<div class="info-item info-addrcost" onclick="MEETFORM.showMeetFormItem(4)">
 				<div style="width: 40%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					场地费</div>
@@ -123,15 +120,16 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-addrcost">免费<!--、AA、发起者付、赴约者付 、如果是比赛的话（输者付）--></span>
+						<span id="val-addrcost">{{site_fee | itemFormat : 'site_fee'}}</span>
 					</span>
 				</div>
 			</div>
 		</div>
 		<div style="padding: 10px 0;">
-			<div class="info-title" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;">
+			<div class="info-title" onclick="MEETFORM.setMeet()" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;">
 				提 交
 			</div>
 		</div>
+		</script>
 	</body>
 </html>
