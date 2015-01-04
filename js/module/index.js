@@ -4,6 +4,7 @@ var INDEX = {
 	currentView : 'meet',
 	init : function(){
 		plus.navigator.closeSplashscreen();
+		plus.navigator.setStatusBarBackground('#028ce6');
 		this.ws = plus.webview.currentWebview();
 		this.bindEvent();
 		this.renderFirstPage();

@@ -12,12 +12,15 @@
 	},
 	init : function(){
 		this.run(function(){
+			//快速点击
 			FastClick.attach(document.body);
+			//绑定退出键
 			plus.key.addEventListener("backbutton", function() {
 				if (confirm("确认退出？")) {
 					plus.runtime.quit();
 				}
 			}, false);
+			//去除默认菜单
 			document.oncontextmenu = function() {
 				return false;
 			};

@@ -43,33 +43,19 @@ var MEET = {
 		
 	},
 	bindEvent: function() {
-		$(document).on('click',function(){
+		$('#btn_meet').on('click',function(){
 			MEET.showMeetForm();
 		})
 	},
 	showMeetForm: function() {
-		if (this.hasOpen) {
-			return;
-		}
-		if (window.plus) {
-			var openwn = plus.webview.create('meet-form.html', 'meet-form', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-bottom", 150);
-				openwn.evalJS('MEETFORM.init()')
-			})
-
-			USER.hasOpen = true;
-			openwn.addEventListener("close", function() { //页面关闭后可再次打开
-
-				USER.hasOpen = false;
-			}, false);
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('meet-form.html');
-		}
+		var openwn = plus.webview.create('meet-form.html', 'meet-form', {
+			scrollIndicator: 'none',
+			scalable: false
+		});
+		openwn.addEventListener("loaded", function() {
+			openwn.show("slide-in-bottom", 150);
+			openwn.evalJS('MEETFORM.init()')
+		});
 	},
 	
 	showUserInfo: function($item) {
