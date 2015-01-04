@@ -49,6 +49,9 @@ template.helper('itemFormat', function (date,item) {
 });
 
 template.helper('dateFormat', function (date, format) {
+	if(!date){
+		return '';
+	}
     date = new Date(date-0);
     var map = {
         "M": date.getMonth() + 1, //月份 

@@ -1,5 +1,5 @@
 var MEETITEM = {
-	dataArrEN:['type_damend','sex_damend','age_damend','skills_damend','site_fee'],
+	dataArrEN:['type_demand','sex_demand','age_demand','skills_demand','site_fee'],
 	init: function(data,index) {
 		data = data;
 		this.initEvent();

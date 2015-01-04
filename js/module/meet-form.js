@@ -2,29 +2,31 @@ var MEETFORM = {
 	hasOpenSex:false,
 	init: function(data) {
 		this.bindEvent();
-		this.render(data);
+		this.render();
 	},
-	render: function(data) {
-		var default_data = {
-			'user_id':2,
-			'add_id':'',
-			'time':'12313132132',
-			'people_num':2,
-			'type_damend':0,
-			'sex_damend':0,
-			'age_damend':0,
-			'skills_damend':0,
-			'site_fee':0
-		};
-		data = data == null?default_data:data;
-		
-		var htmlStr = template('meetFormTpl', data);
+	render: function() {
+		if(plus.storage.getItem('meet-form')==null){
+			var default_data = {
+				'user_id':2,
+				'add_id':'',
+				'time':'',
+				'people_num':2,
+				'type_demand':0,
+				'sex_demand':0,
+				'age_demand':0,
+				'skills_demand':0,
+				'site_fee':0
+			};
+			plus.storage.setItem('meet-form',JSON.stringify(default_data));
+		}
+		var meet =JSON.parse(plus.storage.getItem('meet-form'));
+		var htmlStr = template('meetFormTpl', meet);
 		$('.info').html(htmlStr);
-		plus.storage.setItem('meet-form',JSON.stringify(data));
 	},
 
 	bindEvent: function() {
 		window.back = function() {
+			plus.storage.setItem('meet-form','');
 			ws = plus.webview.currentWebview();
 			if (window.plus) {
 				ws.close();
@@ -35,25 +37,27 @@ var MEETFORM = {
 			}
 		};
 		window.close = function() {
+			plus.storage.setItem('meet-form','');
 			ws = plus.webview.currentWebview();
 			ws.close();
 		};
 		$(document.body).on('swipeRight', function() {
+			plus.storage.setItem('meet-form','');
 			plus.webview.currentWebview().close()
 		})
 		plus.key.addEventListener("backbutton", function() {
+			plus.storage.setItem('meet-form','');
 			back();
 		}, false);
 	},
 	setMeet: function(){
 		var meet =JSON.parse(plus.storage.getItem('meet-form'));
-		var data = '&user_id=2&addr_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_damend=" + meet.type_damend+ "&sex_damend=" + meet.sex_damend+ "&age_damend=" + meet.age_damend+ "&skills_damend=" + meet.skills_damend+ "&site_fee=" + meet.site_fee;
+		var data = '&user_id=2&addr_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
 		var url = encodeURI(CONF.apiServer + '/?method=setMeet'+data);
-		alert(url)
 		var ajax = new plus.net.XMLHttpRequest();
 		ajax.onreadystatechange = function() {
-			alert(ajax.readyState+":"+ajax.status)
 			if (ajax.readyState == 4 && ajax.status == 200) {
+				plus.storage.setItem('meet-form','')
 				if (plus.os.name == "iOS") {
 					alert('约球成功');
 				} else {
@@ -79,15 +83,19 @@ var MEETFORM = {
 		},{title:"请选择日期",date:dDate,minDate:minDate});
 	},
 	pickTime:function (d){
+		alert(1)
 		var dTime=new Date();
 		dTime.setHours(dTime.getHours()+1,0);
 		plus.nativeUI.pickTime(function (e){
 			var t=e.date;
+			var data = JSON.parse(plus.storage.getItem('meet-form'));
+			var month = (d.getMonth()+1).toString().length==1 ? ('0' + (d.getMonth()+1)):(d.getMonth()+1);
+			var day = (d.getDate()).toString().length==1 ? ('0' + (d.getDate())):(d.getDate());
 			var minutes = t.getMinutes().toString().length==1 ? ('0' + t.getMinutes()):t.getMinutes();
-			var data = plus.storage.getItem('meet-form');
-			var time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+t.getHours()+":"+minutes;
+			var hour = (t.getHours()).toString().length==1 ? ('0' + (t.getHours())):(t.getHours());
+			var time = d.getFullYear()+'-'+month+'-'+day+' '+hour+":"+minutes;
 			data['time'] = time;
-			plus.storage.setItem('meet-form',data)
+			plus.storage.setItem('meet-form',JSON.stringify(data))
 			$('#val-time').html(time);
 		},function (e){
 			//outSet( "未选择时间："+e.message );

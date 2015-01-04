@@ -24,16 +24,17 @@
 	<script type="text/html" id="meetFormTpl">
 		<div class="info-content info-body">
 			<div class="info-title">基本信息</div>
-			<div class="info-item info-time">
-				<div style="width: 40%;float: left;color: #202020;">
+			<div class="info-item info-time"  onclick="MEETFORM.pickDate()">
+				<div style="width: 30%;float: left;color: #202020;">
 					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
-					时间
-				</div>
-				<div style="width: 60%;float: right;" >
-					<span style="display: table-cell;float: right;width:7px;">
+					时间</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
-					<input id="val-time" type="datetime" class="datetime" value="{{time}}" />
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-time">{{time}}</span>
+					</span>
 				</div>
 			</div>
 			<div class="info-item info-addr" >
@@ -67,7 +68,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-type">{{type_damend | itemFormat : 'type_damend'}}</span>
+						<span id="val-type">{{type_demand | itemFormat : 'type_demand'}}</span>
 					</span>
 				</div>
 			</div>
@@ -80,7 +81,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-sex">{{sex_damend | itemFormat : 'sex_damend'}}</span>
+						<span id="val-sex">{{sex_demand | itemFormat : 'sex_demand'}}</span>
 					</span>
 					
 				</div>
@@ -94,7 +95,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-sex">{{age_damend | itemFormat : 'age_damend'}}</span>
+						<span id="val-sex">{{age_demand | itemFormat : 'age_demand'}}</span>
 					</span>
 				</div>
 			</div>
@@ -107,7 +108,7 @@
 						<img class="arrow-right" src="img/arrow_right.png" />
 					</span>
 					<span style="display: table-cell;float: right;margin-right: 10px;">
-						<span id="val-ballneed">{{skills_damend | itemFormat : 'skills_damend'}}</span>
+						<span id="val-ballneed">{{skills_demand | itemFormat : 'skills_demand'}}</span>
 					</span>
 				</div>
 			</div>
