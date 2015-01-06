@@ -16,6 +16,10 @@ footer {
 	box-shadow: 0px 1px 6px #CCC;
 }
 
+header .nvbar{display:inline-block;text-decoration:none;width: 45%;color:#ccc}
+
+header .nvbar-active{color:#fff}
+
 footer .nav-item {
 	color: #666;
 	float: left;

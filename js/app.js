@@ -25,7 +25,36 @@
 				return false;
 			};
 		})
+		
 	},
+	//尝试根据id获取页面，如果没有则创建之并挂载到当前webview的父页面，并得到页面的引用
+	getPeerPageById : function(pageId,param){
+		var me = this;
+		if(plus.webview.getWebviewById(pageId)){
+			var webviewObj = plus.webview.getWebviewById(pageId);
+		}else{
+			var webviewObj = plus.webview.create(pageId + '.html', pageId, {
+				top: '45px',
+				bottom: '50px'
+			});
+			
+			plus.webview.currentWebview().append(webviewObj);
+		}
+		return webviewObj;
+	},
+	
+	//尝试根据id获取页面，如果没有则创建之并挂载到当前webview，并得到页面的引用
+	getSubPageById : function(pageId,param){
+		var me = this;
+		if(plus.webview.getWebviewById(pageId)){
+			var webviewObj = plus.webview.getWebviewById(pageId);
+		}else{
+			var webviewObj = plus.webview.create(pageId + '.html', pageId, param);
+			plus.webview.currentWebview().append(webviewObj);
+		}
+		return webviewObj;
+	},
+	
 	formatAge : function(date){
 		var newDate = new Date();
 	    var ageDate = new Date(date-0);

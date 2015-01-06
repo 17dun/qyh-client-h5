@@ -12,11 +12,24 @@ var INDEX = {
 	bindEvent : function(){
 		var me = this;
 		//我的页面顶部按钮
-		$('.edit').on('click', function() {
+		$(document).on('click','.edit', function() {
 			plus.webview.getWebviewById('my').evalJS("MY.editMy();");
 		});
+		
+		//附近的球友和附近的场地切换
+		$(document).on('click','.nvbar',function(){
+			var itemId = $(this).attr('data-id');
+			if(itemId!=='user'){
+				plus.webview.hide(plus.webview.getWebviewById('user'));
+				APP.getPeerPageById('addr').show("none");
+			}else{
+				plus.webview.hide(plus.webview.getWebviewById('addr'));
+				plus.webview.getWebviewById('user').show("none");
+			}
+		})
+		
 		//约球页面顶部定位
-		$('.position').on('click', function() {
+		$(document).on('click','.position',function() {
 			plus.webview.getWebviewById('meet').evalJS("MEET.init()");
 		})
 		//底部tab切换
@@ -28,7 +41,7 @@ var INDEX = {
 			$('.nav-item').removeClass('active');
 			$(this).addClass('active');
 			me.freshTitle(item);
-			me.freshToolBtn(item);
+			//me.freshToolBtn(item);
 			if (!plus.webview.getWebviewById(item)) {
 				if (item == 'meet'||item == 'my') {
 					var myView = plus.webview.create(item + '.html', item, {
@@ -60,16 +73,11 @@ var INDEX = {
 		me.list.addEventListener("loaded", function() {		
 			me.ws.append(me.list);
 		}, false);
-
+		me.freshTitle('meet');
 	},
-	freshTitle : function(item){
-		var titleConf = CONF.title;
-		$('.nvtt').html(titleConf[item]);
-	},
-	freshToolBtn : function(item){
-		$('.nvbtrbt').hide();
-		$('.'+item+'-btn').show();
+	freshTitle : function(itemId){
+		var headHttml = template(itemId,null)();
+		$('header').html(headHttml);
 	}
 }
-
 APP.run(function(){INDEX.init();})
