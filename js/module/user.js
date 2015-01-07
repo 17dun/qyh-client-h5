@@ -43,18 +43,17 @@ var USER = {
 		}, this.getNewList);
 	},
 
+	
 	getNewList: function() {
-
-		var ajax = new plus.net.XMLHttpRequest();
-		ajax.onreadystatechange = function() {
-			var user = USER;
-			if (ajax.readyState == 4 && ajax.status == 200) {
-
-				user.freshList(JSON.parse(ajax.responseText));
+		var me = this;
+		APP.ajax({
+			'url': CONF.apiServer + '/?method=getUserList',
+			'sucess':function(rt){
+				USER.freshList(JSON.parse(rt));
+			},
+			'fail':function(rt){
 			}
-		}
-		ajax.open("GET", CONF.apiServer + '/?method=getUserList');
-		ajax.send();
+		})
 	},
 
 	freshList: function(data) {
