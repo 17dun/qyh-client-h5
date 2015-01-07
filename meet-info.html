@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<link rel="stylesheet" href="css/core.css" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="css/user-info.css"/>
+		<script src="js/core.js" type="text/javascript"></script>
+		<script src="js/module/meet-info.js" type="text/javascript"></script>
+		
+	</head>
+	
+	<body>
+		<header>
+			<div class="nvbt iback-back" ontouchend="back();"></div>
+			<div class="nvtt">详细信息</div>
+		</header>
+	<div class="wrap">
+		<div class="info-content info-head">
+		</div>
+		<div class="info">
+		<div class="loading"></div>
+		</div>
+		<div class="info-content info-foot"><a class="add"  href="javascript:;">加为好友</a><a class="send"  href="javascript:;">发送消息</a></div>
+	</div>
+	<script type="text/html" id="infoHeadTpl">
+	  <div class="info-item"><img style="border-radius:10px" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
+		<div class="info-item" style="padding-top: 2px;">
+			<span class="info-text name">{{user_name}}</span>
+			<div style="height: 3px;"></div>
+			<span class="info-text-small sex">{{sex | itemFormat:'sex'}}</span>
+			<span class="info-text-small age"></span>
+			<div style="height: 3px;"></div>
+			<span class="info-text-small work">影响力:{{score}}</span>
+		</div>
+	</script>
+	<script type="text/html" id="meetInfoTpl">
+		<div class="info-content info-body">
+			<div class="info-title"></div>
+			<div class="info-item info-time"  onclick="MEETFORM.pickDate()">
+				<div style="width: 30%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					时间</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-time">{{time}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="info-title"></div>
+			<div class="info-item info-addr" >
+				<div style="width: 30%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					地点</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-addr">{{add_id}}</span>
+					</span>
+					
+				</div>
+			</div>
+			<div class="info-item info-peopleNum">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					人数</div>
+				<div style="width: 60%;float: right;">
+					<input type="number" id="val-peopleNum" class="input-row" value="{{people_num}}" />
+				</div>
+			</div>
+			<div class="info-item info-type"  onclick="MEETFORM.showMeetFormItem(0)">
+				<div style="width: 30%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					类型</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-type">{{type_demand | itemFormat : 'type_demand'}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-sex"  onclick="MEETFORM.showMeetFormItem(1)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					性别要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-sex">{{sex_demand | itemFormat : 'sex_demand'}}</span>
+					</span>
+					
+				</div>
+			</div>
+			<div class="info-item info-age" onclick="MEETFORM.showMeetFormItem(2)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					年龄要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-sex">{{age_demand | itemFormat : 'age_demand'}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-ballneed" onclick="MEETFORM.showMeetFormItem(3)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					球技要求</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-ballneed">{{skills_demand | itemFormat : 'skills_demand'}}</span>
+					</span>
+				</div>
+			</div>
+			<div class="info-item info-addrcost" onclick="MEETFORM.showMeetFormItem(4)">
+				<div style="width: 40%;float: left;color: #202020;">
+					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+					场地费</div>
+				<div style="width: 60%;float: right;">
+					<span style="display: table-cell;float: right;width:7px;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-addrcost">{{site_fee | itemFormat : 'site_fee'}}</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div style="padding: 10px 0;">
+			<div class="info-title" onclick="MEETFORM.setMeet()" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;font-size: 1.2em;">
+				发起球局
+			</div>
+		</div>
+		</script>
+	</body>
+</html>

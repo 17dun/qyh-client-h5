@@ -57,7 +57,6 @@
 
 	ajax:function(options){
 		
-		
 		var ajaxObj = new plus.net.XMLHttpRequest();
 
 		//超时时间设置
@@ -72,7 +71,7 @@
 		var paramStr = '';
 
 		//成功的回调
-		var sucess = options.sucess;
+		var sucess = options.success;
 
 		//失败的回调
 		var fail = options.fail;
@@ -83,7 +82,7 @@
 		ajaxObj.onreadystatechange = function() {
 			if (ajaxObj.readyState == 4) {
 				if(ajaxObj.status == 200){
-					sucess(ajaxObj.responseText);
+					success(ajaxObj.responseText);
 				}else{
 					fail(ajaxObj.statusText)
 				}
