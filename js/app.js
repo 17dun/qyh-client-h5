@@ -55,6 +55,46 @@
 		return webviewObj;
 	},
 
+	//公共的定位组件，输入地图渲染的div的ID：contentId，地图放大比例size,回调 sucess，失败回调fail
+	
+	initCurrentPosition :function(options){
+		var contentId = options.id;
+		var mapSize = options.size;
+		var success = options.success;
+		plus.geolocation.getCurrentPosition(function(pos) {
+			var centerPoint = new BMap.Point(pos.coords.longitude, pos.coords.latitude);
+			var map = new BMap.Map(contentId);
+			map.centerAndZoom(centerPoint, mapSize);
+			var myIcon = new BMap.Icon("img/point.png", new BMap.Size(20, 20));
+			myIcon.setImageSize(new BMap.Size(20, 20))
+			var marker = new BMap.Marker(centerPoint, {icon: myIcon});
+			map.addOverlay(marker);
+			var label = new BMap.Label("我的位置", {
+				offset: new BMap.Size(-15, 18)
+			});
+			marker.setLabel(label);
+			success({'centerPoint':centerPoint,'map':map});
+		}, null, {
+			coordsType: 'bd09ll',
+			provider:'baidu'
+		});
+	},
+	
+	
+	//将经纬度转换为像素点
+	lngLatToPoint : function(lngLat){
+		var projection = new BMap.MercatorProjection();
+		var point = projection.lngLatToPoint(lngLat);
+		return point;
+	},
+	
+	//将像素点转换为经纬度
+	pointToLngLat : function(point){
+		var projection = new BMap.MercatorProjection();
+		var lngLat = projection.pointToLngLat(point);
+		return lngLat;
+	},
+
 	ajax:function(options){
 		
 		var ajaxObj = new plus.net.XMLHttpRequest();
@@ -71,12 +111,11 @@
 		var paramStr = '';
 
 		//成功的回调
-		var sucess = options.success;
+		var success = options.success;
 
 		//失败的回调
 		var fail = options.fail;
 
-		
 
 		//数据类型
 		ajaxObj.onreadystatechange = function() {

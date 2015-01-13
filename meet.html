@@ -16,5 +16,16 @@
 	<body>		
 		<div id="container"></div>
 		<button class="btn-meet" id="btn_meet">我要约球</button>
+		<script id="meetInfo" type="text/html">
+			<div ontouchend="MEET.showMeetInfo($(this))" class="addr-card clearfix">
+				<img src="img/qiuzhuo.jpg"/ style="float:left;">
+				<div style="float:left;width:180px;padding-left:10px;">
+					<span style="font-size:16px;font-weight:bold;">{{add_name}}</span>
+						<br/>时间：{{time}}
+						<br/>报名情况:{{people_num}}
+						
+				</div>
+			</div>
+		</script>
 	</body>
 </html>

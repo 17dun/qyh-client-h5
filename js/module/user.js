@@ -48,14 +48,13 @@ var USER = {
 		var me = this;
 		APP.ajax({
 			'url': CONF.apiServer + '/?method=getUserList',
-			'sucess':function(rt){
+			'success':function(rt){
 				USER.freshList(JSON.parse(rt));
 			},
 			'fail':function(rt){
 			}
 		})
 	},
-
 	freshList: function(data) {
 
 		var data = {
