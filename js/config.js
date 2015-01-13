@@ -1,6 +1,32 @@
 ﻿var CONF = {
 	apiServer : 'http://182.254.209.32:8888/',
 	staticServer : 'http://182.254.209.32:8080/',
+	rootPageStyleList : [
+		{
+			id:'meet',
+			top: '45px',
+			bottom: '50px',
+			bounce:'none'
+		},
+		{
+			id:'user',
+			top: '45px',
+			bottom: '50px',
+			bounce:'vertical'
+		},
+		{
+			id:'addr',
+			top: '45px',
+			bottom: '50px',
+			bounce:'none'
+		},
+		{
+			id:'my',
+			top: '45px',
+			bottom: '50px',
+			bounce:'vertical'
+		}
+	],
 	sex:['女','男'],
 	style:['弧圈','削球','推挡'],
 	paixing:['直拍','横拍'],

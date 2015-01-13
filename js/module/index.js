@@ -2,13 +2,32 @@ var INDEX = {
 	ws : null,
 	list : null,
 	currentView : 'meet',
+	/*初始化的时候，保证首页中的几个子页面被加载，但不显示，加载完成后，再关闭启动动画，同时停留在第一个选项*/
 	init : function(){
-		plus.navigator.closeSplashscreen();
+		this.preLoadSubPages();
 		plus.navigator.setStatusBarBackground('#028ce6');
 		this.ws = plus.webview.currentWebview();
 		this.bindEvent();
-		this.renderFirstPage();
 	},
+	preLoadSubPages:function(){
+		var me = this;
+		var loadPage = 0; 
+		$.each(CONF.rootPageStyleList,function(i,item){
+			var myView = plus.webview.create(item.id + '.html', item.id, item);
+			myView.addEventListener("loaded", function() {
+				loadPage++;
+				if(item.id=='meet'){
+					me.ws.append(myView);
+					me.freshTitle('meet');
+				}
+				if(loadPage==4){
+					
+				}
+			}, false)
+			
+		})
+	},
+	
 	bindEvent : function(){
 		var me = this;
 		//我的页面顶部按钮
@@ -38,42 +57,15 @@ var INDEX = {
 			if(item==me.currentView){
 				return false;
 			}
+			
 			$('.nav-item').removeClass('active');
 			$(this).addClass('active');
 			me.freshTitle(item);
-			//me.freshToolBtn(item);
-			if (!plus.webview.getWebviewById(item)) {
-				if (item == 'meet'||item == 'my') {
-					var myView = plus.webview.create(item + '.html', item, {
-						top: '45px',
-						bottom: '50px'
-					});
-				} else {
-					var myView = plus.webview.create(item + '.html', item, {
-						top: '45px',
-						bottom: '50px',
-						bounce: 'vertical'
-					});
-				}
-				me.ws.append(myView);
-			} else {
-				var myView = plus.webview.getWebviewById(item);
-			}
+			var myView = plus.webview.getWebviewById(item);
 			plus.webview.hide(plus.webview.getWebviewById(me.currentView));
-			myView.show("none");
+			myView.show("fade-in",300);
 			me.currentView = item;
 		})
-	},
-	renderFirstPage : function(){
-		var me = this;
-		me.list = plus.webview.create('meet.html', 'meet', {
-			top: '45px',
-			bottom: '50px'
-		});
-		me.list.addEventListener("loaded", function() {		
-			me.ws.append(me.list);
-		}, false);
-		me.freshTitle('meet');
 	},
 	freshTitle : function(itemId){
 		var headHttml = template(itemId,null)();

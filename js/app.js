@@ -96,27 +96,18 @@
 	},
 
 	ajax:function(options){
-		
 		var ajaxObj = new plus.net.XMLHttpRequest();
-
 		//超时时间设置
 		var timeout = options.timeout||60;
-
 		//请求的url
 		var url = options.url;
-
 		//请求的数据
 		var datas = options.data;
-
 		var paramStr = '';
-
 		//成功的回调
 		var success = options.success;
-
 		//失败的回调
 		var fail = options.fail;
-
-
 		//数据类型
 		ajaxObj.onreadystatechange = function() {
 			if (ajaxObj.readyState == 4) {
@@ -127,9 +118,7 @@
 				}
 			}
 		}
-
 		ajaxObj.open("GET",url);
-
 		ajaxObj.send();
 	},
 	
