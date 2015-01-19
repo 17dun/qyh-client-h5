@@ -85,7 +85,7 @@ var MEET = {
 			var marker2 = new BMap.Marker(rs, {
 				icon: myIcon
 			});
-			var meetInfoHtml  = template('meetInfo', item);
+			var meetInfoHtml  = template('meetTipTpl', item);
 			marker2.addEventListener("click", function(e) {
 				var p = e.target;
 				var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);

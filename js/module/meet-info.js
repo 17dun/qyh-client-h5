@@ -6,24 +6,23 @@ var MEETINFO = {
 		this.getData(data);
 	},
 	renderHead: function(data) {
-		alert(JSON.stringify(data));
 		var htmlStr = template('infoHeadTpl', data);
-		$('.info-head').html(htmlStr);
+		$('.head').html(htmlStr);
 	},
 	getData: function(data) {
-		var id = data.id;
-		var ajax = new plus.net.XMLHttpRequest();
-		ajax.onreadystatechange = function() {
-			if (ajax.readyState == 4 && ajax.status == 200) {
-				MEETINFO.renderBody(JSON.parse(ajax.responseText));
+		var me = this;
+		APP.ajax({
+			//url最好用json传，然后在app中拼
+			'url':CONF.apiServer + '/?method=getMeetInfo&id=' + data.id,
+			'success':function(rt){
+				me.renderBody(JSON.parse(rt));
 			}
-		}
-		ajax.open("GET", CONF.apiServer + '/?method=getMeetInfo&id=' + id);
-		ajax.send();
+		})
 	},
 	renderBody: function(data) {
-		var htmlStr = template('meetInfoTpl', data);
-		$('.info-body').html(htmlStr);
+		alert(JSON.stringify(data))
+		var htmlStr = template('meetInfoTpl', data[0]);
+		$('.info').html(htmlStr);
 	},
 	bindEvent: function() {
 		window.back = function() {
