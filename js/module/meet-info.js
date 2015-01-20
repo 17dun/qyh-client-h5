@@ -2,7 +2,7 @@ var MEETINFO = {
 	data:null,
 	init: function(data) {
 		MEETINFO.data = data;
-		plus.localStorage.setItem("meet_id",data.id);
+		/*plus.localStorage.setItem('meet_id',data.id.toString());*/
 		data.staticServer = CONF.staticServer;
 		this.bindEvent();
 		this.renderHead(data);
@@ -51,7 +51,7 @@ var MEETINFO = {
 		});
 	},
 	addMeet: function() {
-		var id = plus.localStorage.getItem("meet_id");
+		var id = plus.localStorage.getItem('meet_id');
 		var me = this;
 		APP.ajax({
 			//url最好用json传，然后在app中拼
