@@ -43,25 +43,21 @@ var MEETMAP = {
 		if (this.hasOpen) {
 			return;
 		}
-		if (window.plus) {
-			var openwn = plus.webview.create('addr-info.html', 'addr-info', {
-				scrollIndicator: 'none',
-				scalable: false
-			});
-			openwn.addEventListener("loaded", function() {
-				openwn.show("slide-in-right", 150);
-				openwn.evalJS('addrInfoPageInit(' + JSON.stringify(data) + ')')
-			})
+		var openwn = plus.webview.create('addr-info.html', 'addr-info', {
+			scrollIndicator: 'none',
+			scalable: false
+		});
+		openwn.addEventListener("loaded", function() {
+			openwn.show("slide-in-right", 150);
+			openwn.evalJS('addrInfoPageInit(' + JSON.stringify(data) + ')')
+		})
 
-			MEETMAP.hasOpen = true;
-			openwn.addEventListener("close", function() { //页面关闭后可再次打开
+		MEETMAP.hasOpen = true;
+		openwn.addEventListener("close", function() { //页面关闭后可再次打开
 
-				MEETMAP.hasOpen = false;
-			}, false);
-		} else {
-			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
-			rootView.open('addr-info.html');
-		}
+			MEETMAP.hasOpen = false;
+		}, false);
+		
 	},
 	renderPlaceList : function(placeList){
 		var me = this;
@@ -80,12 +76,13 @@ var MEETMAP = {
 				icon: myIcon
 			});
 			marker2.addEventListener("click", function(e) {
-				alert('地点的id是'+item.id);
+				plus.webview.getWebviewById('meet-form').evalJS('MEETFORM.setAddr('+item.id+',"'+item.name+'")');
+				plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150);
+				
 			});
 			me.map.addOverlay(marker2);
 		})
 	},
-	
 	getPlaceData: function() {
 		var me = this;
 		var pix = APP.lngLatToPoint(me.point);
