@@ -63,7 +63,7 @@ var INDEX = {
 			me.freshTitle(item);
 			var myView = plus.webview.getWebviewById(item);
 			plus.webview.hide(plus.webview.getWebviewById(me.currentView));
-			myView.show("fade-in",300);
+			myView.show('none');
 			me.currentView = item;
 		})
 	},

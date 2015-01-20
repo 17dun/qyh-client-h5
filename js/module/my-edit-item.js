@@ -23,16 +23,6 @@ var MYEDITITEM = {
 		$('#chance-item').html(str);
 	},
 	initEvent:function(){
-		window.back = function() {
-			ws = plus.webview.currentWebview();
-			if (window.plus) {
-				ws.close();
-			} else if (history.length > 1) {
-				history.back();
-			} else {
-				window.close();
-			}
-		};
 		$(document.body).on('swipeRight', function() {
 			plus.webview.currentWebview().close()
 		})

@@ -116,6 +116,16 @@ var MEETFORM = {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
 			rootView.open('meet-form-item.html');
 		}
+	},
+	//显示地图
+	showMeetMap : function(){
+		var openwn = plus.webview.create('meet-map.html','meet-map', {
+			scrollIndicator: 'none',
+			scalable: false
+		});
+		openwn.addEventListener("loaded", function() {
+			openwn.show("slide-in-right", 150);
+		})
 	}
 }
 APP.run(function(){MEET.init(data);})

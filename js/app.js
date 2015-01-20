@@ -20,7 +20,18 @@
 					plus.runtime.quit();
 				}
 			}, false);
-			//去除默认菜单
+			
+			window.back = function() {
+				ws = plus.webview.currentWebview();
+				if (window.plus) {
+					ws.close();
+				} else if (history.length > 1) {
+					history.back();
+				} else {
+					window.close();
+				}
+			};
+				//去除默认菜单
 			document.oncontextmenu = function() {
 				return false;
 			};

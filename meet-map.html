@@ -7,16 +7,17 @@
 		<meta name="MobileOptimized" content="320" />
 		<title>yueqiu</title>
 		<link rel="stylesheet" href="css/core.css" type="text/css"/>
-		<link rel="stylesheet" href="css/meet.css" type="text/css"/>
-		
+		<link rel="stylesheet" href="css/meet-map.css" type="text/css"/>
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=voiDBvYeYVPqqtrXmLZvI4SX"></script>
 		<script src="js/core.js" type="text/javascript"></script>
-		<script src="js/module/meet.js" type="text/javascript"></script>
+		<script src="js/module/meet-map.js" type="text/javascript"></script>
 	</head>
-	<body>		
+	<body>
+		<header>
+			<div class="nvbt iback-back" ontouchend="back();"></div>
+			<div class="nvtt myedit-head" id="myhead">请选择地点</div>
+		</header>
 		<div id="container"></div>
-		
-		<button class="btn-meet" id="btn_meet">我要约球</button>
 		<script id="meetTipTpl" type="text/html">
 			<div ontouchend="MEET.showMeetInfo($(this))" data-meetid="{{id}}" data-userid="{{user_id}}" data-addid="{{add_id}}" data-username="{{user_name}}" data-addname="{{add_name}}" data-created="{{date_created}}"   data-pic="{{pic}}" data-time="{{time}}" data-tel="{{tel}}"  data-topic="{{topic}}"  class="addr-card clearfix">
 				<img src="img/qiuzhuo.jpg"/ style="float:left;">
