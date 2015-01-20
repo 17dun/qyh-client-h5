@@ -20,7 +20,6 @@ var MEETINFO = {
 		})
 	},
 	renderBody: function(data) {
-		alert(JSON.stringify(data))
 		var htmlStr = template('meetInfoTpl', data[0]);
 		$('.info').html(htmlStr);
 	},
