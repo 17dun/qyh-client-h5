@@ -49,7 +49,10 @@ var MEET = {
 			user_name: $item.data('username'),
 			add_name: $item.data('addname'),
 			pic: $item.data('pic'),
-			topic: $item.data('topic')
+			topic: $item.data('topic'),
+			time:$item.data('time'),
+			created:$item.data('created'),
+			tel:$item.data('tel'),
 		}
 		if (this.hasOpen) {
 			return;

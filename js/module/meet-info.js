@@ -1,6 +1,9 @@
 var MEETINFO = {
+	data:null,
 	init: function(data) {
-		data.staticServer = CONF.staticServer
+		MEETINFO.data = data;
+		plus.localStorage.setItem("meet_id",data.id);
+		data.staticServer = CONF.staticServer;
 		this.bindEvent();
 		this.renderHead(data);
 		this.getData(data);
@@ -20,7 +23,9 @@ var MEETINFO = {
 		})
 	},
 	renderBody: function(data) {
-		var htmlStr = template('meetInfoTpl', data[0]);
+		data.usersNum = data.meetUsers.length;
+		data.staticServer = CONF.staticServer;
+		var htmlStr = template('meetInfoTpl', data);
 		$('.info').html(htmlStr);
 	},
 	bindEvent: function() {
@@ -45,10 +50,26 @@ var MEETINFO = {
 			MEETINFO.showInfo($('#addrHead'));
 		});
 	},
-	add: function() {
-
+	addMeet: function() {
+		var id = plus.localStorage.getItem("meet_id");
+		var me = this;
+		APP.ajax({
+			//url最好用json传，然后在app中拼
+			'url':CONF.apiServer + '/?method=setMeetUsers&id=' + id,
+			'success':function(rt){
+				if (plus.os.name == "iOS") {
+					alert('加入成功');
+					me.init(me.data);
+				} else {
+					plus.nativeUI.toast('加入成功');
+					me.init(me.data);
+				}
+			}
+		})
 	},
-	sendMsg: function() {},
+	sendMsg: function() {
+		
+	},
 	showInfo: function($item) {
 		var data = {
 			id: $item.data('id'),
