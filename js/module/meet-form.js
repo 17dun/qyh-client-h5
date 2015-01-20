@@ -74,7 +74,6 @@ var MEETFORM = {
 			minDate=new Date(),
 			maxDate=new Date();
 			minDate.setFullYear(dDate.getFullYear(),dDate.getMonth(),dDate.getDate());
-			
 		plus.nativeUI.pickDate( function(e) {
 			var d=e.date;
 			MEETFORM.pickTime(d);
@@ -110,7 +109,7 @@ var MEETFORM = {
 			});
 			openwn.addEventListener("loaded", function() {
 				openwn.show("slide-in-right", 150);
-				openwn.evalJS('MEETITEM.init(' + data + ','+index+')')
+				openwn.evalJS('MEETITEM.run(' + data + ','+index+')')
 			})
 		} else {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);
@@ -119,13 +118,17 @@ var MEETFORM = {
 	},
 	//显示地图
 	showMeetMap : function(){
-		var openwn = plus.webview.create('meet-map.html','meet-map', {
-			scrollIndicator: 'none',
-			scalable: false
-		});
-		openwn.addEventListener("loaded", function() {
+		if(plus.webview.getWebviewById('meet-map')){
+			plus.webview.getWebviewById('meet-map').show("slide-in-right", 150);
+		}else{
+			var openwn = plus.webview.create('meet-map.html','meet-map', {
+				scrollIndicator: 'none',
+				scalable: false
+			});
+			openwn.addEventListener("loaded", function() {
 			openwn.show("slide-in-right", 150);
-		})
+			})
+		}
 	}
 }
 APP.run(function(){MEET.init(data);})

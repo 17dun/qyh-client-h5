@@ -1,5 +1,11 @@
 var MEETITEM = {
 	dataArrEN:['type_demand','sex_demand','age_demand','skills_demand','site_fee'],
+	run : function(data,index){
+		var me = this;
+		APP.run(function(){
+			me.init(data,index);
+		})
+	},
 	init: function(data,index) {
 		data = data;
 		this.initEvent();
@@ -22,19 +28,6 @@ var MEETITEM = {
 		$('#chance-item').html(str);
 	},
 	initEvent:function(){
-		window.back = function() {
-			ws = plus.webview.currentWebview();
-			if (window.plus) {
-				ws.close();
-			} else if (history.length > 1) {
-				history.back();
-			} else {
-				window.close();
-			}
-		};
-		$(document.body).on('swipeRight', function() {
-			plus.webview.currentWebview().close()
-		})
 		plus.key.addEventListener("backbutton", function() {
 			back();
 		}, false);
@@ -48,17 +41,4 @@ var MEETITEM = {
 			plus.webview.getWebviewById('meet-form').evalJS('MEETFORM.init(' +JSON.stringify(data) + ')');
 		});
 	}
-}
-
-function pageInit(data,index) {
-	$(function() {
-		FastClick.attach(document.body);
-		if (window.plus) {
-			MEETITEM.init(data,index);
-		} else {
-			document.addEventListener("plusready", function() {
-				MEETITEM.init(data,index)
-			}, false);
-		}
-	})
 }
