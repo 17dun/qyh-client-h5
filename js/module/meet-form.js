@@ -20,6 +20,7 @@ var MEETFORM = {
 			};
 			plus.storage.setItem('meet-form',JSON.stringify(default_data));
 		}
+		
 		var meet =JSON.parse(plus.storage.getItem('meet-form'));
 		var htmlStr = template('meetFormTpl', meet);
 		$('.info').html(htmlStr);
@@ -53,7 +54,7 @@ var MEETFORM = {
 	},
 	setMeet: function(){
 		var meet =JSON.parse(plus.storage.getItem('meet-form'));
-		var data = '&user_id=2&addr_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
+		var data = '&user_id=2&add_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
 		var url = encodeURI(CONF.apiServer + '/?method=setMeet'+data);
 		var ajax = new plus.net.XMLHttpRequest();
 		ajax.onreadystatechange = function() {
