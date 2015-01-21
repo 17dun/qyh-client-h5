@@ -103,8 +103,14 @@ var MEET = {
 		var me = this;
 		var pix = APP.lngLatToPoint(me.point);
 		APP.ajax({
+			'data':{
+				'method':'getMeetListByDis',
+				'x':pix.x,
+				'y':pix.y,
+				'dis':100000
+			},
 			//url最好用json传，然后在app中拼
-			'url':CONF.apiServer + '/?method=getMeetListByDis&x=' + pix.x + '&y=' + pix.y + '&dis=100000',
+			'url':CONF.apiServer,
 			'success':function(rt){
 				me.renderMeetList(JSON.parse(rt));
 			}

@@ -120,6 +120,19 @@
 		//失败的回调
 		var fail = options.fail;
 		//数据类型
+		
+		if(datas){
+			var dataList = [];
+			for (key in datas){
+				if (typeof datas[key] != 'undefined')
+					dataList.push(key + '=' + decodeURIComponent(datas[key]));
+			}
+			if(url.indexOf('/?')!=-1){
+				url = url+'&'+dataList.join('&');
+			}else{
+				url = url+'/?'+dataList.join('&');
+			}
+		}
 		ajaxObj.onreadystatechange = function() {
 			if (ajaxObj.readyState == 4) {
 				if(ajaxObj.status == 200){
