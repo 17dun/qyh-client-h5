@@ -22,11 +22,10 @@
 			<div class="info">
 			<div class="loading"></div>
 			</div>
-			<div class="info-content info-foot"><a class="add"  href="javascript:;">加入活动</a><a class="send"  href="javascript:;">发送消息</a></div>
 		</div>
 		<script type="text/html" id="infoHeadTpl">
 			<div class="info-head" >
-			  	<div class="info-item"><img width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
+			  	<div class="info-item"><img style="border-radius: 5px;" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
 				<div class="info-item" style="padding-top: 2px;">
 					<span class="info-text-small">{{user_name}}</span>
 					<div style="height: 3px;"></div>
@@ -39,41 +38,49 @@
 		<script id="meetInfoTpl" type="text/html">
 		<div class="info-content  info-body">
 			<div class="info-row">
+				<img src="img/icon_meet_time.png" class="icon-meet"/>
 				<span>球局时间 : {{time}}</span>
 				<img src="img/icon_tel.png" style="width: 30px; height: 30px;float: right;margin-right: 5%;margin-top: -10px;" />
 			</div>
 			<div class="info-row">
-				<span >类型 : {{type_demand | itemFormat : 'type_demand'}}</span>
-			</div>
-			<div class="info-row">
-				<span >性别要求 : {{sex_demand | itemFormat : 'sex_demand'}}</span>
-			</div>
-			<div class="info-row">
-				<span >年龄要求 : {{age_demand | itemFormat : 'age_demand'}}</span>
-			</div>
-			<div class="info-row">
-				<span >球技要求 : {{skills_demand | itemFormat : 'skills_demand'}}</span>
-			</div>
-			<div class="info-row">
+				<img src="img/icon_meet_fee.png" class="icon-meet" />
 				<span >场地费 : {{site_fee | itemFormat : 'site_fee'}}</span>
 			</div>
-			<div class="info-row" >
-				<img src="img/icon_location.png" style="width: 25px; height: 25px;display: inline-block; vertical-align: middle;" />
-				<span  style="height: 25px;line-height: 25px;">{{add_name}}</span>
-				<img class="arrow-right" src="img/arrow_right.png" style="width: 7px; height: 11px;float: right;vertical-align: middle;display: inline-block; margin-top: 15px;margin-right: 3%;" />
+			<div class="info-row">
+				<img src="img/icon_meet_location.png" class="icon-meet" />
+				<span class="ellipsis" style="height: 25px;line-height: 25px;width: 90%;display: inline-block;">地址：{{add_name}}</span>
+			</div>
+			<div class="info-row">
+				<div style="float: left;width: 50%;">
+					<img src="img/icon_meet_type.png" class="icon-meet" />
+					<span >类型 : {{type_demand | itemFormat : 'type_demand'}}</span>
+				</div>
+				<img src="img/icon_meet_skills.png" class="icon-meet" />
+				<span >球技: {{skills_demand | itemFormat : 'skills_demand'}}</span>
+			</div>
+			<div class="info-row">
+				<div style="float: left;width: 50%;">
+					<img src="img/icon_meet_sex.png" class="icon-meet"/>
+					<span >性别 : {{sex_demand | itemFormat : 'sex_demand'}}</span>
+				</div>
+				<img src="img/icon_meet_age.png" class="icon-meet" />
+				<span >年龄 : {{age_demand | itemFormat : 'age_demand'}}</span>
 			</div>
 		</div>
 		<div class="info-content info-body clearfix" style="margin: 10px 0px;">
 			<div class="info-title">参与者 : ({{usersNum}}/{{people_num}})</div>
 			{{each meetUsers}}
 				<div style="float: left;margin:10px;" data-userid="{{$value.user_id}}">
-					<img src="{{staticServer}}/images/{{$value.pic}}" height="60px" width="60px" />
+					<img src="{{staticServer}}/images/{{$value.pic}}" style="border-radius: 5px;" height="60em" width="60em" />
 				</div>
 			{{/each}}
 			{{if people_num-usersNum>0}}
-				<div style="float: left;margin:10px;" >
-					<img src="img/add_user.png" height="60px" width="60px" />
+				<div style="float: left;margin:10px;" onclick="MEETINFO.addMeet()" >
+					<img src="img/add_user.png" style="border-radius: 5px;" height="60em" width="60em" />
 				</div>
+				<div class="info-content info-foot"><a class="addmeet foot-btn-left" href="javascript:;" onclick="MEETINFO.addMeet()">加入活动</a><a class="foot-btn-right"  href="javascript:;">发送消息</a></div>
+			{{else}}
+				<div class="info-content info-foot"><a class="addmeet foot-btn-left" style="background: #E0E0E0;color: #666666;border-radius: 5px;"  href="javascript:;">加入活动</a><a class="foot-btn-right"  href="javascript:;">发送消息</a></div>
 			{{/if}}
 		</div>
 		<div class="info-title"></div>

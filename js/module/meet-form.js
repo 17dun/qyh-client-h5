@@ -8,7 +8,8 @@ var MEETFORM = {
 		if(plus.storage.getItem('meet-form')==null){
 			var default_data = {
 				'user_id':2,
-				'add_id':'',
+				'add_id':0,
+				'add_name':'',
 				'time':'',
 				'people_num':2,
 				'type_demand':0,
@@ -129,13 +130,6 @@ var MEETFORM = {
 			openwn.show("slide-in-right", 150);
 			})
 		}
-	},
-	
-	//设置地点
-	setAddr : function(id,name){
-		var me = this;
-		$('#val-addr').html(name);
-		$('#val-addr').data('id',id);
 	}
 }
 APP.run(function(){MEET.init(data);})

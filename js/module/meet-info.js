@@ -1,8 +1,7 @@
 var MEETINFO = {
 	data:null,
 	init: function(data) {
-		MEETINFO.data = data;
-		/*plus.localStorage.setItem('meet_id',data.id.toString());*/
+		this.data = data;
 		data.staticServer = CONF.staticServer;
 		this.bindEvent();
 		this.renderHead(data);
@@ -20,52 +19,45 @@ var MEETINFO = {
 			'success':function(rt){
 				me.renderBody(JSON.parse(rt));
 			}
-		})
+		});
 	},
 	renderBody: function(data) {
 		data.usersNum = data.meetUsers.length;
+		this.data.userIds='|';
+		for(var i =0,len=data.usersNum;i<len;i++){
+			this.data.userIds +=data.meetUsers[i].user_id+'|';
+		}
 		data.staticServer = CONF.staticServer;
 		var htmlStr = template('meetInfoTpl', data);
 		$('.info').html(htmlStr);
 	},
 	bindEvent: function() {
-		window.back = function() {
-			ws = plus.webview.currentWebview();
-			if (window.plus) {
-				ws.close();
-			} else if (history.length > 1) {
-				history.back();
-			} else {
-				window.close();
-			}
-		};
-		$(document.body).on('swipeRight', function() {
-			plus.webview.currentWebview().close()
-		})
-
-		plus.key.addEventListener("backbutton", function() {
-			back();
-		}, false);
-		$('.add').on('click', function() {
-			MEETINFO.showInfo($('#addrHead'));
-		});
+		
 	},
 	addMeet: function() {
-		var id = plus.localStorage.getItem('meet_id');
 		var me = this;
-		APP.ajax({
-			//url最好用json传，然后在app中拼
-			'url':CONF.apiServer + '/?method=setMeetUsers&id=' + id,
-			'success':function(rt){
-				if (plus.os.name == "iOS") {
-					alert('加入成功');
-					me.init(me.data);
-				} else {
-					plus.nativeUI.toast('加入成功');
-					me.init(me.data);
+		var userid = 5;//暂时写死
+		if(me.data.userIds.indexOf('|'+userid+'|')==-1){
+			APP.ajax({
+				//url最好用json传，然后在app中拼
+				'url':CONF.apiServer + '/?method=setMeetUsers&is_leader=0&user_id='+userid+'&meet_id=' + me.data.id,
+				'success':function(rt){
+					if (plus.os.name == "iOS") {
+						alert('加入成功');
+						me.init(me.data);
+					} else {
+						plus.nativeUI.toast('加入成功');
+						me.init(me.data);
+					}
 				}
+			});
+		}else{
+			if (plus.os.name == "iOS") {
+				alert('您已经是该活动成员啦!');
+			} else {
+				plus.nativeUI.toast('您已经是该活动成员啦!');
 			}
-		})
+		}
 	},
 	sendMsg: function() {
 		
@@ -97,19 +89,4 @@ var MEETINFO = {
 			rootView.open('addr-comment.html');
 		}
 	}
-}
-
-function meetInfoPageInit(data) {
-	$(function() {
-		FastClick.attach(document.body);
-		if (window.plus) {
-			MEETINFO.init(data);
-		} else {
-			document.addEventListener("plusready", function() {
-				MEETINFO.init(data)
-			}, false);
-		}
-
-
-	})
 }

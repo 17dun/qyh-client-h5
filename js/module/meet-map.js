@@ -76,7 +76,12 @@ var MEETMAP = {
 				icon: myIcon
 			});
 			marker2.addEventListener("click", function(e) {
-				plus.webview.getWebviewById('meet-form').evalJS('MEETFORM.setAddr('+item.id+',"'+item.name+'")');
+				var data =JSON.parse(plus.storage.getItem('meet-form'));
+				data.add_id=item.id;
+				data.add_name = item.name;
+				var initdata = JSON.stringify(data);
+				plus.storage.setItem('meet-form',initdata);
+				plus.webview.getWebviewById('meet-form').evalJS('MEETFORM.init('+initdata+')');
 				plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150);
 				
 			});

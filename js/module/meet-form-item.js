@@ -34,7 +34,7 @@ var MEETITEM = {
 	},
 	bindEvent: function() {
 		$('.info-item').on('click',function(){
-			data =JSON.parse(plus.storage.getItem('meet-form'));
+			var data =JSON.parse(plus.storage.getItem('meet-form'));
 			data[MEETITEM.dataArrEN[$(this).data('index')]]=$(this).data('item');
 			plus.storage.setItem('meet-form',JSON.stringify(data));
 			plus.webview.hide(plus.webview.currentWebview(),"slide-out-right", 150);

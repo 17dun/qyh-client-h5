@@ -85,17 +85,20 @@ header {
 	line-height: 45px;
 	text-decoration: none;
 }
-.add,.send{height: 45px;line-height: 45px;}
-.add {
+.foot-btn-left,.foot-btn-right{height: 45px;line-height: 45px;}
+.foot-btn-left {
 	width: 50%;
 }
-.send {
+.foot-btn-right {
 	width: 50%;
 	margin-left: -1px;
 	border-left: 1px solid #fff;
 }
 .item-title {
 	color: #202020;
+}
+.icon-meet{
+	width: 24px; height: 24px;display: inline-block; vertical-align: middle;
 }
 @media screen and (max-device-width: 1200px) {
 	.info-title {
