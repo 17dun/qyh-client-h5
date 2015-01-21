@@ -53,18 +53,19 @@ var INDEX = {
 		})
 		//底部tab切换
 		$('.nav-item').on('click', function() {
+			$('.active').removeClass('active');
+			$(this).addClass('active');
 			var item = $(this).attr('data-id');
 			if(item==me.currentView){
 				return false;
 			}
-			
-			$('.nav-item').removeClass('active');
-			$(this).addClass('active');
-			me.freshTitle(item);
-			var myView = plus.webview.getWebviewById(item);
-			plus.webview.hide(plus.webview.getWebviewById(me.currentView));
-			myView.show('none');
-			me.currentView = item;
+			setTimeout(function(){
+				me.freshTitle(item);
+				var myView = plus.webview.getWebviewById(item);
+				plus.webview.hide(plus.webview.getWebviewById(me.currentView));
+				myView.show('none');
+				me.currentView = item;
+			},50)
 		})
 	},
 	freshTitle : function(itemId){
