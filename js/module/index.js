@@ -21,7 +21,7 @@ var INDEX = {
 					me.freshTitle('meet');
 				}
 				if(loadPage==4){
-					
+					plus.navigator.closeSplashscreen();
 				}
 			}, false)
 			

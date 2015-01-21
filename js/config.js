@@ -15,7 +15,7 @@
 			bounce:'vertical'
 		},
 		{
-			id:'addr',
+			id:'quan',
 			top: '45px',
 			bottom: '50px',
 			bounce:'none'
