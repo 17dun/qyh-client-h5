@@ -54,11 +54,12 @@ var MEETFORM = {
 	},
 	setMeet: function(){
 		var meet =JSON.parse(plus.storage.getItem('meet-form'));
-		var data = '&user_id=2&add_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
-		var url = encodeURI(CONF.apiServer + '/?method=setMeet'+data);
-		var ajax = new plus.net.XMLHttpRequest();
-		ajax.onreadystatechange = function() {
-			if (ajax.readyState == 4 && ajax.status == 200) {
+		var data = '&user_id='+meet.user_id+'&add_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
+		alert(data)
+		APP.ajax({
+			//url最好用json传，然后在app中拼
+			'url':encodeURI(CONF.apiServer + '/?method=setMeet'+data),
+			'success':function(rt){
 				plus.storage.setItem('meet-form','')
 				if (plus.os.name == "iOS") {
 					alert('约球成功');
@@ -67,9 +68,7 @@ var MEETFORM = {
 				}
 				back();
 			}
-		}
-		ajax.open("GET", url);
-		ajax.send();
+		});
 	},
 	pickDate:function(){
 		var dDate=new Date(),
