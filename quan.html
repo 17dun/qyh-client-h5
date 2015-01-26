@@ -15,36 +15,40 @@
 	<body>
 		<div class="info-content">
 			<div id="wrap">
-				<div class="loading"></div>
-				<ul id="list" style="display:none;"></ul>
+				<ul id="list">
+				</ul>
+				
 			</div>
 			<script id="test" type="text/html">
 			{{each list}}
-			<li class="data-item" data-score="{{$value.score}}" data-pic="{{$value.pic}}" data-style="{{$value.style}}" data-id="{{$value.id}}" data-name="{{$value.name}}" data-sex="{{$value.sex}}" data-age="{{$value.age}}" data-ballage="{{$value.ballage}}">
-				<div class="item clearfix">
-					<img style="border-radius:10px" class="item-col" src="{{staticServer}}/images/{{$value.pic}}">
-					<div class="item-col" style="width:80%;margin-left:0.5em;">
-						<div class="item-row clearfix">
-							<span class="name">{{$value.name}}</span>
-							<span class="grey-text">
-								{{$value.sex | itemFormat:'sex'}}
-							</span>
-							<span class="grey-text">
-								{{$value.age | itemFormat:'age'}}岁
-							</span>
-						</div>
-						<div class="item-row item-content">
-							#微活动#为丰富社区老年人的精神文化生活，促进全民健身运动开展。近日，@鼓楼区江东街道江滨新寓社区 青松乒乓球协会开展了“迎春乒乓球比赛”活动。活动的开展不但丰富了社区老年人的业余文化生活，让老年人老有所为，老有所乐。同时也彰显了社区居民朝气蓬勃的精神风貌和积极向上的奋斗精神[鼓掌]
-						</div>
-						<div class="item-row item-tools">
-							<span class="zan"></span>
-							<span class="commit"></span>
-						</div>
-						<div class="item-row item-commit">
+			<li class="data-item">
+						<div class="item clearfix">
+						<img class="item-col" style="margin-right: 5px;" src="{{staticServer}}/images/{{$value.pic}}">
+						<div class="item-col" style="width:80%;margin-left:0.5em;">
+							<div class="item-row clearfix">
+								<span class="name">{{$value.name}}</span>
+								<span class="grey-text">
+									影响力: {{$value.score}}
+								</span>
+								<span class="grey-text">
+									球龄：{{$value.ballage}}年
+								</span>
+								<br/>
+								<span class="grey-text">
+									{{$value.creat_time}}	
+								</span>
+							</div>
+							<div class="item-row item-content">
+								{{$value.content}}	
+							</div>
+							<div class="item-row item-tools">
+								<span class="zan">距离您200m</span>
+								<span class="zan">{{$value.good_num}}赞</span>
+								<span class="commit">10评论</span>
+							</div>
 						</div>
 					</div>
-				</div>
-			</li>
+				</li>
 			{{/each}}
 		</script>
 		</div>
