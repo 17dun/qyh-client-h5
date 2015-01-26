@@ -1,4 +1,4 @@
-var USER = {
+var QUAN = {
 	ws: null,
 	list: null,
 	hasOpen: false,
@@ -39,7 +39,7 @@ var USER = {
 		APP.ajax({
 			'url': CONF.apiServer + '/?method=getContentList',
 			'success':function(rt){
-				USER.freshList(JSON.parse(rt));
+				QUAN.freshList(JSON.parse(rt));
 			},
 			'fail':function(rt){
 			}
@@ -56,6 +56,24 @@ var USER = {
 		plus.storage.setItem('userList', htmlStr);
 		this.ws.endPullToRefresh();
 		this.list.show();
+	},
+	editQuan:function(){
+		if (this.hasOpen) {
+			return;
+		}
+		var openwn = plus.webview.create('quan-edit.html', 'quan-edit', {
+			scrollIndicator: 'none',
+			scalable: false
+		});
+		openwn.addEventListener("loaded", function() {
+			openwn.show("slide-in-bottom", 150);
+		})
+
+		QUAN.hasOpen = true;
+		openwn.addEventListener("close", function() { //页面关闭后可再次打开
+			QUAN.hasOpen = false;
+		}, false);
+		
 	}
 }
-APP.run(function(){USER.init()});
+APP.run(function(){QUAN.init()});

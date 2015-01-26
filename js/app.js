@@ -10,9 +10,15 @@
 			}
 		})
 	},
+	
+	closeWebview:function(){
+		var ws = plus.webview.currentWebview();
+		ws.close();
+	},
+	
 	init : function(){
+		
 		this.run(function(){
-			//快速点击
 			FastClick.attach(document.body);
 			//绑定退出键
 			plus.key.addEventListener("backbutton", function() {
@@ -23,13 +29,8 @@
 			
 			window.back = function() {
 				ws = plus.webview.currentWebview();
-				if (window.plus) {
-					ws.close();
-				} else if (history.length > 1) {
-					history.back();
-				} else {
-					window.close();
-				}
+				alert(2)
+				ws.close();
 			};
 				//去除默认菜单
 			document.oncontextmenu = function() {

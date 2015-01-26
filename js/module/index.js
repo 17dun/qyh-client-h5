@@ -31,8 +31,11 @@ var INDEX = {
 	bindEvent : function(){
 		var me = this;
 		//我的页面顶部按钮
-		$(document).on('click','.edit', function() {
+		$(document).on('click','.my-btn', function() {
 			plus.webview.getWebviewById('my').evalJS("MY.editMy();");
+		});
+		$('.quan-btn').live('click',function() {
+			plus.webview.getWebviewById('quan').evalJS("QUAN.editQuan();");
 		});
 		
 		//附近的球友和附近的场地切换
