@@ -1,5 +1,6 @@
 ﻿var APP = {
 	run : function(callback){
+		
 		$(function() {
 			if (window.plus) {
 				callback.call(this);
@@ -29,7 +30,6 @@
 			
 			window.back = function() {
 				ws = plus.webview.currentWebview();
-				alert(2)
 				ws.close();
 			};
 				//去除默认菜单

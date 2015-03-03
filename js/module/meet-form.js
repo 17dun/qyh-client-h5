@@ -132,4 +132,4 @@ var MEETFORM = {
 		}
 	}
 }
-APP.run(function(){MEET.init(data);})
+APP.run(function(){MEETFORM.init();})

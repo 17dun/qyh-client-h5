@@ -18,13 +18,13 @@
 			id:'quan',
 			top: '45px',
 			bottom: '50px',
-			bounce:'none'
+			bounce:'vertical'
 		},
 		{
 			id:'my',
 			top: '45px',
 			bottom: '50px',
-			bounce:'vertical'
+			bounce:'none'
 		}
 	],
 	sex:['女','男'],

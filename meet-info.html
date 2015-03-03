@@ -12,63 +12,93 @@
 		<script src="js/module/meet-info.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<header>
+		<header class="nofix">
 			<div class="nvbt iback-back" ontouchend="back();"></div>
 			<div class="nvtt">详细信息</div>
 		</header>
 		<div class="wrap">
-			<div class="info-content head">
-			</div>
 			<div class="info">
 			<div class="loading"></div>
 			</div>
 		</div>
 		<script type="text/html" id="infoHeadTpl">
-			<div class="info-head" >
-			  	<div class="info-item"><img style="border-radius: 5px;" width="60em" height="60em" src="{{staticServer}}/images/{{pic}}"/></div>
-				<div class="info-item" style="padding-top: 2px;">
-					<span class="info-text-small">{{user_name}}</span>
-					<div style="height: 3px;"></div>
-					<span class="info-text-small ">发布时间 : {{created}}</span>
-					<div style="height: 3px;"></div>
-					<span class="info-text">{{topic}}</span>
-				</div>
-			</div>
+			
 		</script>
 		<script id="meetInfoTpl" type="text/html">
 		<div class="info-content  info-body">
 			<div class="info-row">
-				<img src="img/icon_meet_time.png" class="icon-meet"/>
-				<span>球局时间 : {{time}}</span>
-				<img src="img/icon_tel.png" style="width: 30px; height: 30px;float: right;margin-right: 5%;margin-top: -10px;" />
 			</div>
-			<div class="info-row">
-				<img src="img/icon_meet_fee.png" class="icon-meet" />
-				<span >场地费 : {{site_fee | itemFormat : 'site_fee'}}</span>
-			</div>
-			<div class="info-row">
-				<img src="img/icon_meet_location.png" class="icon-meet" />
-				<span class="ellipsis" style="height: 25px;line-height: 25px;width: 90%;display: inline-block;">地址：{{add_name}}</span>
-			</div>
-			<div class="info-row">
-				<div style="float: left;width: 50%;">
-					<img src="img/icon_meet_type.png" class="icon-meet" />
-					<span >类型 : {{type_demand | itemFormat : 'type_demand'}}</span>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">发起人 </div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						 {{user_name}}
+					</span>
 				</div>
-				<img src="img/icon_meet_skills.png" class="icon-meet" />
-				<span >球技: {{skills_demand | itemFormat : 'skills_demand'}}</span>
 			</div>
-			<div class="info-row">
-				<div style="float: left;width: 50%;">
-					<img src="img/icon_meet_sex.png" class="icon-meet"/>
-					<span >性别 : {{sex_demand | itemFormat : 'sex_demand'}}</span>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">时间 </div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						 {{time}}
+					</span>
 				</div>
-				<img src="img/icon_meet_age.png" class="icon-meet" />
-				<span >年龄 : {{age_demand | itemFormat : 'age_demand'}}</span>
 			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">费用</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{site_fee | itemFormat : 'site_fee'}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">地点</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						{{add_name}}
+					</span>
+				</div>
+			</div>
+			
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">类型</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						 {{type_demand | itemFormat : 'type_demand'}}
+					</span>
+				</div>
+			</div>
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">球技要求</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						 {{skills_demand | itemFormat : 'skills_demand'}}
+					</span>
+				</div>
+			</div>
+	
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">性别要求</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						 {{sex_demand | itemFormat : 'sex_demand'}}
+					</span>
+				</div>
+			</div>
+			
+			<div class="info-item">
+				<div style="width: 30%;float: left;color: #202020;">年龄要求</div>
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+							{{age_demand | itemFormat : 'age_demand'}}
+					</span>
+				</div>
+			</div>
+
 		</div>
 		<div class="info-content info-body clearfix" style="margin: 10px 0px;">
-			<div class="info-title">参与者 : ({{usersNum}}/{{people_num}})</div>
+			<div class="info-title">应邀: ({{usersNum}}/{{people_num}})</div>
 			{{each meetUsers}}
 				<div style="float: left;margin:10px;" data-userid="{{$value.user_id}}">
 					<img src="{{staticServer}}/images/{{$value.pic}}" style="border-radius: 5px;" height="60em" width="60em" />
@@ -78,12 +108,9 @@
 				<div style="float: left;margin:10px;" onclick="MEETINFO.addMeet()" >
 					<img src="img/add_user.png" style="border-radius: 5px;" height="60em" width="60em" />
 				</div>
-				<div class="info-content info-foot"><a class="addmeet foot-btn-left" href="javascript:;" onclick="MEETINFO.addMeet()">加入活动</a><a class="foot-btn-right"  href="javascript:;">发送消息</a></div>
-			{{else}}
-				<div class="info-content info-foot"><a class="addmeet foot-btn-left" style="background: #E0E0E0;color: #666666;border-radius: 5px;"  href="javascript:;">加入活动</a><a class="foot-btn-right"  href="javascript:;">发送消息</a></div>
+				{{else}}
 			{{/if}}
 		</div>
-		<div class="info-title"></div>
 		</script>
 	</body>
 </html>

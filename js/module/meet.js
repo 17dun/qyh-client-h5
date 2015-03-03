@@ -63,7 +63,7 @@ var MEET = {
 		});
 		openwn.addEventListener("loaded", function() {
 			openwn.show("slide-in-right", 150);
-			openwn.evalJS('APP.run(MEETINFO.init(' + JSON.stringify(data) + '))')
+			openwn.evalJS('MEETINFO.init(' + JSON.stringify(data) + ')')
 		})
 
 		MEET.hasOpen = true;

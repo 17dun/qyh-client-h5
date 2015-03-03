@@ -42,6 +42,9 @@ header {
 	-ms-touch-action: none;
 }
 
+.nofix {
+	position: static;	
+}
 
 .ellipsis{
 	overflow:hidden;

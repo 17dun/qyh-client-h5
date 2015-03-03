@@ -4,12 +4,7 @@ var MEETINFO = {
 		this.data = data;
 		data.staticServer = CONF.staticServer;
 		this.bindEvent();
-		this.renderHead(data);
 		this.getData(data);
-	},
-	renderHead: function(data) {
-		var htmlStr = template('infoHeadTpl', data);
-		$('.head').html(htmlStr);
 	},
 	getData: function(data) {
 		var me = this;
