@@ -1,8 +1,11 @@
 var MEETFORM = {
 	hasOpenSex:false,
-	init: function(data) {
+	init: function(data,flag) {
 		this.bindEvent();
 		this.render();
+		if(flag){
+			this.pickDate();	
+		}
 	},
 	render: function() {
 		if(plus.storage.getItem('meet-form')==null){
@@ -66,7 +69,10 @@ var MEETFORM = {
 					plus.nativeUI.toast('约球成功');
 				}
 				//todo。这里不用后退，用跳转到原来的窗口。要容忍技术上的不完善。先完成功能上线。
+				var meetPage = plus.webview.getWebviewById('meet');
+				meetPage.evalJS('MEET.init()');
 				back();
+				
 			}
 		});
 	},
@@ -109,7 +115,7 @@ var MEETFORM = {
 			});
 			openwn.addEventListener("loaded", function() {
 				openwn.show("slide-in-right", 150);
-				openwn.evalJS('MEETITEM.run(' + data + ','+index+')')
+				openwn.evalJS('MEETITEM.run(' + data + ','+index+')');
 			})
 		} else {
 			var rootView = plus.webview.getWebviewById(plus.runtime.appid);

@@ -26,12 +26,12 @@ var MEET = {
 	},
 
 	bindEvent: function() {
-		$('#btn_meet').on('click',function(){
+		$('#btn_meet').on('touchend',function(){
 			MEET.showMeetForm();
 		})
 	},
-	
 	showMeetForm: function() {
+		console.log('1')
 		var me = this;
 		if(me.windowStatus['meetForm']){
 			return;
@@ -42,7 +42,7 @@ var MEET = {
 		});
 		openwn.addEventListener("loaded", function() {
 			openwn.show("slide-in-bottom", 150);
-			openwn.evalJS('MEETFORM.init()');
+			openwn.evalJS('MEETFORM.init(null,true)');
 			me.windowStatus['meetForm'] = true;
 		});
 		openwn.addEventListener("close", function() { //页面关闭后可再次打开

@@ -16,6 +16,25 @@ var MEETINFO = {
 			}
 		});
 	},
+	delMeet : function(){
+		var me = this;
+        var id = me.data.id;
+        APP.ajax({
+            'url':CONF.apiServer + '/?method=delMeet&meet_id=' + id,
+            'success':function(rt){
+                 plus.nativeUI.toast('删除成功');
+                //todo。这里不用后退，用跳转到原来的窗口。要容忍技术上的不完善。先完成功能上线。
+                var meetPage = plus.webview.getWebviewById('meet');
+                meetPage.evalJS('MEET.init()');
+                back();
+            },
+            'fail' : function(){
+                alert('shibai')
+            }
+        });  		
+		
+	},
+	
 	renderBody: function(data) {
 		data.usersNum = data.meetUsers.length;
 		this.data.userIds='|';
