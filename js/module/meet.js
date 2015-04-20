@@ -1,6 +1,7 @@
 var MEET = {
 	point: null,
 	map: null,
+	windowStatus : {},
 	hasOpen: false,
 	centerAndZoom: function() {
 		if (this.map) {
@@ -31,17 +32,26 @@ var MEET = {
 	},
 	
 	showMeetForm: function() {
+		var me = this;
+		if(me.windowStatus['meetForm']){
+			return;
+		}
 		var openwn = plus.webview.create('meet-form.html', 'meet-form', {
 			scrollIndicator: 'none',
 			scalable: false
 		});
 		openwn.addEventListener("loaded", function() {
 			openwn.show("slide-in-bottom", 150);
-			openwn.evalJS('MEETFORM.init()')
+			openwn.evalJS('MEETFORM.init()');
+			me.windowStatus['meetForm'] = true;
 		});
+		openwn.addEventListener("close", function() { //页面关闭后可再次打开
+			me.windowStatus['meetForm'] = false;
+		}, false);
 	},
 
 	showMeetInfo: function($item) {
+		var me = this;
 		var data = {
 			id: $item.data('meetid'),
 			user_id :$item.data('userid'),
@@ -54,7 +64,7 @@ var MEET = {
 			created:$item.data('created'),
 			tel:$item.data('tel'),
 		}
-		if (this.hasOpen) {
+		if(me.windowStatus['meetInfo']){
 			return;
 		}
 		var openwn = plus.webview.create('meet-info.html', 'meet-info', {
@@ -63,12 +73,12 @@ var MEET = {
 		});
 		openwn.addEventListener("loaded", function() {
 			openwn.show("slide-in-right", 150);
-			openwn.evalJS('MEETINFO.init(' + JSON.stringify(data) + ')')
+			openwn.evalJS('MEETINFO.init(' + JSON.stringify(data) + ')');
+			me.windowStatus['meetInfo'] = true;
 		})
 
-		MEET.hasOpen = true;
 		openwn.addEventListener("close", function() { //页面关闭后可再次打开
-			MEET.hasOpen = false;
+			me.windowStatus['meetInfo'] = false;
 		}, false);
 		
 	},

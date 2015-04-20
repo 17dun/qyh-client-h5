@@ -1,5 +1,5 @@
 var MEETITEM = {
-	dataArrEN:['type_demand','sex_demand','age_demand','skills_demand','site_fee'],
+	dataArrEN:['type_demand','sex_demand','age_demand','skills_demand','site_fee','people_num'],
 	run : function(data,index){
 		var me = this;
 		APP.run(function(){
@@ -15,7 +15,7 @@ var MEETITEM = {
 	render: function(data,index) {
 		var str="",
 		len=0,
-		dataArrCN=['类型','赛制','性别要求','年龄要求','球技要求','场地费'];
+		dataArrCN=['类型','性别要求','年龄要求','球技要求','场地费','人数'];
 		itemArr=CONF[MEETITEM.dataArrEN[index]];
 		$('#myhead').html(dataArrCN[index]);
 		len = itemArr.length;

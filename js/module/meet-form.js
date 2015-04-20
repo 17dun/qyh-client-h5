@@ -55,17 +55,17 @@ var MEETFORM = {
 	setMeet: function(){
 		var meet =JSON.parse(plus.storage.getItem('meet-form'));
 		var data = '&user_id='+meet.user_id+'&add_id=' + meet.add_id + "&time=" + meet.time + "&people_num=" + meet.people_num + "&type_demand=" + meet.type_demand+ "&sex_demand=" + meet.sex_demand+ "&age_demand=" + meet.age_demand+ "&skills_demand=" + meet.skills_demand+ "&site_fee=" + meet.site_fee;
-		alert(data)
 		APP.ajax({
 			//url最好用json传，然后在app中拼
 			'url':encodeURI(CONF.apiServer + '/?method=setMeet'+data),
 			'success':function(rt){
 				plus.storage.setItem('meet-form','')
 				if (plus.os.name == "iOS") {
-					alert('约球成功');
+					plus.nativeUI.toast('约球成功');
 				} else {
 					plus.nativeUI.toast('约球成功');
 				}
+				//todo。这里不用后退，用跳转到原来的窗口。要容忍技术上的不完善。先完成功能上线。
 				back();
 			}
 		});
@@ -83,7 +83,6 @@ var MEETFORM = {
 		},{title:"请选择日期",date:dDate,minDate:minDate});
 	},
 	pickTime:function (d){
-		alert(1)
 		var dTime=new Date();
 		dTime.setHours(dTime.getHours()+1,0);
 		plus.nativeUI.pickTime(function (e){

@@ -45,12 +45,7 @@
 		if(plus.webview.getWebviewById(pageId)){
 			var webviewObj = plus.webview.getWebviewById(pageId);
 		}else{
-			var webviewObj = plus.webview.create(pageId + '.html', pageId, {
-				top: '45px',
-				bottom: '50px'
-			});
-			
-			plus.webview.currentWebview().append(webviewObj);
+			var webviewObj = plus.webview.create(pageId + '.html', pageId, param);
 		}
 		return webviewObj;
 	},
@@ -155,6 +150,17 @@
 		}else{
 			return "未完善";
 		}
+	},
+	
+	console : function(info){
+		if(typeof info == 'string'){
+			console.log(info);
+		}else{
+			for(key in info){
+				console.log(key,info[key]);
+			}
+		}
+		
 	}
 }
 APP.init();

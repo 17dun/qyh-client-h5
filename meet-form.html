@@ -16,7 +16,6 @@
 		<header>
 			<div class="nvbt iback-cancel" ontouchend="window.close();"></div>
 			<div class="nvtt myedit-head">我要约球</div>
-			<div class="nvbt nvbtr btn-nav-submit meet-submit" onclick="MEETFORM.setMeet()">提交</div>
 		</header>
 		<div class="info">
 		</div>
@@ -26,7 +25,6 @@
 			<div class="info-title">基本信息</div>
 			<div class="info-item info-time"  onclick="MEETFORM.pickDate()">
 				<div style="width: 30%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					时间</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -39,7 +37,6 @@
 			</div>
 			<div class="info-item info-addr" onclick="MEETFORM.showMeetMap();">
 				<div style="width: 30%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					地点</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -51,17 +48,20 @@
 					
 				</div>
 			</div>
-			<div class="info-item info-peopleNum">
-				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
+			<div class="info-item info-peopleNum" onclick="MEETFORM.showMeetFormItem(5)">
+				<div style="width: 30%;float: left;color: #202020;">
 					人数</div>
-				<div style="width: 60%;float: right;">
-					<input type="number" id="val-peopleNum" class="input-row" value="{{people_num}}" />
+				<div style="width: 70%;float: right;">
+					<span style="display: table-cell;float: right;">
+						<img class="arrow-right" src="img/arrow_right.png" />
+					</span>
+					<span style="display: table-cell;float: right;margin-right: 10px;">
+						<span id="val-num">{{people_num | itemFormat : 'people_num'}}</span>
+					</span>
 				</div>
 			</div>
 			<div class="info-item info-type"  onclick="MEETFORM.showMeetFormItem(0)">
 				<div style="width: 30%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					类型</div>
 				<div style="width: 70%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -74,7 +74,6 @@
 			</div>
 			<div class="info-item info-sex"  onclick="MEETFORM.showMeetFormItem(1)">
 				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					性别要求</div>
 				<div style="width: 60%;float: right;">
 					<span style="display: table-cell;float: right;">
@@ -88,7 +87,6 @@
 			</div>
 			<div class="info-item info-age" onclick="MEETFORM.showMeetFormItem(2)">
 				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					年龄要求</div>
 				<div style="width: 60%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
@@ -101,7 +99,6 @@
 			</div>
 			<div class="info-item info-ballneed" onclick="MEETFORM.showMeetFormItem(3)">
 				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					球技要求</div>
 				<div style="width: 60%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
@@ -114,7 +111,6 @@
 			</div>
 			<div class="info-item info-addrcost" onclick="MEETFORM.showMeetFormItem(4)">
 				<div style="width: 40%;float: left;color: #202020;">
-					<img src="img/icon-meet_time.png" style="28px;height: 28px;border: 0;vertical-align: middle;">
 					场地费</div>
 				<div style="width: 60%;float: right;">
 					<span style="display: table-cell;float: right;width:7px;">
@@ -126,11 +122,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="padding: 10px 0;">
-			<div class="info-title" onclick="MEETFORM.setMeet()" style="background: #028CE6;color: #ffffff;width: 30%;margin: 0 auto;text-align: center;border-radius: 5px;font-size: 1.2em;">
-				发起球局
-			</div>
-		</div>
+		<button class="btn-meet" onclick="MEETFORM.setMeet()">发起约球</button>
 		</script>
 	</body>
 </html>
