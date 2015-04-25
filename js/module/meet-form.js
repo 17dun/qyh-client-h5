@@ -14,7 +14,7 @@ var MEETFORM = {
 				'add_id':0,
 				'add_name':'',
 				'time':'',
-				'people_num':2,
+				'people_num':0,
 				'type_demand':0,
 				'sex_demand':0,
 				'age_demand':0,

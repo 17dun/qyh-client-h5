@@ -17,16 +17,10 @@
 			<div class="nvbt iback-back" ontouchend="back();"></div>
 			<div class="nvtt myedit-head" id="myhead">请选择地点</div>
 		</header>
+		<div id="mask" style="position: absolute;z-index:999;width:100%;height:100%;background: #333;opacity: .3;"></div>
+		<div style="background: url(img/zhuo.png);background-size:100%;width:22px;height:30px;position: absolute;z-index:9999;"></div>
 		<div id="container"></div>
-		<script id="meetTipTpl" type="text/html">
-			<div ontouchend="MEET.showMeetInfo($(this))" data-meetid="{{id}}" data-userid="{{user_id}}" data-addid="{{add_id}}" data-username="{{user_name}}" data-addname="{{add_name}}" data-created="{{date_created}}"   data-pic="{{pic}}" data-time="{{time}}" data-tel="{{tel}}"  data-topic="{{topic}}"  class="addr-card clearfix">
-				<img src="img/qiuzhuo.jpg"/ style="float:left;">
-				<div style="float:left;width:180px;padding-left:10px;">
-					<span style="font-size:16px;font-weight:bold;">{{add_name}}</span>
-						<br/>时间：{{time}}
-						<br/>报名情况:{{people_num}}
-				</div>
-			</div>
-		</script>
+		<button class="btn-meet" ontouchend="MEET.showMeetForm()" id="btn_meet">标记新场地</button>
+		
 	</body>
 </html>

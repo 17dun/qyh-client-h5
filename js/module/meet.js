@@ -10,7 +10,6 @@ var MEET = {
 	},
 	init: function() {
 		var me = this;
-		me.bindEvent();
 		if(me.map){
 			me.map = null;
 		}
@@ -25,13 +24,7 @@ var MEET = {
 		});
 	},
 
-	bindEvent: function() {
-		$('#btn_meet').on('touchend',function(){
-			MEET.showMeetForm();
-		})
-	},
 	showMeetForm: function() {
-		console.log('1')
 		var me = this;
 		if(me.windowStatus['meetForm']){
 			return;

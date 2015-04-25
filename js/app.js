@@ -45,7 +45,12 @@
 		if(plus.webview.getWebviewById(pageId)){
 			var webviewObj = plus.webview.getWebviewById(pageId);
 		}else{
-			var webviewObj = plus.webview.create(pageId + '.html', pageId, param);
+			var webviewObj = plus.webview.create(pageId + '.html', pageId, {
+				top: '45px',
+				bottom: '50px'
+			});
+			
+			plus.webview.currentWebview().append(webviewObj);
 		}
 		return webviewObj;
 	},
